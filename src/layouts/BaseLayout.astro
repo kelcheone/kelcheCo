@@ -7,22 +7,25 @@ export interface Props {
   title: string;
   description?: string;
   activeLink?: string;
+  keywords?: string[];
 }
 
 const {
   title,
   description = "My blog",
   activeLink = null,
+  keywords = ["blog, astro, javascript, typescript"],
 } = Astro.props as Props;
 const { navLinks } = pageSize;
 const {
   metaData: { authorName },
 } = config;
+console.log(keywords);
 ---
 
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} cKeywords={keywords} />
   </head>
 
   <body>
