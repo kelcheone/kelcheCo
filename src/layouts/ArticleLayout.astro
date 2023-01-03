@@ -2,6 +2,7 @@
 import { Frontmatter } from "src/misc";
 import BaseLayout from "./BaseLayout.astro";
 import TagButton from "@components/TagButton.astro";
+const { minutesRead } = Astro.props.frontmatter;
 
 export interface Props {
   content: Frontmatter;
@@ -13,6 +14,7 @@ const date = new Date(content.date);
 ---
 
 <BaseLayout title={title} description={description}>
+  <p>{minutesRead} readingTime</p>
   <h1
     class="text-3xl md:text-5xl 2xl:text-6xl mb-[0.8em] font-extrabold mx-auto w-fit"
   >

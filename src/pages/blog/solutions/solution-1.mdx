@@ -1,0 +1,22 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+title: My solution Article
+date: 1 January 2023
+image: /images/my-third-article/cardimage.jpg
+description: "I had some challenges, but asking in the community really helped!"
+pubDate: 2022-07-15
+tags:
+  - third
+  - featured-astro
+  - learning in public
+  - setback
+  - community
+---
+
+import Greeting from "../../../components/Greeting.tsx";
+
+It wasn't always smooth sailing, but I'm enjoying building with Astro. And, the [Discord community](https://astro.build/chat) is really friendly and helpful!
+
+{" "}
+
+<Greeting client:load messages={["Hej", "Hola", "Hallo", "Habari"]} />

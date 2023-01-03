@@ -3,6 +3,7 @@ import ArticleCard from "@components/ArticleCard.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import config from "src/config";
 import { Frontmatter, sortDateDescending, capitalizeString } from "src/misc";
+import Nuggets from "@components/Nuggets.astro";
 
 const allPosts = await Astro.glob<Frontmatter>("../pages/blog/articles/*.md");
 const posts = sortDateDescending(
@@ -61,6 +62,7 @@ const {
       </div>
     </div>
   </section>
+  <Nuggets />
 
   <section>
     <h2

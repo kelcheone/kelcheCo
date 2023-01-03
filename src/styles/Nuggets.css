@@ -1,0 +1,23 @@
+/* style <code> tags */
+code {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1em;
+    color: #531299;
+    /* bold text */
+    font-weight: bold;
+    border: 1px solid #d0d0d0;
+    padding: 0.2em 0.4em;
+    margin: 0 0.2em;
+    white-space: nowrap;
+    /* rounded border */
+    border-radius: 0.5em;
+
+}
+
+/* if dakmode  */
+@media (prefers-color-scheme: dark) {
+    code {
+        color: #dcdbde;
+        background-color: #2d3a50;
+    }
+}
