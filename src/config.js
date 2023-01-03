@@ -50,10 +50,11 @@ export default {
     },
   ],
   metaData: {
-    authorName: "Kelche",
-    summary: "My personal blog",
+    authorName: "Kevin Kelche",
+    summary:
+      "I write about data engineering, data science, web development, and other things I find interesting.",
     category: "Blog",
-    keywords: ["Blog", "Astro"],
+    keywords: ["Data", "Python", "Data Science", "Web Development", "Kelche"],
     icon: "favicon.ico",
   },
 };

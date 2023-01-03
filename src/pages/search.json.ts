@@ -2,7 +2,10 @@ import { MarkdownInstance } from "astro";
 import { Frontmatter } from "src/misc";
 
 export async function get() {
-  const allPosts = import.meta.glob<MarkdownInstance<Frontmatter>>("./blog/articles/*.md", { eager: true }); // Vite
+  const allPosts = import.meta.glob<MarkdownInstance<Frontmatter>>(
+    "./blog/**/*.md*",
+    { eager: true }
+  ); // Vite
   const posts = Object.values(allPosts)
     .filter((ele) => ele.frontmatter.draft != true)
     .map((ele) => {

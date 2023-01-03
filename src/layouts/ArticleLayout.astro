@@ -2,13 +2,22 @@
 import { Frontmatter } from "src/misc";
 import BaseLayout from "./BaseLayout.astro";
 import TagButton from "@components/TagButton.astro";
+const { minutesRead } = Astro.props.frontmatter;
 
 export interface Props {
   content: Frontmatter;
 }
 
 const { content } = Astro.props as Props;
-const { title, image, imageDescription, tags, description } = content;
+const {
+  title,
+  image,
+  imageDescription,
+  tags,
+  description,
+  imageSource,
+  imageUrl,
+} = content;
 const date = new Date(content.date);
 ---
 
@@ -28,6 +37,17 @@ const date = new Date(content.date);
           alt={imageDescription ?? title}
         />
       </Fragment>
+    ) : null
+  }
+  <!-- image source credits -->
+  {
+    imageSource ? (
+      <p class="text-sm text-center text-gray-500 mb-4">
+        Image from {imageSource}
+        <a href={imageUrl} class="text-blue-400 hover:underline">
+          {imageSource}
+        </a>
+      </p>
     ) : null
   }
 
@@ -56,6 +76,7 @@ const date = new Date(content.date);
         }</time
       >
     </div>
+    <p>{minutesRead}</p>
 
     <div class="flex flex-wrap gap-2">
       {tags.map((tag) => <TagButton tagName={tag} />)}

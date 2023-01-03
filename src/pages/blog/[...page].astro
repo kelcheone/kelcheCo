@@ -6,13 +6,36 @@ import { Frontmatter, sortDateDescending } from "src/misc";
 import { MarkdownInstance, Page } from "astro";
 import config from "src/config";
 
+export const mdposts = await Astro.glob<Frontmatter>(
+  "../../pages/blog/**/*.md"
+);
+
+export const mdxposts = await Astro.glob<Frontmatter>(
+  "../../pages/blog/**/*.mdx"
+);
+
+export const merged = [...mdposts, ...mdxposts];
+
 export interface Props {
-  page: Page<MarkdownInstance<Frontmatter>>,
+  page: Page<MarkdownInstance<Frontmatter>> | any;
+}
+
+export function sortDateDescending2(arg) {
+  return arg.sort(
+    (a, b) =>
+      new Date(b.frontmatter.date).getTime() -
+      new Date(a.frontmatter.date).getTime()
+  );
 }
 
 export async function getStaticPaths({ paginate }) {
-  const allPosts = await Astro.glob<Frontmatter>('../../pages/blog/articles/*.md');
-  const posts = sortDateDescending(allPosts.filter((post) => post.frontmatter.draft != true));
+  const allPosts = await Astro.glob<Frontmatter>(
+    "../../pages/blog/articles/*.md"
+  );
+  const posts = sortDateDescending2(
+    merged.filter((post) => post.frontmatter.draft != true)
+  );
+
   return paginate(posts, { pageSize: config.pageSize ?? 5 });
 }
 
@@ -20,13 +43,16 @@ const { page } = Astro.props as Props;
 ---
 
 <BaseLayout title="Blog" activeLink="blog">
-  {page.currentPage == 1 ? <h1
-    class="text-center text-3xl font-semibold bg-gradient-orange text-transparent bg-clip-text mb-8">
-    Recent Articles</h1> : null}
+  {
+    page.currentPage == 1 ? (
+      <h1 class="text-center text-3xl font-semibold bg-gradient-orange text-transparent bg-clip-text mb-8">
+        Recent Articles
+      </h1>
+    ) : null
+  }
 
   <div class="flex flex-wrap flex-col justify-center gap-12">
-    {page.data.map(post =>
-    <ArticleCard content={post} />)}
+    {page.data.map((post) => <ArticleCard content={post} />)}
   </div>
 
   <Pagination page={page} dir={"blog"} />
