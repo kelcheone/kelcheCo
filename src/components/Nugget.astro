@@ -6,7 +6,7 @@ import "../styles/Nuggets.css";
 
 <!-- <BaseLayout title="Array.slice() - JavaScript | Astrology"> -->
 <div class="max-w-5xl mx-auto">
-  <div class="p-4 rounded-md bg-blue-50 dark:bg-blue-400 dark:text-blue-100">
+  <div class="p-4 rounded-md bg-blue-50 dark:bg-gray-600 dark:text-blue-100">
     <div class="flex">
       <div class="flex-shrink-0 mt-1">
         <svg
@@ -14,7 +14,7 @@ import "../styles/Nuggets.css";
           fill="currentColor"
           stroke-width="0"
           viewBox="0 0 20 20"
-          class="w-5 h-5 text-blue-600"
+          class="w-5 h-5 text-blue-600 dark:text-blue-100"
           height="1em"
           width="1em"
           xmlns="http://www.w3.org/2000/svg"
@@ -25,14 +25,11 @@ import "../styles/Nuggets.css";
         </svg>
       </div><div class="ml-3" style="min-width:0">
         <div class="font-medium text-blue-700 dark:text-blue-100">
-          <span class="break-words"
-            >Even if the <code>end</code> index you provide to the<!-- -->
-            <code>Array.slice()</code> method exceeds the array's length, the method
-            doesn't throw an error, instead, it returns all array elements.</span
-          >
+          <span class="break-words">
+            <slot />
+          </span>
         </div>
       </div>
     </div>
   </div>
 </div>
-<!-- </BaseLayout> -->

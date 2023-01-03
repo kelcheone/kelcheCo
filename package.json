@@ -24,10 +24,8 @@
     "theme-change": "^2.1.0"
   },
   "dependencies": {
-    "@astro-github-elements/clipboard-copy": "^0.0.4",
     "@astrojs/mdx": "^0.14.0",
     "@astrojs/react": "^1.2.2",
-    "@code-hike/mdx": "^0.7.4",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "astro-compress": "^1.1.24",
@@ -35,9 +33,7 @@
     "mdast-util-to-string": "^3.1.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "remark-toc": "^8.0.1",
     "rollup": "^3.9.1",
-    "sharp": "^0.31.3",
-    "shiki": "^0.12.1"
+    "sharp": "^0.31.3"
   }
 }

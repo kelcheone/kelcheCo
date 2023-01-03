@@ -1,9 +1,6 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
-import theme from "shiki/themes/github-dark.json";
-import remarkToc from "remark-toc";
-import { remarkCodeHike } from "@code-hike/mdx";
 import { remarkReadingTime } from "./remark-reading-time.mjs";
 
 // https://astro.build/config
@@ -24,23 +21,14 @@ export default defineConfig({
     sitemap(),
     compress(),
     mdx({
-      remarkPlugins: [
-        [
-          remarkCodeHike,
-          {
-            autoImport: false,
-            theme,
-          },
-        ],
-        remarkReadingTime,
-      ],
+      remarkPlugins: [remarkReadingTime],
     }),
     react(),
   ],
-  site: "https://kelche.co",
+  site: "https://www.kelche.co",
   base: "/",
   markdown: {
-    remarkPlugins: [remarkReadingTime, remarkToc],
+    remarkPlugins: [remarkReadingTime],
     shikiConfig: {
       theme: "dracula",
       // Enable word wrap to prevent horizontal scrolling

@@ -15,7 +15,6 @@ export const mdxposts = await Astro.glob<Frontmatter>(
 );
 
 export const merged = [...mdposts, ...mdxposts];
-merged.map((post) => console.log(post.frontmatter.tags));
 
 export interface Props {
   page: Page<MarkdownInstance<Frontmatter>> | any;

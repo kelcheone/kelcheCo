@@ -1,23 +1,24 @@
 /* style <code> tags */
-code {
+cd {
     font-family: "Courier New", Courier, monospace;
     font-size: 1em;
-    color: #531299;
+    color: #050307 !important;
+    background-color: #bde8e8;
     /* bold text */
     font-weight: bold;
-    border: 1px solid #d0d0d0;
+    border: .5px solid #d0d0d0;
     padding: 0.2em 0.4em;
     margin: 0 0.2em;
     white-space: nowrap;
     /* rounded border */
-    border-radius: 0.5em;
+    border-radius: 0.3em;
 
 }
 
 /* if dakmode  */
 @media (prefers-color-scheme: dark) {
-    code {
-        color: #dcdbde;
-        background-color: #2d3a50;
+    cd {
+        color: #f5f4f5 !important;
+        background-color: #4f5051d1 !important;
     }
 }

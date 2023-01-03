@@ -9,12 +9,19 @@ export interface Props {
 }
 
 const { content } = Astro.props as Props;
-const { title, image, imageDescription, tags, description } = content;
+const {
+  title,
+  image,
+  imageDescription,
+  tags,
+  description,
+  imageSource,
+  imageUrl,
+} = content;
 const date = new Date(content.date);
 ---
 
 <BaseLayout title={title} description={description}>
-  <p>{minutesRead} readingTime</p>
   <h1
     class="text-3xl md:text-5xl 2xl:text-6xl mb-[0.8em] font-extrabold mx-auto w-fit"
   >
@@ -30,6 +37,17 @@ const date = new Date(content.date);
           alt={imageDescription ?? title}
         />
       </Fragment>
+    ) : null
+  }
+  <!-- image source credits -->
+  {
+    imageSource ? (
+      <p class="text-sm text-center text-gray-500 mb-4">
+        Image from {imageSource}
+        <a href={imageUrl} class="text-blue-400 hover:underline">
+          {imageSource}
+        </a>
+      </p>
     ) : null
   }
 
@@ -58,6 +76,7 @@ const date = new Date(content.date);
         }</time
       >
     </div>
+    <p>{minutesRead}</p>
 
     <div class="flex flex-wrap gap-2">
       {tags.map((tag) => <TagButton tagName={tag} />)}

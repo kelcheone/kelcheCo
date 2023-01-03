@@ -9,6 +9,8 @@ export interface Frontmatter {
   tags: Array<string>;
   description: string;
   draft?: boolean;
+  imageSource?: string;
+  imageUrl?: string;
 }
 
 export function sortDateDescending(arg: MarkdownInstance<Frontmatter>[]) {
@@ -24,12 +26,7 @@ export function getAllUniqueTags(arg: MarkdownInstance<Frontmatter>[]) {
     new Set(arg.map((e) => e.frontmatter.tags).flat()).values()
   );
 }
-// rewrite the above function in javascript
-export function getAllUniqueTags2(arg) {
-  return Array.from(
-    new Set(arg.map((e) => e.frontmatter.tags).flat()).values()
-  );
-}
+
 export function capitalizeString(arg: string) {
   return arg[0].toUpperCase() + arg.slice(1);
 }

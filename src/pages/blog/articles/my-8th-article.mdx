@@ -12,10 +12,26 @@ tags:
   - community
 ---
 
-import Greeting from "../../../components/Greeting.tsx";
+import Nuggets from "../../../components/Nugget.astro";
 
-It wasn't always smooth sailing, but I'm enjoying building with Astro. And, the [Discord community](https://astro.build/chat) is really friendly and helpful!
+It wasn't <cd>always</cd> smooth sailing, but I'm enjoying building with Astro. And, the [Discord community](https://astro.build/chat) is really friendly and helpful!
 
 {" "}
 
-<Greeting client:load messages={["Hej", "Hola", "Hallo", "Habari"]} />
+<Nuggets>
+  Code is law is just a <cd>myth</cd>
+</Nuggets>
+
+```java
+public class HelloWorld {
+  public static void main(String[] args) {
+    System.out.println("Hello, World");
+  }
+}
+```
+
+<div class="mockup-code">
+  <pre data-prefix="$">
+    <code>yarn add astro</code>
+  </pre>
+</div>
