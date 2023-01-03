@@ -11,6 +11,7 @@ export interface Frontmatter {
   draft?: boolean;
   imageSource?: string;
   imageUrl?: string;
+  keywords?: string[];
 }
 
 export function sortDateDescending(arg: MarkdownInstance<Frontmatter>[]) {
