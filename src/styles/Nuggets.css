@@ -22,3 +22,28 @@ cd {
         background-color: #4f5051d1 !important;
     }
 }
+
+pre {
+    overflow: auto;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    position: relative;
+}
+
+pre copy-code-button{
+    opacity: 0.6;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+}
+
+pre copy-code-button:hover,
+pre copy-code-button:active {
+    opacity: 1;
+}
+
+.mockup-code pre{
+    
+    background-color: #f5f4f500;
+    color: #ccc9d0;
+}

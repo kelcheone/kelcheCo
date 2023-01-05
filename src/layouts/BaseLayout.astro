@@ -1,6 +1,8 @@
 ---
 import BaseHead from "./BaseHead.astro";
 import NavListItem from "@components/NavListItem.astro";
+import "@styles/Nuggets.css";
+
 import pageSize from "src/config.js";
 import config from "src/config.js";
 export interface Props {
@@ -272,7 +274,13 @@ const {
         }
       }
     </style>
+    <script type="module">
+      // import "@components/CodeSnippet/CopyCodeButton/create-copy-button.js";
+    </script>
+
     <script>
+      import "@components/CodeSnippet/CopyCodeButton/create-copy-button.js";
+      import "@components/CodeSnippet/CopyCodeButton/copy-code-button.js";
       // Navigation / Hamburger menu - control
       const nav = document.querySelector<HTMLUListElement>("#primary-nav");
       const navToggle = document.querySelector<HTMLLabelElement>("#nav-toggle");
