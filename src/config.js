@@ -50,7 +50,7 @@ export default {
     },
   ],
   metaData: {
-    authorName: "Kevin Kelche",
+    authorName: "Kelche",
     summary:
       "I write about data engineering, data science, web development, and other things I find interesting.",
     category: "Blog",
