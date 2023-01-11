@@ -1,8 +1,11 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
-import { theme } from "./syntax-highlight-theme";
-import { astroCodeSnippets, codeSnippetAutoImport } from "./integrations/astro-code-snippets";
+
+import {
+  astroCodeSnippets,
+  codeSnippetAutoImport,
+} from "./integrations/astro-code-snippets";
 import AutoImport from "astro-auto-import";
 import { remarkReadingTime } from "./remark-reading-time.mjs";
 
@@ -25,11 +28,21 @@ import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [AutoImport({
-    imports: [codeSnippetAutoImport]
-  }), tailwind(), sitemap(), compress(), astroCodeSnippets(), mdx({
-    remarkPlugins: [remarkReadingTime]
-  }), react(), lit(), partytown()],
+  integrations: [
+    AutoImport({
+      imports: [codeSnippetAutoImport],
+    }),
+    tailwind(),
+    sitemap(),
+    compress(),
+    astroCodeSnippets(),
+    mdx({
+      remarkPlugins: [remarkReadingTime],
+    }),
+    react(),
+    lit(),
+    partytown(),
+  ],
   site: "https://www.kelche.co",
   base: "/",
   markdown: {
@@ -37,8 +50,8 @@ export default defineConfig({
     shikiConfig: {
       theme: "dracula",
       // Enable word wrap to prevent horizontal scrolling
-      wrap: true
-    }
+      wrap: true,
+    },
   },
-  trailingSlash: "always"
+  trailingSlash: "always",
 });
