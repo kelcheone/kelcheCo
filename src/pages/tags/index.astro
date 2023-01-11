@@ -3,8 +3,6 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import TagButton from "@components/TagButton.astro";
 import { Frontmatter, getAllUniqueTags } from "src/misc";
 
-const allPosts = await Astro.glob<Frontmatter>("../../pages/blog/**/*.md");
-
 export const mdposts = await Astro.glob<Frontmatter>(
   "../../pages/blog/**/*.md"
 );
