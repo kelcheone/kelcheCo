@@ -6,6 +6,7 @@ import { Frontmatter, sortDateDescending, capitalizeString } from "src/misc";
 
 const allPosts = await Astro.glob<Frontmatter>("../pages/blog/**/*.mdx");
 
+
 const posts = sortDateDescending(
   allPosts.filter(
     (post) =>
