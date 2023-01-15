@@ -1,0 +1,391 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+title: Golang Map (A Complete Guide)
+description: In Golang a map is a data structure that stores key-value pairs. In this article, we will learn about the map data structure in Golang.
+date: 15 January 2023
+image: https://images.unsplash.com/photo-1642367340318-96fdbc5d30f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80
+imageDescription: Golang Map data structure
+imageSource: unsplash
+imageUrl: https://unsplash.com/photos/fd9mIBluHkA
+keywords:
+  - golang map
+  - map data structure
+  - golang map data structure
+  - golang map tutorial
+tags:
+  - featured
+  - go
+---
+
+import Nugget from "@components/Nugget.astro";
+
+# Table of Contents
+
+- [Introduction](#introduction)
+- [Creating a Map](#creating-a-map)
+- [Map literals](#map-literals)
+- [Accessing a Map](#accessing-a-map)
+- [Adding a Key-Value Pair to a map](#adding-a-key-value-pair-to-a-map)
+- [Deleting a Key-Value Pair](#deleting-a-key-value-pair-from-a-map)
+- [Checking if a Key Exists in a Map](#checking-if-a-key-exists-in-a-map)
+- [Iterating Over a Map](#iterating-over-a-map)
+- [Nested Maps](#nested-maps)
+- [Other Map Functions](#other-map-functions)
+- [Map vs Struct](#map-vs-struct)
+- [Map vs Slice](#map-vs-slice)
+- [Conclusion](#conclusion)
+
+## Introduction
+
+Golang maps can also be refered to as hash tables or dictionaries. It is one of the most important data structures in programming as it allows us to store key-value pairs. We are going to explore the map it's usage in Golang and how it differs from other data structures.
+
+## Creating a Map
+
+Map can be created in two ways in Golang. The first way is by using the `make` function and the second way is by using map literals. The `make` function is used to create a map with a specific size. The map literals are used to create a map with initial values.
+
+The `make` function takes in two arguments, the first argument is the type of the map and the second argument is the size of the map. The size of the map is optional and can be omitted.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+    // Creating a map
+    m := make(map[string]int)
+
+    m["key"] = 10
+
+    fmt.Println(m["key"])
+}
+```
+
+## map literals
+
+Map literals are used to create a map with initial values. The syntax for map literals is as follows:
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+    // Creating a map
+    x:= map[string]int{"foo": 1, "bar": 2}
+
+    fmt.Println(x["foo"])
+}
+```
+
+## Accessing a Map
+
+We can access a value in a map by using the key. If the key does not exist in the map then the value will be the zero value of the type of the map.
+Map values can be accessed using the `[]` operator. The syntax for accessing a map is as follows:
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+    // Creating a map
+    x:= map[string]int{"foo": 1, "bar": 2}
+
+   value:= x["foo"]
+   fmt.Println(value)
+}
+```
+
+## Adding a Key-Value Pair to a Map
+
+We can add a key-value pair to a map by using the `[]` operator. If the key already exists in the map then the value will be updated. The syntax for adding a key-value pair to a map is as follows:
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+    x:= make(map[string]int)
+
+    // Adding a key-value pair
+    x["foo"] = 1
+    x["bar"] = 2
+
+    fmt.Println(x)
+}
+```
+
+Output:
+
+```bash title="output"
+go run main.go
+map[bar:2 foo:1]
+```
+
+<Nugget>
+  <p>
+    <strong>Note:</strong> The keys in a map must be unique. If we try to add a
+    key that already exists in the map then the value will be updated.
+  </p>
+</Nugget>
+
+To update a value in a map we can use the `[]` operator.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+    x:= map[string]int{"foo": 1, "bar": 2}
+
+    // Updating a value
+    x["foo"] = 10
+
+    fmt.Println(x)
+}
+```
+
+Output:
+
+```bash title="output"
+go run main.go
+map[bar:2 foo:10]
+```
+
+## Deleting a Key-Value Pair from a Map
+
+We can delete a key-value pair from a map by using the `delete` function. The `delete` function takes in two arguments, the first argument is the map and the second argument is the key.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+    x:= make(map[string]int)
+
+    // Adding a key-value pair
+    x["foo"] = 1
+    x["bar"] = 2
+
+    // Deleting a key-value pair
+    delete(x, "foo")
+
+    fmt.Println(x)
+}
+```
+
+## Checking if a Key Exists in a Map
+
+To check if a key exists in a map we can use the `ok` idiom. The `ok` idiom is used to check if a key exists in a map. The syntax for the `ok` idiom is as follows:
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+    x:= map[string]int{"foo": 1, "bar": 2}
+
+    // Checking if a key exists
+    value, ok := x["foo"]
+
+    if ok {
+        fmt.Println(value)
+    } else {
+        fmt.Println("Key does not exist")
+    }
+}
+```
+
+## Iterating Over a Map
+
+To iterate over a map we can use the `range` keyword and the `for` loop. The `range` keyword returns the key and the value of the map.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+    x:= map[string]int{"foo": 1, "bar": 2}
+
+    // Iterating over a map
+    for key, value := range x {
+        fmt.Println(key, value)
+    }
+}
+```
+
+Output:
+
+```bash title="output"
+go run main.go
+bar 2
+foo 1
+```
+
+## Nested Maps
+
+To create a nested map we can use the map literals and the `make` function. The syntax for creating a nested map is as follows:
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+    // Creating a nested map
+    x := make(map[string]map[string]int)
+
+    // Adding a key-value pair
+    x["foo"] = make(map[string]int)
+    // Adding a key-value pair
+    x["foo"]["bar"] = 1
+
+    fmt.Println(x)
+}
+```
+
+### using the map literals
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+    // Creating a nested map
+    x := map[string]map[string]int{
+        "foo": {
+            "bar": 1,
+        },
+    }
+
+    fmt.Println(x)
+}
+```
+
+Output:
+
+```bash title="output"
+go run main.go
+map[foo:map[bar:1]]
+```
+
+### Iterating Over a Nested Map
+
+To iterate over a nested map we can use the `range` keyword and the `for` loop. The `range` keyword returns the key and the value of the map.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+    x := make(map[string]map[string]int)
+
+    x["foo"] = make(map[string]int)
+    x["foo"]["bar"] = 1
+
+    x["bar"] = make(map[string]int)
+    x["bar"]["foo"] = 2
+
+    // Iterating over a nested map
+    for key, value := range x {
+        fmt.Println(key, value)
+    }
+    fmt.Println("---------------------")
+
+    // Iterating map inside a map
+    for _, value :=range x{
+        for key2, value2 := range value {
+            fmt.Println( key2, value2)
+        }
+    }
+}
+```
+
+Output:
+
+```bash title="output"
+go run main.go
+bar map[foo:2]
+foo map[bar:1]
+---------------------
+bar 2
+foo 1
+```
+
+## Other Map Functions
+
+### len
+
+The `len` function returns the number of key-value pairs in a map.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main(){
+    x := make(map[string]int)
+
+    x["foo"] = 1
+    x["bar"] = 2
+
+    // Getting the length of a map
+    length := len(x)
+    fmt.Println(length)
+}
+```
+
+### new
+
+The `new` function creates a new map. The `new` function takes in one argument, the type of the map. The `new` function returns a pointer to the map.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main(){
+    // Creating a new map
+    x := new(map[string]int)
+
+    // Adding a key-value pair
+    (*x)["foo"] = 1
+    (*x)["bar"] = 2
+
+    fmt.Println(x)
+}
+```
+
+<Nugget>
+  <p>
+    <strong>NOTE:</strong> The <code>new</code> function is rarely used. It is
+    better to use the <code>make</code> function to create a map.
+  </p>
+</Nugget>
+
+## Map vs Struct
+
+> - A struct is a collection of fields. A map is a collection of key-value pairs.
+> - A struct is a value type. A map is a reference type.
+> - A struct is a fixed size. A map is a dynamic size.
+> - A struct is a composite type. A map is a built-in type.
+> - A struct is a collection of fields. A map is a collection of key-value pairs.
+
+## Map vs Slice
+
+> - A slice is a collection of elements. A map is a collection of key-value pairs.
+> - A slice is a reference type. A map is a reference type.
+> - A slice is a dynamic size. A map is a dynamic size.
+> - A slice is a composite type. A map is a built-in type.
+> - A slice is a collection of elements. A map is a collection of key-value pairs.
+
+## Conclusion
+
+In this article, we learned about maps in Go. We learned how to create a map, how to add a key-value pair to a map, how to delete a key-value pair from a map, how to check if a key exists in a map, how to iterate over a map, how to create a nested map, how to iterate over a nested map, and how to use other map functions.
