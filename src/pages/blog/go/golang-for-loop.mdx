@@ -1,0 +1,500 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+title: Golang for loop (A Complete Guide)
+description: In Golang for loop is used to iterate over a collection of data. In this tutorial, we will learn how to use for loop in Golang and the various patterns used in for loop.
+date: 15 January 2023
+image: https://images.unsplash.com/photo-1642367340318-96fdbc5d30f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80
+imageDescription:
+imageSource: unsplash
+imageUrl: https://unsplash.com/photos/fd9mIBluHkA
+keywords:
+  - golang for loop
+  - golang for loop tutorial
+  - golang for loop example
+  - golang for loop syntax
+tags:
+  - featured
+  - go
+---
+
+import Nugget from "@components/Nugget.astro";
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Syntax](#syntax)
+- [Example](#example)
+- [For loop with range](#for-loop-with-range)
+  - [Iterating over an array](#iterating-over-an-array)
+  - [Iterating over a slice](#iterating-over-a-slice)
+  - [Iterating over a map](#iterating-over-a-map)
+  - [Iterating over a string](#iterating-over-a-string)
+- [For loop with continue](#for-loop-with-continue)
+- [For loop with break](#for-loop-with-break)
+- [For loop with goto](#for-loop-with-goto)
+- [For loop with label](#for-loop-with-label)
+- [For loop with nested loop](#for-loop-with-nested-loop)
+- [For loop with infinite loop](#for-loop-with-infinite-loop)
+- [Example Application of for loop](#example-application-of-for-loop)
+- [Conclusion](#conclusion)
+
+## Introduction
+
+In Golang a for loop is used to iterate over a collection of data. It can also be used to repeat a block of code for a specific number of times or until a condition is met.
+For loops behave like while loops in other programming languages.
+
+## Syntax
+
+The syntax of a for loop in Go is as follows:
+
+```go title="example.go"
+// ...
+for init; condition; post {
+    // code block to be executed
+}
+// ...
+
+```
+
+The init statement is executed before the first iteration. The condition is evaluated before every iteration. If the condition is true, the code block is executed. The post statement is executed at the end of every iteration.
+
+## Example
+
+Let's take a look at an example of a for loop in Go.
+
+```go title="example.go"
+package main
+
+import "fmt"
+
+func main() {
+    for i := 0; i < 5; i++ {
+        fmt.Println(i)
+    }
+}
+
+```
+
+The output of the above program is:
+
+```bash title="output"
+go run example.go
+0
+1
+2
+3
+4
+```
+
+In the above example, the init statement is `i := 0`. The condition is `i < 5`. The post statement is `i++`. The code block is `fmt.Println(i)`. The code block is executed 5 times because the condition is true for 5 iterations.
+
+## For loop with range
+
+The range keyword is used to iterate over a collection of data. It can be used to iterate over an array, slice, map, string, or channel.
+
+### Iterating over an array
+
+Let's take a look at an example of a for loop with range to iterate over an array.
+
+```go title="example.go"
+// ...
+func main() {
+    arr := [5]int{1, 2, 3, 4, 5}
+    for i, v := range arr {
+        fmt.Println(i, v)
+    }
+}
+// ...
+
+```
+
+The output of the above program is:
+
+```bash title="output"
+go run example.go
+0 1
+1 2
+2 3
+3 4
+4 5
+```
+
+In the above example, the range keyword is used to iterate over the array. The variable i is the index of the array and v is the value at the index i.
+
+### Iterating over a slice
+
+Let's take a look at an example of a for loop with range to iterate over a slice.
+
+```go title="example.go"
+// ...
+func main() {
+    slice := []int{1, 2, 3, 4, 5}
+    for i, v := range slice {
+        fmt.Println(i, v)
+    }
+}
+// ...
+
+```
+
+The output of the above program is:
+
+```bash title="output"
+go run example.go
+0 1
+1 2
+2 3
+3 4
+4 5
+```
+
+### Iterating over a map
+
+Let's take a look at an example of a for loop with range to iterate over a map.
+
+```go title="example.go"
+// ...
+func main() {
+    m := map[string]int{"a": 1, "b": 2, "c": 3}
+    for k, v := range m {
+        fmt.Println(k, v)
+    }
+}
+// ...
+
+```
+
+The output of the above program is:
+
+```bash title="output"
+go run example.go
+a 1
+b 2
+c 3
+```
+
+[Learn more about maps in Golang](/blog/go/golang-map/)
+
+### Iterating over a string
+
+Let's take a look at an example of a for loop with range to iterate over a string.
+
+```go title="example.go"
+// ...
+func main() {
+    s := "hello"
+    for i, v := range s {
+        fmt.Println(i, v)
+    }
+}
+// ...
+
+```
+
+The output of the above program is:
+
+```bash title="output"
+go run example.go
+0 104
+1 101
+2 108
+3 108
+4 111
+```
+
+<Nugget>
+  <p>
+    The range keyword returns the index and the value of the element at the
+    index. In the case of a string, the value is the Unicode code point of the
+    character at the index.
+  </p>
+</Nugget>
+
+### Iterating over a channel
+
+Let's take a look at an example of a for loop with range to iterate over a channel.
+
+```go title="example.go"
+// ...
+func main() {
+    c := make(chan int)
+    go func() {
+        for i := 0; i < 5; i++ {
+            c <- i
+        }
+        close(c)
+    }()
+    for v := range c {
+        fmt.Println(v)
+    }
+}
+// ...
+
+```
+
+The output of the above program is:
+
+```bash title="output"
+go run example.go
+0
+1
+2
+3
+4
+```
+
+In the above example, the range keyword is used to iterate over the channel. The channel is closed after 5 values are sent to it.
+
+<Nugget>
+  <p>
+    The range keyword returns the value sent to the channel. If the channel is
+    closed, the loop terminates.
+  </p>
+</Nugget>
+
+## For loop with continue
+
+The `continue` keyword is used to skip the current iteration of the loop and continue with the next iteration.
+
+Let's take a look at an example of a for loop with continue.
+
+```go title="example.go"
+// ...
+func main() {
+    for i := 0; i < 5; i++ {
+        if i == 3 {
+            continue
+        }
+        fmt.Println(i)
+    }
+}
+// ...
+
+```
+
+The output of the above program is:
+
+```bash title="output"
+go run example.go
+0
+1
+2
+4
+```
+
+In the above example, the continue keyword is used to skip the iteration when the value of i is 3.
+
+## For loop with break
+
+The `break` keyword is used to terminate the loop.
+
+Let's take a look at an example of a for loop with break.
+
+```go title="example.go"
+// ...
+func main() {
+    for i := 0; i < 5; i++ {
+        if i == 3 {
+            break
+        }
+        fmt.Println(i)
+    }
+}
+
+```
+
+The output of the above program is:
+
+```bash title="output"
+go run example.go
+
+0
+1
+2
+```
+
+In the above example, the break keyword is used to terminate the loop when the value of i is 3.
+
+## For loop with goto
+
+The `goto` keyword is used to jump to a label in the program.
+
+Let's take a look at an example of a for loop with goto.
+
+```go title="example.go"
+// ...
+func main() {
+    i := 0
+Loop:
+    if i < 5 {
+        fmt.Println(i)
+        i++
+        goto Loop
+    }
+}
+// ...
+
+```
+
+The output of the above program is:
+
+```bash title="output"
+go run example.go
+0
+1
+2
+3
+4
+```
+
+In the above example, the goto keyword is used to jump to the label Loop. The label Loop is the beginning of the for loop.
+
+`goto` is not recommended to be used in Go programs because it makes the code hard to read and understand. It is better to use a for loop with break to terminate the loop.
+
+## For loop with labels
+
+A label is a name given to a statement. It is used to jump to a statement in the program.
+
+Let's take a look at an example of a for loop with labels.
+
+```go title="example.go"
+// ...
+func main() {
+    i := 0
+Loop:
+    for i < 5 {
+        fmt.Println(i)
+        i++
+        if i == 3 {
+            break Loop
+        }
+    }
+}
+// ...
+
+```
+
+The output of the above program is:
+
+```bash title="output"
+go run example.go
+0
+1
+2
+```
+
+In the above example, the label Loop is given to the for loop. The break keyword is used to terminate the loop when the value of i is 3.
+
+## For loop with nested loops
+
+A for loop can be nested inside another for loop. This is useful when you want to iterate over a multidimensional array or a slice of slices or a slice of maps among other things.
+
+Let's take a look at an example of a for loop with nested loops.
+
+```go title="example.go"
+// ...
+func main() {
+    slice := [][]int{{1, 2}, {3, 4}, {5, 6}}
+    for _, v := range slice {
+        for _, v2 := range v {
+            fmt.Println(v2)
+        }
+    }
+}
+// ...
+
+```
+
+The output of the above program is:
+
+```bash title="output"
+go run example.go
+1
+2
+3
+4
+5
+6
+```
+
+In the above example, the for loop is nested inside another for loop. The outer for loop iterates over the slice of slices. The inner for loop iterates over each slice.
+
+## For loop with infinite loop
+
+A for loop can be used to create an infinite loop. An infinite loop is a loop that never terminates. An infinite loop can be important in some cases. For example, a server program can use an infinite loop to keep listening for requests.
+
+Let's take a look at an example of a for loop with an infinite loop.
+
+```go title="example.go"
+// ...
+func main() {
+    for {
+        fmt.Println("infinite loop")
+    }
+}
+// ...
+
+```
+
+The output of the above program is:
+
+```bash title="output"
+go run example.go
+infinite loop
+infinite loop
+...
+```
+
+In the above example, the for loop is used to create an infinite loop. The loop never terminates.
+
+<Nugget>
+  <p>
+    To terminate the infinite loop, click <cd> Ctrl+C </cd> or <cd> Cmd+C </cd>{" "}
+    in the terminal.
+  </p>
+</Nugget>
+
+## Example Application of for loop
+
+Drawing a staircase using a for loop
+
+Let's take a look at an example of a for loop to draw a staircase.
+
+```go title="example.go"
+// ...
+func main() {
+    n := 6
+    for i := 1; i <= n; i++ {
+        for j := 1; j <= n; j++ {
+            if j <= n-i {
+                fmt.Print(" ")
+            } else {
+                fmt.Print("#")
+            }
+        }
+        fmt.Println()
+    }
+}
+// ...
+
+```
+
+The output of the above program is:
+
+```bash title="output"
+go run example.go
+     #
+    ##
+   ###
+  ####
+ #####
+######
+```
+
+In the above example, the outer for loop iterates from 1 to n. The inner for loop iterates from 1 to n. The inner for loop prints a space if the value of j is less than or equal to n-i. Otherwise, it prints a #.
+
+This is a classic example of using a for loop.
+
+## Conclusion
+
+In this article, we learned about the for loop in Go. We learned about the syntax of the for loop. We also learned about the different ways to use the for loop. We learned about the range keyword. We learned about the continue, break, and goto keywords. We learned about labels. We learned about nested loops. We learned about infinite loops. We also learned about an example application of the for loop.

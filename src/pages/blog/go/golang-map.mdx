@@ -19,7 +19,7 @@ tags:
 
 import Nugget from "@components/Nugget.astro";
 
-# Table of Contents
+## Table of Contents
 
 - [Introduction](#introduction)
 - [Creating a Map](#creating-a-map)
@@ -37,7 +37,7 @@ import Nugget from "@components/Nugget.astro";
 
 ## Introduction
 
-Golang maps can also be refered to as hash tables or dictionaries. It is one of the most important data structures in programming as it allows us to store key-value pairs. We are going to explore the map it's usage in Golang and how it differs from other data structures.
+Golang maps can also be refered to as hash tables (maps) or dictionaries. It is one of the most important data structures in programming as it allows us to store key-value pairs. We are going to explore the map it's usage in Golang and how it differs from other data structures.
 
 ## Creating a Map
 
@@ -226,6 +226,7 @@ go run main.go
 bar 2
 foo 1
 ```
+[Learn more about iteration in Golang](/blog/go/golang-for-loop)
 
 ## Nested Maps
 
@@ -336,7 +337,7 @@ func main(){
     x["foo"] = 1
     x["bar"] = 2
 
-    // Getting the length of a map
+    // length of a map
     length := len(x)
     fmt.Println(length)
 }
