@@ -1,0 +1,485 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+title: Golang Interfaces (A Complete Guide)
+description: Interfaces in golang are a powerful tool that allows you to define a set of methods that a type must implement. In this article, we will learn how to use interfaces in golang
+date: 16 January 2023
+image: https://images.unsplash.com/photo-1642367340318-96fdbc5d30f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80
+imageDescription: Golang Interfaces (A Complete Guide)
+imageSource: unsplash
+imageUrl: https://unsplash.com/photos/fd9mIBluHkA
+keywords:
+  - golang interfaces
+  - golang
+  - interfaces
+  - go interfaces
+tags:
+  - featured
+  - go
+---
+
+import Nugget from "@components/Nugget.astro";
+
+## Table of Contents
+
+- [What is an Interface?](#what-is-an-interface)
+- [How to Declare an Interface?](#how-to-declare-an-interface)
+- [How to Implement an Interface?](#how-to-implement-an-interface)
+- [How to Use an Interface as a Type?](#how-to-use-an-interface-as-a-type)
+- [Empty Interface](#empty-interface)
+- [Type Assertion in Interfaces](#type-assertion-in-interfaces)
+- [Type Switch in Interfaces](#type-switch-in-interfaces)
+- [Interface in variadic functions](#interface-in-variadic-functions)
+- [Multiple Interfaces in a struct](#multiple-interfaces-in-a-struct)
+- [Embedding Interfaces](#embedding-interfaces)
+- [Tldr](#tldr)
+
+## What is an Interface?
+
+An interface is a set of methods that a type must implement. In other words, an interface is a contract that a type must follow. If a type implements all the methods of an interface, then it is said to implement the interface.
+
+<Nugget>
+  <p>
+    Interfaces provide object-oriented like approach in Go ( Polymorphism ),
+    though Go is not an object-oriented language.
+  </p>
+</Nugget>
+
+## How to Declare an Interface?
+
+An interface is declared using the `interface` keyword. The syntax for declaring an interface is as follows:
+
+```go title="interface.go"
+type <interface_name> interface {
+    <method_name_1>(<parameters>) <return_type>
+    <method_name_2>(<parameters>) <return_type>
+    ...
+}
+```
+
+Let's take a look at an example:
+
+```go title="interface.go"
+type Shape interface {
+    Area() float64
+    Perimeter() float64
+}
+```
+
+In the above example, we have declared an interface named `Shape`. The `Shape` interface has two methods: `Area` and `Perimeter`. The `Area` method takes no parameters and returns a `float64` value. Similarly, the `Perimeter` method takes no parameters and returns a `float64` value.
+
+## How to Implement an Interface?
+
+A type implements an interface by implementing all the methods of the interface. The syntax for implementing an interface is as follows:
+
+```go title="interface.go"
+type <type_name> struct {
+    <field_name_1> <field_type_1>
+    <field_name_2> <field_type_2>
+    ...
+}
+
+func (<receiver_name> <type_name>) <method_name_1>(<parameters>) <return_type> {
+    ...
+}
+
+func (<receiver_name> <type_name>) <method_name_2>(<parameters>) <return_type> {
+    ...
+}
+
+...
+```
+
+Let's take a look at an example:
+
+```go title="interface.go"
+package main
+
+import "fmt"
+
+type Book struct {
+    title  string
+    author string
+    price  float64
+}
+
+type Drink struct {
+    name  string
+    price float64
+}
+
+type Printer interface {
+    printIt()
+}
+
+func (b Book) printIt() {
+    fmt.Printf("Book: %s by %s costs $%.2f\n", b.title, b.author, b.price)
+}
+
+func (d Drink) printIt() {
+    fmt.Printf("%s costs $%.2f\n", d.name, d.price)
+}
+
+func main() {
+    b1 := Book{
+        title:  "The Alchemist",
+        author: "Paulo Coelho",
+        price:  8.99,
+    }
+
+    d1 := Drink{
+        name:  "Coke",
+        price: 1.99,
+    }
+
+    info := []Printer{b1, d1}
+    for _, v := range info {
+        v.printIt()
+    }
+}
+```
+
+Output:
+
+```bash title="output"
+Book: The Alchemist by Paulo Coelho costs $8.99
+Coke costs $1.99
+```
+
+There is alot going on in the above example. Let's break it down.
+
+First, we have declared two types: `Book` and `Drink`. Both the types have a `price` field. The `Book` type has two more fields: `title` and `author`. The `Drink` type has a `name` field. Both the types have a `printIt` method. The `printIt` method takes no parameters and returns nothing.
+
+Next, we have declared an interface named `Printer`. The `Printer` interface has a `printIt` method. The `printIt` method takes no parameters and returns nothing. The `printIt` method is implemented by both the `Book` and `Drink` types.
+
+Finally, we have a `main` function. In the `main` function, we have created two values of type `Book` and `Drink`. We have created a slice of type `Printer` and added the two values to the slice. We have then iterated over the slice and called the `printIt` method on each value. The `printIt` method is called on the value of type `Book` and the value of type `Drink`.
+
+If we addedd a new type to the `Printer` interface, we would have to implement the `printIt` method on the new type as well. Also by introducing a foreign type to the `info` slice, we would have to implement the `printIt` method on the foreign type as well or else we would get a compile time error.
+
+<Nugget>
+  <p>
+    <strong>Interfaces are implemented implicitly</strong>
+  </p>
+  <p>
+    There is no explicit declaration of intent, no "implements" keyword. If a
+    type provides all the methods required by an interface, it is said to
+    implement the interface.
+  </p>
+</Nugget>
+
+## How to Use an Interface as a Type?
+
+An interface can be used as a type. The syntax for using an interface as a type is as follows:
+
+```go title="interface.go"
+...
+var <variable_name> <interface_name>
+```
+
+Let's take a look at an example:
+
+```go title="interface.go"
+type Printer interface {
+	printIt()
+}
+
+type MyPrinter struct {
+}
+
+func (p *MyPrinter) printIt() {
+	println("printIt")
+}
+
+func main() {
+  var p Printer = &MyPrinter{}
+  p.printIt()
+}
+```
+
+Output:
+
+```bash title="output"
+printIt
+```
+
+In the above example, we have declared an interface named `Printer`. The `Printer` interface has a `printIt` method. The `printIt` method is implemented by the `MyPrinter` type. The `MyPrinter` type has a `printIt` method.
+
+We have declared a variable named `p` of type `Printer`. We have assigned a value of type `MyPrinter` to the `p` variable. We have then called the `printIt` method on the `p` variable. The `printIt` method is called on the value of type `MyPrinter`.
+
+## Empty Interface
+
+An empty interface is an interface that has no methods. The syntax for declaring an empty interface is as follows:
+
+```go title="interface.go"
+...
+interface {}
+```
+
+Let's take a look at an example:
+
+```go title="interface.go"
+...
+func main() {
+    var i interface{}
+    i = 10
+    fmt.Println(i)
+
+    i = "Hello"
+    fmt.Println(i)
+
+    i = true
+    fmt.Println(i)
+}
+```
+
+An empty interface can hold any type of value. In the above example, we have declared a variable named `i` of type `interface{}`. We have assigned a value of type `int`, `string` and `bool` to the `i` variable. We have then printed the value of the `i` variable. The value of the `i` variable is printed as `10`, `Hello` and `true` respectively.
+
+This is important in cases where we don't know the type of the value that we are working with.
+
+## Type Assertion in Interfaces
+
+Type assertion is a way to check the type of a value. The syntax for type assertion is as follows:
+
+```go title="interface.go"
+//...
+<value>.(type)
+```
+
+Assertion can be done in two ways:
+
+1. Simple assertion
+
+```go title="interface.go"
+
+func main() {
+    var i interface{} = "Hello"
+    s := i.(string)
+    fmt.Println(s)
+
+    f := i.(float64) // panic
+    fmt.Println(f)
+}
+```
+
+Output:
+
+```bash title="output"
+Hello
+panic: interface conversion: interface {} is string, not float64
+...
+```
+
+2. Comma ok assertion
+
+This is a safer way to assert the type of value because it doesn't panic if the type assertion fails.
+
+```go title="interface.go"
+
+func main() {
+    var i interface{} = "Hello"
+    s, ok := i.(string)
+    fmt.Println(s, ok)
+
+    f, ok := i.(float64)
+    fmt.Println(f, ok)
+}
+```
+
+Output:
+
+```bash title="output"
+Hello true
+0 false
+```
+
+In the above example, we have declared a variable named `i` of type `interface{}`. We have assigned a value of type `string` to the `i` variable. We have then asserted the type of the `i` variable. The type of the `i` variable is asserted using the simple assertion. The type of the `i` variable is asserted using the comma ok assertion.
+
+## Type Switch in Interfaces
+
+Type switch is a way to check the type of a value. The syntax for type switch is as follows:
+
+```go title="interface.go"
+//...
+switch <value>.(type) {
+    case <type1>:
+        //...
+    case <type2>:
+        //...
+    default:
+        //...
+}
+```
+
+Type switch is important when dealing with an empty interface. Let's take a look at an example:
+
+```go title="interface.go"
+func do(i interface{}) {
+    switch v := i.(type) {
+    case int:
+        fmt.Printf("Twice %v is %v \n", v, v*2)
+    case string:
+        fmt.Printf("%q is %v bytes long \n", v, len(v))
+    default:
+        fmt.Printf("I don't know about type %T! \n", v)
+    }
+}
+
+func main() {
+    do(21)
+    do("hello")
+    do(true)
+}
+```
+
+Output:
+
+```bash title="output"
+Twice 21 is 42
+"hello" is 5 bytes long
+I don't know about type bool!
+```
+
+In the above example we declare function `do` which takes an empty interface as a parameter. The function `do` uses a type switch to check the type of the value passed to it. The function `do` prints the value of the value passed to it. We have called the `do` function with three different types of values. The `do` function is called with a value of type `int`, `string` and `bool`. The `do` function prints the value of the value passed to it.
+
+## Interfaces in variadic functions
+
+Interfaces can be used in variadic functions. Let's take a look at an example:
+
+```go title="interface.go"
+type Printer interface {
+  printIt()
+}
+
+type Book struct {
+  name string
+}
+
+func (b *Book) printIt() {
+  fmt.Println(b.name)
+}
+
+type Drink struct {
+  name string
+}
+
+func (d *Drink) printIt() {
+  fmt.Println(d.name)
+}
+
+func printAll(printers ...Printer) {
+  for _, p := range printers {
+    p.printIt()
+  }
+}
+
+func main() {
+  book := &Book{name: "The Alchemist"}
+  drink := &Drink{name: "Coke"}
+  printAll(book, drink)
+}
+```
+
+Output:
+
+```bash title="output"
+The Alchemist
+Coke
+```
+
+The `printAll` function takes a variadic parameter of type `Printer`. The `printAll` function iterates over the `printers` slice and calls the `printIt` method on each value of the `printers` slice. The `printAll` function is called with two values of type `Book` and `Drink`. The `printAll` function prints the name of the `Book` and `Drink`.
+
+You can complement variadic functions with interfacess and switch statements to create a powerful tool for handling different types of data.
+
+## Multiple Interfaces in a struct
+
+A struct can implement multiple interfaces. Let's take a look at an example:
+
+```go title="interface.go"
+...
+type Printer interface {
+  printIt()
+}
+
+type Scanner interface {
+  scanIt()
+}
+
+type MyPrinterScanner struct {
+  name string
+}
+
+func (m *MyPrinterScanner) printIt() {
+  fmt.Println(m.name)
+}
+
+func (m *MyPrinterScanner) scanIt() {
+  fmt.Println(m.name)
+}
+
+func main() {
+  var p Printer = &MyPrinterScanner{name: "MyPrinterScanner"}
+  p.printIt()
+  var s Scanner = &MyPrinterScanner{name: "MyPrinterScanner"}
+  s.scanIt()
+}
+```
+
+Output:
+
+```bash title="output"
+MyPrinterScanner
+MyPrinterScanner
+```
+
+The `MyPrinterScanner` struct implements both the `Printer` and `Scanner` interfaces. The `MyPrinterScanner` struct has a method named `printIt` which implements the `Printer` interface. The `MyPrinterScanner` struct has a method named `scanIt` which implements the `Scanner` interface. The `MyPrinterScanner` struct is assigned to a variable of type `Printer` and a variable of type `Scanner`. The `printIt` method is called on the `Printer` variable. The `scanIt` method is called on the `Scanner` variable.
+
+## Embeding Interfaces
+
+Golang does not allow multiple inheritance. However, it does allow embedding of interfaces. This is by merging the methods of two or more interfaces into a single interface. Let's take a look at an example:
+
+```go title="interface.go"
+...
+
+type Printer interface {
+  printIt()
+}
+
+type Scanner interface {
+  scanIt()
+}
+
+type PrinterScanner interface {
+  Printer
+  Scanner
+}
+
+type MyPrinterScanner struct {
+  name string
+}
+
+func (m *MyPrinterScanner) printIt() {
+  fmt.Println(m.name)
+}
+
+func (m *MyPrinterScanner) scanIt() {
+  fmt.Println(m.name)
+}
+
+func main() {
+  var p PrinterScanner = &MyPrinterScanner{name: "MyPrinterScanner"}
+  p.printIt()
+  p.scanIt()
+}
+```
+
+Output:
+
+```bash title="output"
+MyPrinterScanner
+MyPrinterScanner
+```
+
+In the above example, we have declared two interfaces named `Printer` and `Scanner`. We have then declared an interface named `PrinterScanner` which embeds the `Printer` and `Scanner` interfaces. We have later declared a struct `MyPrinterScanner` which implements the `PrinterScanner` interface. Finally, we have called the `printIt` and `scanIt` methods on `p` which is of type `PrinterScanner`.
+
+## Tldr
+
+Interfaces introduces the concept of `polymorphism` in Go. Interfaces are declared using the `interface` keyword. Interfaces are implemented by structs. A struct implements an interface by implementing all the methods of the interface. A struct can implement multiple interfaces. An interface can be embedded in another interface. Interfaces can be used in variadic functions. Interfaces can be used in type switches. Interfaces can be used in type assertions.

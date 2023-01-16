@@ -35,6 +35,7 @@ import Nugget from "@components/Nugget.astro";
 - [Generic Variadic Methods](#generic-variadic-methods)
 - [Generic Variadic Types](#generic-variadic-types)
 - [Generic Variadic Constraints](#generic-variadic-constraints)
+- [Generic Type sets](#generic-type-sets)
 - [Conclusion](#conclusion)
 
 ## Introduction
@@ -179,6 +180,58 @@ a
 ```
 
 In this example, we defined a generic function `First` that takes a slice of any type `T` and returns the first element of the slice. We then called the function with two different types, `int` and `string`. The compiler is able to infer the type of the generic function from the type of the arguments passed to the function.
+
+In cases where a type has an underlying type, the compiler might not be able to infer the type of the generic function. For example, let's look at how we would write a generic function that takes a slice of any type and returns the first element of the slice.
+
+```go title="example.go"
+package main
+
+import "fmt"
+
+type Int int
+
+func First[T int] (x T) {
+    fmt.Println(x)
+}
+
+func main() {
+    First[Int](Int(1))
+}
+
+```
+
+Output:
+
+```bash title="output"
+go run example.go
+# constraints
+./main.go:12:11: Int does not implement int (possibly missing ~ for int in constraint int)
+```
+
+In this example, the generic function `First` has a constraint `T int` which means that the type of the generic function must be an `int`. The compiler is not able to infer the type `Int` from the argument passed to the function even though `Int` has an underlying type of `int`. To fix this, we can use the `~` operator to tell the compiler that `Int` is an `int`.
+
+```go title="example.go"
+package main
+
+import "fmt"
+
+type Int int
+
+func First[T ~int] (x T) {
+    fmt.Println(x)
+}
+
+func main() {
+    First[Int](Int(1))
+}
+```
+
+Output:
+
+```bash title="output"
+go run example.go
+1
+```
 
 ## Generic Functions
 
@@ -445,6 +498,49 @@ func main() {
 ```
 
 Here function `First` takes a slice of any type `T` that implements the `io.Writer` interface and returns the first element of the slice. We then called the function with two different types, `os.Stdout` and `os.Stderr`. It worked as expected because both `os.Stdout` and `os.Stderr` implement the `io.Writer` interface.
+
+## Generic Type Sets
+
+Now that we have looked at how generics allow us to define both with constraints and without constraints, we realize that these are two complete extremes. You may ask yourself, what if I want to define a generic type that can only be used with a subset of types? For example, what if I want to define a generic type that can only be used with types that implement the `int` and `string` interfaces? This is where type sets come in.
+
+Type sets are a set of types that can be used in a generic type, function, method, or variadic function or method. Let's look at an example of a generic type that can only be used with types that implement the `int` and `string` interfaces.
+
+```go title="example.go"
+package main
+
+import "fmt"
+
+type FirstTypes interface{
+    ~int | ~string
+}
+
+type First[T FirstTypes] struct {
+    v T
+}
+
+func (f First[T]) Value() T {
+    return f.v
+}
+
+func main() {
+    fmt.Println(First[int]{v: 1}.Value())
+    fmt.Println(First[string]{v: "a"}.Value())
+}
+```
+
+Output:
+
+```bash title="output"
+1
+a
+```
+
+If we introduced a foreign type to the function implementation, the compiler would throw an error.
+
+```bash title="output"
+# constraints
+./main.go:21:20: bool does not implement FirstTypes (bool missing in ~int | ~string)
+```
 
 ## Conclusion
 
