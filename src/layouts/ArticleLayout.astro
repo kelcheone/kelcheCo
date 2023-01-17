@@ -18,6 +18,7 @@ const {
   imageSource,
   imageUrl,
   keywords,
+  author,
 } = content;
 const date = new Date(content.date);
 ---
@@ -44,7 +45,7 @@ const date = new Date(content.date);
   {
     imageSource ? (
       <p class="text-sm text-center dark:text-gray-100 text-gray-600 mb-4">
-        Image from 
+        Image from
         <a href={imageUrl} class="text-blue-400 hover:underline">
           {imageSource}
         </a>
@@ -52,7 +53,19 @@ const date = new Date(content.date);
     ) : null
   }
 
+  <!-- Author -->
   <div class="flex flex-wrap justify-evenly mb-9 mt-2">
+    <div class="flex items-center mb-4">
+      <img
+        class="w-12 h-12 rounded-full mr-4"
+        src="/images/bob.jpg"
+        alt="Avatar of Author"
+      />
+      <div class="text-sm">
+        <p class="text-gray-900 dark:text-white leading-none">{author}</p>
+        <p class="text-gray-600 dark:text-green-400">{minutesRead}</p>
+      </div>
+    </div>
     <div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -71,19 +84,18 @@ const date = new Date(content.date);
         >{
           date.toLocaleDateString("en-uk", {
             day: "numeric",
-            month: "long",
+            month: "short",
             year: "numeric",
           })
         }</time
       >
     </div>
-    <p>{minutesRead}</p>
-
     <div class="flex flex-wrap gap-2">
       {tags.map((tag) => <TagButton tagName={tag} />)}
     </div>
   </div>
 
+  <!-- Content -->
   <div class="prose md:prose-lg 2xl:prose-xl px-4 mx-auto prose-pre:font-mono">
     <slot />
   </div>
