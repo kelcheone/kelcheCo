@@ -1,0 +1,133 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+title: Golang ParseInt
+description: ParseInt is a method in the strconv package that converts a string to an integer. It takes in a string, a base, and a bit size. It returns an integer and an error.
+date: 17 January 2023
+author: Kevin Kelche
+image: https://images.unsplash.com/photo-1672054280269-e8809178fd94?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80
+imageDescription: Golang Anonymous Structs
+imageSource: Unsplash
+imageUrl: https://unsplash.com/photos/_ydVvIoA1RU
+keywords:
+  - go parseint
+  - strconv parseint
+tags:
+  - go
+---
+
+## What is ParseInt in Golang?
+
+ParseInt is a method in the strconv package that converts a string to an integer. It takes in a string, a base, and a bit size. The base can be 0, 2, 8, 10, or 16. The bit size can be 0, 8, 16, 32, or 64. If the string starts with 0x or 0X, the base is 16. If the string starts with 0, the base is 8. Otherwise, the base is 10. If the string is invalid, an error is returned, and the integer is 0.
+
+## How to use ParseInt in Golang
+
+ParseInt is a method in the strconv package. To use it, you must import the package.
+
+```go title="main.go"
+...
+
+import "strconv"
+
+```
+
+ParseInt takes in a string, a base, and a bit size. It returns an integer and an error.
+
+```go title="main.go"
+...
+
+func main() {
+  i, err := strconv.ParseInt("42", 10, 64)
+  if err != nil {
+    fmt.Println(err)
+  }
+  fmt.Println(i)
+}
+
+```
+
+In the example above, the string "42" is converted to an integer. The base is 10, and the bit size is 64. The integer is 42, and the error is nil.
+
+## convert string to int64 in Golang
+
+ParseInt can be used to convert a string to an int64. The base is 10, and the bit size is 64.
+
+```go title="main.go"
+...
+i, err := strconv.ParseInt("42", 10, 64)
+if err != nil {
+  fmt.Println(err)
+}
+fmt.Println(i)
+```
+
+## convert string to int32 in Golang
+
+ParseInt can be used to convert a string to an int32. The base is 10, and the bit size is 32.
+
+```go title="main.go"
+...
+i, err := strconv.ParseInt("42", 10, 32)
+if err != nil {
+  fmt.Println(err)
+}
+fmt.Println(i)
+```
+
+## convert hex string to int64 in Golang
+
+ParseInt can be used to convert a hex string to an int64. The base is 0, and the bit size is 64.
+
+```go title="main.go"
+...
+i, err := strconv.ParseInt("0x2a", 0, 64)
+if err != nil {
+  fmt.Println(err)
+}
+fmt.Println(i)
+```
+
+Output:
+
+```bash title="output"
+42
+```
+
+## convert octal string to int64 in Golang
+
+ParseInt can be used to convert an octal string to an int64. The base is 8, and the bit size is 64.
+
+```go title="main.go"
+...
+i, err := strconv.ParseInt("052", 8, 64)
+if err != nil {
+  fmt.Println(err)
+}
+fmt.Println(i)
+```
+
+Output:
+
+```bash title="output"
+42
+```
+
+## convert binary string to int64 in Golang
+
+ParseInt can be used to convert a binary string to an int64. The base is 2, and the bit size is 64.
+
+```go title="main.go"
+...
+i, err := strconv.ParseInt("101010", 2, 64)
+if err != nil {
+  fmt.Println(err)
+}
+fmt.Println(i)
+```
+
+Output:
+
+```bash title="output"
+42
+```
+
+Some other methods related to `strconv.ParseInt` are `strconv.ParseUint`, `strconv.ParseFloat`, and `strconv.ParseBool`. These methods convert a string to an unsigned integer, float, and boolean, respectively. Learn also about [`strconv.Atoi()`](/blog/golang-atoi/).
