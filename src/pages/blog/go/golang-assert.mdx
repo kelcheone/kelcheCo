@@ -1,0 +1,179 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+title: Golang Assert
+description: Assert is a package that provides a set of helper functions that make it easier to test various properties in your Go programs. It is intended to be used in the xtest files of your package, as an aid in writing tests.
+date: 17 January 2023
+image: https://images.unsplash.com/photo-1663289236123-5826e22f1064?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80
+imageDescription: Golang Assert
+imageSource: Unsplash
+imageUrl: https://unsplash.com/photos/IOdCBWHWhfY
+keywords:
+  - Go Assert
+  - Golang Assert
+tags:
+  - go
+---
+
+## What is Assert in Golang?
+
+Assert is a package that provides a set of helper functions that make it easier to test various properties in your Go programs. It is intended to be used in the xtest files of your package, as an aid in writing tests.
+
+## How to use Assert in Golang?
+
+### Installation
+
+```bash
+go get github.com/stretchr/testify/assert
+```
+
+### Example
+
+```go title="main.go"
+package main
+
+import (
+    "fmt"
+)
+
+func greeting() string {
+    return "Hello, World!"
+}
+
+func main() {
+    fmt.Println(greeting())
+}
+```
+
+### Test file
+
+```go title="main_test.go"
+package main
+
+import (
+    "testing"
+
+    "github.com/stretchr/testify/assert"
+)
+
+func TestGreeting(t *testing.T) {
+    assert.Equal(t, "Hello, World!", greeting())
+}
+```
+
+Output:
+
+```bash title="Output"
+go test -v
+=== RUN   TestGreeting
+--- PASS: TestGreeting (0.00s)
+PASS
+ok      assert  0.010s
+
+```
+
+## Major Assert Methods
+
+### 1. Equal and NotEqual
+
+`assert.Equal()` and `assert.NotEqual()` are used to check if the two objects are equal or not. It takes three arguments, the first one is the testing object, the second one is the expected object and the third one is the actual object.
+
+```go title="main_test.go"
+...
+assert.Equal(t, "Hello, World!", greeting())
+assert.NotEqual(t, "Hello, World!", "Hello, Universe!")
+```
+
+### 3. Nil and NotNil
+
+`assert.Nil()` and `assert.NotNil()` are used to check if the object is nil or not. It takes two arguments, the first one is the testing object and the second one is the object to be checked.
+
+```go title="main_test.go"
+...
+assert.Nil(t, nil)
+assert.NotNil(t, "Hello, World!")
+```
+
+### 5. True and False
+
+`assert.True()` and `assert.False()` are used to check if the object is true or false, they are both usually used with boolean values or functions returning boolean values. It takes two arguments, the first one is the testing object and the second one is the object to be checked.
+
+```go title="main_test.go"
+...
+assert.True(t, true)
+assert.False(t, false)
+```
+
+### 6. Empty and NotEmpty
+
+`assert.Empty()` and `assert.NotEmpty()` are used to check if the object is empty or not. It takes two arguments, the first one is the testing object and the second one is the object to be checked.
+
+```go title="main_test.go"
+...
+assert.Empty(t, "")
+assert.NotEmpty(t, "Hello, World!")
+```
+
+### 7. Len
+
+`assert.Len()` is used to check if the length of the object is equal to the expected length. It takes three arguments, the first one is the testing object, the second one is the object to be checked and the third one is the expected length.
+
+```go title="main_test.go"
+...
+j := []int{1, 2, 3}
+assert.Len(t, j, 3)
+```
+
+### 8. Contains
+
+`assert.Contains()` is used to check if the object contains the expected value. It takes three arguments, the first one is the testing object, the second one is the object to be checked and the third one is the expected value.
+
+```go title="main_test.go"
+...
+j := []int{1, 2, 3}
+assert.Contains(t, j, 2)
+```
+
+### 9. Panics and NotPanics
+
+`assert.Panics()` and `assert.NotPanics()` is used to check if the function panics or not. It takes two arguments, the first one is the testing object and the second one is the function to be checked.
+
+```go title="main_test.go"
+...
+func willPanic() {
+    panic("Panic!")
+}
+
+func willNotPanic() {
+    fmt.Println("Hello, World!")
+}
+
+func TestPanic(t *testing.T) {
+    assert.Panics(t, willPanic)
+    assert.NotPanics(t, willNotPanic)
+}
+```
+
+### 10. Error and NoError
+
+`assert.Error()` and `assert.NoError()` is used to check if the error is nil or not. It takes two arguments, the first one is the testing object and the second one is the error to be checked.
+
+```go title="main_test.go"
+...
+func willError() error {
+    return errors.New("Error!")
+}
+
+func willNotError() error {
+    return nil
+}
+
+func TestError(t *testing.T) {
+    assert.Error(t, willError())
+    assert.NoError(t, willNotError())
+}
+```
+
+## Conclusion
+
+writing tests is a very important part of the development process, and it is very important to write tests for your code. In this article, we have learned how to use the assert package in Golang. We have also learned about the major assert methods. I hope you have enjoyed this article.
+If you have any questions or suggestions, please reach out to me on Twitter.
