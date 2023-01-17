@@ -5,7 +5,7 @@ description: In Go Enum is a type that consists of a set of named constants. Con
 date: 16 January 2023
 image: https://images.unsplash.com/photo-1672845977046-cd68269e4be9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80
 imageDescription: Golang Enum
-imageSource: unsplash
+imageSource: Unsplash
 imageUrl: https://unsplash.com/photos/qkAqJuX6DVI
 keywords:
   - Enum
@@ -32,7 +32,7 @@ import Nugget from "@components/Nugget.astro";
 
 ## What is Enum in Golang?
 
-Enum is a type that consists of a set of named constants they can also be refered to as <i>enumarated constants</i>. Constants are used to represent a fixed value that the program may not alter during its execution.
+Enum is a type that consists of a set of named constants they can also be referred to as <i>enumarated constants</i>. Constants are used to represent a fixed value that the program may not alter during its execution.
 
 ## How to Define Enum in Golang
 
@@ -40,7 +40,7 @@ In Go, we can define an enum using the `const` keyword. The `const` keyword is u
 
 The following is an example of how to define an enum in Golang.
 
-```go
+```go title=” example.go”
 ...
 const (
     value1 = 1
@@ -126,7 +126,7 @@ func main() {
 
 By using `iota` we generated a sequence of integer constants. We can use the `for` loop to iterate over the sequence.
 
-So as to skip a value in the sequence, we can use the `_` operator.
+To skip a value in the sequence, we can use the `_` operator.
 
 ```go title="main.go"
     ...
@@ -250,5 +250,5 @@ We have defined an enum type `Subject` and assigned the values `English`, `Geogr
 
 ## Tl;dr
 
-- Enum is a type that consists of a set of named constants they can also be refered to as <i>enumarated constants</i>.
+- Enum is a type that consists of a set of named constants that can also be referred to as <i>enumarated constants</i>.
 - We can define an enum using the `const` keyword.

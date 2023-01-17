@@ -1,11 +1,11 @@
 ---
 layout: "@layouts/ArticleLayout.astro"
 title: How to measure execution time in Go
-description: To measure execution time in Golang we use time time.Now() and time.Since() functions. Some other functions we can use are .Sub(), .UnixNano among others.
+description: To measure execution time in Golang we use time.Now() and time.Since() functions. Some other functions we can use are, `.Sub()`, and `.UnixNano`  among others.
 date: 10 January 2023
 image: https://images.unsplash.com/photo-1672745769443-bd174ad38547?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80
 imageDescription: How to measure execution time in Go
-imageSource: unsplash
+imageSource: Unsplash
 imageUrl: https://images.unsplash.com/photo-1672745769443-bd174ad38547?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80
 keywords:
   - go structs
@@ -17,7 +17,7 @@ tags:
 
 # How to measure execution time in Go
 
-To measure execution time in Golang we use time time.Now() and time.Since() functions.
+To measure execution time in Golang we use `time.Now()` and `time.Since()` functions.
 
 ```go title="main.go"
 package main
@@ -42,7 +42,7 @@ Output:
 Time elapsed:  2.0020002s
 ```
 
-We can also use time.Now().Sub() function to measure execution time.
+We can also use `time.Now().Sub()` function to measure execution time.
 
 ```go title="main.go"
 package main
@@ -66,7 +66,7 @@ Output:
 Time elapsed:  2.0020002s
 ```
 
-We can also use time.Now().UnixNano() function to measure execution time.
+We can also use `time.Now().UnixNano()` function to measure execution time.
 
 ```go title="main.go"
 // ....

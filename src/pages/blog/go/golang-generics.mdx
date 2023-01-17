@@ -1,11 +1,11 @@
 ---
 layout: "@layouts/ArticleLayout.astro"
 title: Golang Generics (A Complete Guide)
-description: In Go 1.18 genereics were introduced, this enables us to write generic functions and types. In this article we will learn about generics in Go.
+description: In Go 1.18 generics were introduced, which enables us to write generic functions and types. In this article, we will learn about generics in Go.
 date: 15 January 2023
 image: https://images.unsplash.com/photo-1642367340318-96fdbc5d30f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80
 imageDescription: Golang Generics
-imageSource: unsplash
+imageSource: Unsplash
 imageUrl: https://unsplash.com/photos/fd9mIBluHkA
 keywords:
   - golang generics
@@ -22,25 +22,25 @@ import Nugget from "@components/Nugget.astro";
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [What are Generics?](#what-are-generics)
-- [Interfaces](#interfaces)
-- [Generic Interfaces](#generic-interfaces)
-- [Type inference](#type-inference)
-- [Generic Functions](#generic-functions)
-- [Generic Types](#generic-types)
-- [Generic Constraints](#generic-constraints)
-- [Generic Methods](#generic-methods)
-- [Generic Methods](#generic-methods)
-- [Generic Variadic Functions](#generic-variadic-functions)
-- [Generic Variadic Methods](#generic-variadic-methods)
-- [Generic Variadic Types](#generic-variadic-types)
-- [Generic Variadic Constraints](#generic-variadic-constraints)
-- [Generic Type sets](#generic-type-sets)
+- [What are Generics?](#what-are-generics-in-golang)
+- [Interfaces in Go](#interfaces-in-golang)
+- [Generic Interfaces](#generic-interfaces-in-golang)
+- [Type inference](#type-inference-in-golang)
+- [Generic Functions](#generic-functions-in-golang)
+- [Generic Types](#generic-types-in-golang)
+- [Generic Constraints](#generic-constraints-in-golang)
+- [Generic Methods](#generic-methods-in-golang)
+- [Generic Methods](#generic-methods-in-golang)
+- [Generic Variadic Functions](#generic-variadic-functions-in-golang)
+- [Generic Variadic Methods](#generic-variadic-methods-in-golang)
+- [Generic Variadic Types](#generic-variadic-types-in-golang)
+- [Generic Variadic Constraints](#generic-variadic-constraints-in-golang)
+- [Generic Type sets](#generic-type-sets-in-golang)
 - [Conclusion](#conclusion)
 
 ## Introduction
 
-Golang genereics were introduced in Go 1.18, this enables us to write generic functions and types.
+Golang generics were introduced in Go 1.18, this enables us to write generic functions and types.
 
 <Nugget>
   <strong>NOTE:</strong> This article assumes that you have go 1.18 or later
@@ -48,10 +48,10 @@ Golang genereics were introduced in Go 1.18, this enables us to write generic fu
   <a href="https://go.dev/dl/">here</a>.
 </Nugget>
 
-## What are Generics?
+## What are Generics in Golang?
 
 Generics are a way to write functions and types that can work with any type. This is similar to how we write functions and types that work with any type in JavaScript.
-Generics allows types to be parameterized over types or values.
+Generics allow types to be parameterized over types or values.
 
 Before the launch of go 1.18, we had to write a lot of boilerplate code to write generic functions and types. For example, let's look at how we would write a generic function that takes a slice of any type and returns the first element of the slice.
 
@@ -95,9 +95,9 @@ func main() {
 
 In the above example, we defined a generic function `First` that takes a slice of any type `T` and returns the first element of the slice. We then called the function with two different types, `int` and `string`.
 
-## Interfaces
+## Interfaces in Golang
 
-Before we dive into generics, let's first understand interfaces. Interfaces are a way to define a set of methods that a type must implement. For example, the `io.Writer` interface defines a set of methods that a type must implement to be a writer.
+Before we dive into generics, let's first understand interfaces. [Interfaces](/blog/go/golang-interface/) are a way to define a set of methods that a type must implement. For example, the `io.Writer` interface defines a set of methods that a type must implement to be a writer.
 
 ```go title="example.go"
 package main
@@ -120,7 +120,7 @@ func main() {
 
 In the above example, we defined a `Writer` interface that defines a `Write` method. We then defined a variable `w` of type `Writer` and assigned it to `os.Stdout`. This is possible because `os.Stdout` implements the `Writer` interface.
 
-## Generic Interfaces
+## Generic Interfaces in Golang
 
 Let's now look at how we can write generic interfaces in Go. We will start by writing a generic interface that defines a `Write` method that takes a slice of any type and returns the number of bytes written and an error.
 
@@ -153,7 +153,7 @@ hello, writer
 
 In the above example, we defined a generic interface `Writer` that defines a `Write` method that takes a slice of any type `T` and returns the number of bytes written and an error. We then defined a variable `w` of type `Writer[int]` and assigned it to `os.Stdout`. This is possible because `os.Stdout` implements the `Writer` interface.
 
-## Type inference
+## Type inference in Golang
 
 Let's now look at how we can use type inference in Go. We will start by writing a generic function that takes a slice of any type and returns the first element of the slice.
 
@@ -179,7 +179,7 @@ Output:
 a
 ```
 
-In this example, we defined a generic function `First` that takes a slice of any type `T` and returns the first element of the slice. We then called the function with two different types, `int` and `string`. The compiler is able to infer the type of the generic function from the type of the arguments passed to the function.
+In this example, we defined a generic function `First` that takes a slice of any type `T` and returns the first element of the slice. We then called the function with two different types, `int` and `string`. The compiler can infer the type of the generic function from the type of arguments passed to the function.
 
 In cases where a type has an underlying type, the compiler might not be able to infer the type of the generic function. For example, let's look at how we would write a generic function that takes a slice of any type and returns the first element of the slice.
 
@@ -233,7 +233,7 @@ go run example.go
 1
 ```
 
-## Generic Functions
+## Generic Functions in Golang
 
 Let's now look at how we can write generic functions in Go. We will start by writing a generic function that takes a slice of any type and returns the first element of the slice.
 
@@ -262,7 +262,7 @@ a
 
 In the above example, we defined a generic function `First` that takes a slice of any type `T` and returns the first element of the slice. We then called the function with two different types, `int` and `string`.
 
-## Generic Types
+## Generic Types in Golang
 
 Generic types are types that can work with any type. Let's look at an example of a generic type that implements the `Writer` interface.
 
@@ -298,7 +298,7 @@ hello
 
 In the above example, we defined a generic type `Writer` that implements the `Writer` interface. We then defined a variable `w` of type `Writer[int]` and assigned it to `os.Stdout`. This is possible because `os.Stdout` implements the `Writer` interface.
 
-## Generic Constraints
+## Generic Constraints in Golang
 
 We can also add constraints to generic types and functions. Let's look at an example of a generic function that takes a slice of any type that implements the `io.Writer` interface and returns the first element of the slice.
 
@@ -352,9 +352,9 @@ Output:
 ./main.go:16:22: string does not implement io.Writer (missing Write method)
 ```
 
-In the above two code blocks we introduced genereic constraint to the generic function `First`. In the both examples, `First` takes `T` as a generic type that implements the `io.Writer` interface. In the first example, we passed a slice of `io.Writer` to the function and it worked as expected. In the second example, we passed a slice of `int` and `string` to the function and it failed to compile because `int` and `string` do not implement the `io.Writer` interface.
+In the above two code blocks, we introduced generic constraint to the generic function `First`. In both examples, `First` takes `T` as a generic type that implements the `io.Writer` interface. In the first example, we passed a slice of `io.Writer` to the function and it worked as expected. In the second example, we passed a slice of `int` and `string` to the function and it failed to compile because `int` and `string` do not implement the `io.Writer` interface.
 
-## Generic Methods
+## Generic Methods in Golang
 
 We can also define generic methods. Let's look at an example of a generic method that takes a slice of any type and returns the first element of the slice.
 
@@ -375,19 +375,19 @@ func main() {
 }
 ```
 
-In the above example, we defined a generic method `First` that takes a slice of any type `T` and returns the first element of the slice. We then called the method with two different types, `int` and `string`. The compiler is able to infer the type of the slice from the arguments passed to the method.
+In the above example, we defined a generic method `First` that takes a slice of any type `T` and returns the first element of the slice. We then called the method with two different types, `int` and `string`. The compiler can infer the type of the slice from the arguments passed to the method.
 
 <Nugget>
   <p>
     A method is a function with a special receiver argument. The receiver
-    appears in its own argument list between the <code>func</code> keyword and
-    the method name. In the above example, the method <code>First</code> has a
+    appears in its argument list between the <code>func</code> keyword and the
+    method name. In the above example, the method <code>First</code> has a
     receiver of type <code>Slice[T]</code>. This means that the method can only
     be called on a variable of type <code>Slice[T]</code>.
   </p>
 </Nugget>
 
-## Generic Variadic Functions
+## Generic Variadic Functions in Golang
 
 We can also define generic variadic functions. Let's look at an example of a generic variadic function that takes a slice of any type and returns the first element of the slice.
 
@@ -419,7 +419,7 @@ func main() {
 
 In the example above, we defined a generic variadic function `First` that takes a slice of any type `T` and returns the first element of the slice. We then called the function with two different types, `int` and `string`.
 
-## Generic Variadic Methods
+## Generic Variadic Methods in Golang
 
 We can also define generic variadic methods. Let's look at an example of a generic variadic method that takes a slice of any type and returns the first element of the slice.
 
@@ -440,9 +440,9 @@ func main() {
 }
 ```
 
-In the above example, we defined a generic variadic method `First` that takes a slice of any type `T` and returns the first element of the slice. We then called the method with two different types, `int` and `string`. The compiler is able to infer the type of the slice from the arguments passed to the method.
+In the above example, we defined a generic variadic method `First` that takes a slice of any type `T` and returns the first element of the slice. We then called the method with two different types, `int` and `string`. The compiler can infer the type of the slice from the arguments passed to the method.
 
-## Generic Variadic Types
+## Generic Variadic Types in Golang
 
 We can also define generic variadic types. Let's look at an example of a generic variadic type that implements the `Writer` interface.
 
@@ -471,7 +471,7 @@ func main() {
 
 In the above example, we defined a generic variadic type `Writer` that implements the `Writer` interface. We then defined a variable `w` of type `Writer[int]` and assigned it to `os.Stdout`. This is possible because `os.Stdout` implements the `Writer` interface. We then called the `Write` method on the variable `w` and passed a slice of bytes to it.
 
-## Generic Variadic Constraints
+## Generic Variadic Constraints in Golang
 
 We can also add constraints to generic variadic types and functions. Let's look at an example of a generic variadic function that takes a slice of any type that implements the `io.Writer` interface and returns the first element of the slice.
 
@@ -499,7 +499,7 @@ func main() {
 
 Here function `First` takes a slice of any type `T` that implements the `io.Writer` interface and returns the first element of the slice. We then called the function with two different types, `os.Stdout` and `os.Stderr`. It worked as expected because both `os.Stdout` and `os.Stderr` implement the `io.Writer` interface.
 
-## Generic Type Sets
+## Generic Type Sets in Golang
 
 Now that we have looked at how generics allow us to define both with constraints and without constraints, we realize that these are two complete extremes. You may ask yourself, what if I want to define a generic type that can only be used with a subset of types? For example, what if I want to define a generic type that can only be used with types that implement the `int` and `string` interfaces? This is where type sets come in.
 

@@ -1,11 +1,11 @@
 ---
 layout: "@layouts/ArticleLayout.astro"
 title: Golang Arrays (A Complete Guide)
-description: Arrays in Go are a fixed length sequence of elements of a single type. Arrays are a fundamental data structure in Go. In this article, we will learn about arrays in Go.
+description: Arrays in Go are a fixed-length sequence of elements of a single type. Arrays are a fundamental data structure in Go. In this article, we will learn about arrays in Go.
 date: 16 January 2023
 image: https://images.unsplash.com/photo-1663291217080-9d3f7706f1ce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80
 imageDescription: Golang Arrays (A Complete Guide)
-imageSource: unsplash
+imageSource: Unsplash
 imageUrl: https://unsplash.com/photos/2RtL_L5DYa4
 keywords:
   - Go Arrays
@@ -66,7 +66,7 @@ Arrays are used to store multiple values in a single variable, instead of declar
 var arr [4]int
 ```
 
-Here, we have declared an array named `arr` that will hold 4 integers. The type of the elements is `int` and the length of the array is 4. The elements of an array are indexed starting from zero.
+Here, we have declared an array named `arr` that will hold 4 integers. The type of the elements is `int` and the array length is 4. The elements of an array are indexed starting from zero.
 
 ```go title="main.go"
 ...
@@ -153,7 +153,7 @@ Since arrays are fixed-length, the length of an array cannot be changed after it
 
 ## Array Slicing in Golang
 
-Array slicing is a technique to access a subset of an array. The sytax for array slicing is `array[start:end]`. The `start` index is inclusive, and the `end` index is exclusive. The `start` index defaults to 0, and the `end` index defaults to the length of the array.
+Array slicing is a technique to access a subset of an array. The syntax for array slicing is `array[start:end]`. The `start` index is inclusive, and the `end` index is exclusive. The `start` index defaults to 0, and the `end` index defaults to the length of the array.
 
 ```go title="main.go"
 ...
@@ -316,7 +316,7 @@ The above code declares an array of slices with 2 elements. The elements of the 
 
 ## Array of Maps in Golang
 
-An array of maps is one which each element is a map. The syntax for declaring an array of maps is `var arr [size]type`.
+An array of maps is one in which each element is a map. The syntax for declaring an array of maps is `var arr [size]type`.
 
 ```go title="main.go"
 ...
@@ -411,4 +411,4 @@ The above code declares an array of structs with 2 elements. The elements of the
 
 ## Tl;dr
 
-Arrays are a data structure that stores a fixed number of elements of the same type. Arrays are zero-indexed, which means that the first element of an array is at index 0. Arrays can be declared using the `var` keyword, and the elements of an array can be accessed using the index of the element.
+Arrays are a data structure that stores a fixed number of elements of the same type. Arrays are zero-indexed, meaning an array's first element is at index 0. Arrays can be declared using the `var` keyword, and the elements of an array can be accessed using the index of the element.
