@@ -2,7 +2,7 @@
 layout: "@layouts/ArticleLayout.astro"
 author: Kevin Kelche
 title: Golang Generics (A Complete Guide)
-description: In Go 1.18 generics were introduced, which enables us to write generic functions and types. In this article, we will learn about generics in Go.
+description: Generics are a way to write functions and types that can work with any type. In Golang generics can be defined using empty interfaces, or using type parameters and type inference.
 date: 15 January 2023
 image: https://images.unsplash.com/photo-1642367340318-96fdbc5d30f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80
 imageDescription: Golang Generics
@@ -51,8 +51,7 @@ Golang generics were introduced in Go 1.18, this enables us to write generic fun
 
 ## What are Generics in Golang?
 
-Generics are a way to write functions and types that can work with any type. This is similar to how we write functions and types that work with any type in JavaScript.
-Generics allow types to be parameterized over types or values.
+Generics are a way to write functions and types that can work with any type. In Golang generics can be defined using empty interfaces, or using type parameters and type inference.
 
 Before the launch of go 1.18, we had to write a lot of boilerplate code to write generic functions and types. For example, let's look at how we would write a generic function that takes a slice of any type and returns the first element of the slice.
 

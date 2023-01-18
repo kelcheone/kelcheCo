@@ -239,6 +239,25 @@ arr[1] = 0
 fmt.Println(arr) // [1 0 3 4]
 ```
 
+## Array Contains in Golang
+
+To check if array contains a value, we can use the `sort.Search` function from the `sort` package. The `sort.Search` function takes three arguments: the length of the array, a function that returns true if the element at the given index is greater than or equal to the value, and the value to search for.
+
+```go title="main.go"
+...
+arr := [4]int{1, 2, 3, 4}
+i := sort.Search(len(arr), func(i int) bool { return arr[i] >= 3 })
+if i < len(arr) && arr[i] == 3 {
+    fmt.Println("found 3 at index", i) // found 3 at index 2
+}
+```
+
+The output of the above code is:
+
+```bash title="output"
+found 3 at index 2
+```
+
 ## Array Reverse in Golang
 
 Arrays can be reversed in two ways. The first way is to replace the first element with the last element, the second element with the second last element, and so on. The second way is to use the `sort.Reverse` function from the `sort` package.

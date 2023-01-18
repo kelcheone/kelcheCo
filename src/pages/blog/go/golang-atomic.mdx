@@ -1,0 +1,227 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+title: Golang Atomic
+author: Kevin Kelche
+description: In Golang, atomic is a package that provides low-level atomic memory primitives useful for implementing synchronization algorithms. Atomic operations execute in constant time and are implemented in assembly language on supported platforms. They are provided for int32, int64, uint32, uint64, uintptr, unsafe.Pointer, and unsafe.Size values.
+date: 18 January 2023
+image: https://images.unsplash.com/photo-1672005363923-80a7b60a76ec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=771&q=80
+imageDescription: Golang Atomic
+imageSource: Unsplash
+imageUrl: https://unsplash.com/photos/3IgMyW1R7sw
+keywords:
+  - Golang atomic
+tags:
+  - go
+---
+
+import Nugget from "@components/Nugget.astro";
+
+## What is Atomic?
+
+In Golang, atomic is a package that provides low-level atomic memory primitives useful for implementing synchronization algorithms. Atomic operations execute in constant time and are implemented in assembly language on supported platforms. They are provided for int32, int64, uint32, uint64, uintptr, unsafe.Pointer, and unsafe.Size values.
+
+## Atomic Counter.
+
+When incrementing a counter, usually we would do something like this:
+
+```go title="main.go"
+...
+func main() {
+    var counter int
+    var wg sync.WaitGroup
+    wg.Add(100)
+
+    for i := 0; i < 100; i++ {
+        go func() {
+            counter++
+            wg.Done()
+        }()
+    }
+
+    wg.Wait()
+    fmt.Println(counter)
+}
+```
+
+Output:
+
+```bash title="output"
+go run main.go
+99
+go run main.go
+96
+go run main.go
+88
+```
+
+This has the drawback that it cannot be assumed that the counter will be increased by 100. This occurs as a result of numerous goroutines simultaneously accessing the counter. The operating system refers to this phenomenon as a **data race** when multiple users simultaneously access the same memory address. Atomic operations are useful in this situation.
+
+To fix this, use the `atomic.AddInt64` function to increment the counter by 100.
+
+```go title="main.go"
+...
+func main() {
+    var counter int64
+    var wg sync.WaitGroup
+    wg.Add(100)
+
+    for i := 0; i < 100; i++ {
+        go func() {
+            atomic.AddInt64(&counter, 1)
+            wg.Done()
+        }()
+    }
+
+    wg.Wait()
+    fmt.Println(counter)
+}
+```
+
+Output:
+
+```bash title="output"
+go run main.go
+100
+go run main.go
+100
+go run main.go
+100
+```
+
+<Nugget>
+  <strong> Atomic vs Channel </strong>
+  <p>
+    Atomic package is used to perform atomic operations on memory addresses.
+    Channels are used to communicate between goroutines. Atomic operations are
+    faster than channels, but channels are more flexible.
+  </p>
+</Nugget>
+
+## Atomic functions
+
+The functions can be of different types. The most common types are `int32`, `int64`, `uint32`, `uint64`, `uintptr`, `unsafe.Pointer`, and `unsafe.Size`.
+
+### Load and Store
+
+The `Load` and `Store` functions are used to read and write values to a memory address. The address must be aligned to the size of the value being read or written.
+
+```go title="main.go"
+...
+func main() {
+    var x int64 = 10
+    fmt.Println(atomic.LoadInt64(&x))
+    atomic.StoreInt64(&x, 20)
+    fmt.Println(x)
+}
+```
+
+In the above example, the `LoadInt64` function returns the value of `x` and the `StoreInt64` function sets the value of `x` to 20.
+
+### Swap
+
+The `Swap` function is used to swap the value of a memory address with a new value.
+
+```go title="main.go"
+...
+func main() {
+    var x int64 = 10
+    fmt.Println(atomic.SwapInt64(&x, 20))
+    fmt.Println(x)
+}
+```
+
+In the above example, the `SwapInt64` function returns the value of `x` before it was swapped. The value of `x` is now 20.
+
+### CompareAndSwap
+
+The `CompareAndSwap` function is used to compare the value of a memory address with a value and swap the value if the comparison is true. The `CompareAndSwap` function returns a boolean value indicating whether the swap was successful.
+
+```go title="main.go"
+...
+
+func main() {
+    var x int64 = 10
+    fmt.Println(atomic.CompareAndSwapInt64(&x, 10, 20))
+    fmt.Println(x)
+}
+```
+
+In the above example, the `CompareAndSwapInt64` function returns a boolean value indicating whether the swap was successful. The value of `x` is now 20.
+
+### Add
+
+The `Add` function is used to add a value to the value of a memory address.
+
+```go title="main.go"
+...
+func main() {
+    var x int64 = 10
+    fmt.Println(atomic.AddInt64(&x, 20))
+    fmt.Println(x)
+}
+```
+
+### LoadPointer and StorePointer
+
+The functions `LoadPointer` and `StorePointer` are used to read and write values to a memory address containing a pointer. `LoadPointer` accepts a `unsafe.Pointer` value and returns a `unsafe.Pointer`. `StorePointer` stores a `unsafe.Pointer` in the memory address.
+
+```go title="main.go"
+...
+func main() {
+    var i int64 = 1
+	var p unsafe.Pointer = unsafe.Pointer(&i)
+	fmt.Println(atomic.LoadPointer(&p))
+	atomic.StorePointer(&p, unsafe.Pointer(&i))
+	fmt.Println(atomic.LoadPointer(&p))
+	fmt.Println(*(*int64)(p))
+}
+```
+
+In the above example, the `LoadPointer` function returns the value of `p` and the `StorePointer` function sets the value of `p` to the memory address of `i` which is 1. The `LoadPointer` function returns the value of `p` which is the memory address of `i` and the `*(*int64)(p)` returns the value of `i` which is 1.
+
+### SwapPointer
+
+The `SwapPointer` function is used to swap the value of a memory address with a new value.
+
+```go title="main.go"
+...
+func main() {
+  	var i int64 = 1
+	var j int64 = 2
+	var p1 unsafe.Pointer = unsafe.Pointer(&i)
+	var p2 unsafe.Pointer = unsafe.Pointer(&j)
+	fmt.Println("p1:", p1, "p2:", p2)
+    tempP1 := p1
+	fmt.Println(atomic.SwapPointer(&p1, p2))
+    fmt.Println(atomic.SwapPointer(&p2, tempP1))
+
+	fmt.Println("p1:", *(*int64)(p1), "p2:", *(*int64)(p2))
+}
+```
+
+In the above example, the `SwapPointer` function returns the value of `p1` before it was swapped. The value of `p1` is now `p2` and the value of `p2` is now `p1`. The `*(*int64)(p1)` returns the value of `p1` which is 2 and the `*(*int64)(p2)` returns the value of `p2` which is 1.
+
+### CompareAndSwapPointer
+
+The `CompareAndSwapPointer` function is used to compare the value of a memory address with a value and swap the value if the comparison is true. The `CompareAndSwapPointer` function returns a boolean value indicating whether the swap was successful.
+
+```go title="main.go"
+...
+func main() {
+	var i int64 = 1
+	var j int64 = 2
+	var p1 unsafe.Pointer = unsafe.Pointer(&i)
+	var p2 unsafe.Pointer = unsafe.Pointer(&j)
+	fmt.Println("p1:", p1, "p2:", p2)
+	temp1 := p1
+	fmt.Println(atomic.CompareAndSwapPointer(&p1, p1, p2))
+	fmt.Println(atomic.CompareAndSwapPointer(&p2, p2, temp1))
+	fmt.Println("p1:", *(*int64)(p1), "p2:", *(*int64)(p2))
+}
+```
+
+In the above example, the `CompareAndSwapPointer` function returns a boolean value indicating whether the swap was successful. The value of `p1` is now `p2` and the value of `p2` is now `p1`. The `*(*int64)(p1)` returns the value of `p1` which is 2 and the `*(*int64)(p2)` returns the value of `p2` which is 1.
+
+## Conclusion
+
+To perform atomic operations on memory addresses, the `sync/atomic` package is used. The `sync/atomic` package includes functions for reading and writing memory addresses, comparing and swapping values, and adding values to memory addresses. The `sync/atomic` package also includes functions for reading and writing values to memory addresses with pointers.
