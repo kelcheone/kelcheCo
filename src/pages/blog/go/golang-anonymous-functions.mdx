@@ -1,0 +1,153 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+title: Golang anonymous functions
+author: Kevin Kelche
+description: In Golang, anonymous functions are functions that are not bound to an identifier. They are also known as lamda functions or function literals. In this article, we explore how to use anonymous functions in Golang.
+date: 17 January 2023
+image: https://images.unsplash.com/photo-1672054280269-e8809178fd94?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80
+imageDescription: Golang Append (A Complete Guide)
+imageSource: Unsplash
+imageUrl: https://unsplash.com/photos/_ydVvIoA1RU
+keywords:
+  - Go Append
+  - Append in Go
+  - Golang Append
+tags:
+  - go
+---
+
+## What is an anonymous function in Golang?
+
+In Golang, anonymous functions are functions that are not bound to an identifier. They are also known as lamda functions or function literals. Anonymous functions form the basis of [closures](#using-anonymous-functions-as-closures-in-golang) in Golang.
+
+## Why use anonymous functions in Golang?
+
+Anonymous functions are useful when you want to pass a function as an argument to another function or when you want to return a function from another function. They are also useful when you want to define a function inline without having to name it. In the following sections, we will explore how to use anonymous functions in Golang.
+
+## How to use anonymous functions in Golang
+
+### Passing anonymous functions as arguments
+
+In Golang, you can pass anonymous functions as arguments to other functions. This is useful when you want to pass a function as an argument to another function.
+
+In the following example, we pass an anonymous function as an argument to the `forEach` function.
+
+```go title="main.go"
+...
+
+func forEach(numbers []int, callback func(int)){
+    for _, number := range numbers{
+        callback(number)
+    }
+}
+
+func main(){
+    numbers := []int{1, 2, 3, 4, 5}
+    forEach(numbers, func(number int){
+        fmt.Println(number)
+    })
+}
+```
+
+The output of the above program is:
+
+```bash title="output"
+1
+2
+3
+4
+5
+```
+
+The `forEach` function takes two arguments, an array of integers and a callback function. The callback function takes an integer as an argument and does not return anything. The `forEach` function iterates over the array of integers and calls the callback function for each element in the array.
+
+### Returning anonymous functions from functions in Golang
+
+In Golang, you can return anonymous functions from functions as well. This is useful when you want to return a function from another function.
+
+In the following example, we return an anonymous function from the `makeGreeter` function.
+
+```go title="main.go"
+...
+func makeGreeter() func(string) string{
+    return func(name string) string{
+        return "Hello " + name
+    }
+}
+
+func main(){
+    greeter := makeGreeter()
+    fmt.Println(greeter("Kevin"))
+}
+```
+
+The output of the above program is:
+
+```bash title="output"
+Hello Kevin
+```
+
+The `makeGreeter` function returns an anonymous function that takes a string as an argument and returns a string. The returned anonymous function greets the person whose name is passed as an argument.
+
+### Using anonymous functions as closures in Golang
+
+In Golang, anonymous functions form the basis of closures. A closure is a function that references variables from outside its body (_scope_). The function may access and assign to the referenced variables; in this sense, the function is "bound" to the variables.
+
+In the following example, we use an anonymous function as a closure.
+
+```go title="main.go"
+...
+
+func main(){
+    number := 0
+    increment := func() int{
+        number++
+        return number
+    }
+    fmt.Println(increment())
+    fmt.Println(increment())
+}
+```
+
+The output of the above program is:
+
+```bash title="output"
+1
+2
+```
+
+The `increment` function is an anonymous function that increments the `number` variable by 1 and returns the new value of the `number` variable. The `increment` function is a closure because it references the `number` variable from outside its body. The `increment` function is bound to the `number` variable.
+
+### Using anonymous functions as goroutines
+
+In Golang, you can use anonymous functions as goroutines. Goroutines are lightweight threads that run concurrently with other goroutines. Goroutines are created using the `go` keyword.
+
+In the following example, we use an anonymous function as a goroutine.
+
+```go title="main.go"
+package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func main(){
+    go func(){
+        fmt.Println("Hello from goroutine")
+    }()
+    time.Sleep(1 * time.Second)
+}
+```
+
+The output of the above program is:
+
+```bash title="output"
+Hello from goroutine
+```
+
+The anonymous function is a goroutine because it is created using the `go` keyword. The `main` function sleeps for 1 second to allow the goroutine to finish executing.
+
+## Tl;dr
+
+In this article, we explored how to use anonymous functions in Golang. We looked at how to pass anonymous functions as arguments to other functions, how to return anonymous functions from functions, how to use anonymous functions as closures, and how to use anonymous functions as goroutines.
