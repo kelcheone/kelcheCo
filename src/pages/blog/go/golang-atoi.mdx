@@ -16,12 +16,13 @@ tags:
 ---
 
 import Nugget from "@components/Nugget.astro";
+import SectionLink from "@components/SectionLink.jsx";
 
-## What is Atoi in Golang?
+## What is Atoi in Golang? <SectionLink id= "what-is-atoi-in-golang" />
 
 Atoi is a method in the strconv package that converts a string to an integer. It returns an error if the string cannot be converted to an integer. The strconv package is part of the standard library.
 
-## How to use Atoi in Golang
+## How to use Atoi in Golang < SectionLink id= "how-to-use-atoi-in-golang" />
 
 The Atoi function takes a string and returns an integer and an error. The error is nil if the string can be converted to an integer. If the string cannot be converted to an integer, the error is not nil.
 
@@ -61,7 +62,7 @@ In the example above, the string "forty-two" is passed to the `Atoi` function. T
   integer will be initialized to 0.
 </Nugget>
 
-## convert to int32 in Golang
+## convert to int32 in Golang <SectionLink id= "convert-to-int32-in-golang" />
 
 The `Atoi` function converts a string to an integer. The integer is an int type. If you need to convert a string to an int32, you can use the `Atoi` function and then cast the integer to an int32.
 
@@ -80,7 +81,7 @@ fmt.Println(i32)
   64-bit systems.
 </Nugget>
 
-## convert to int64 in Golang
+## convert to int64 in Golang <SectionLink id= "convert-to-int64-in-golang" />
 
 The `Atoi` function converts a string to an integer. The integer is an int type. If you need to convert a string to an int64, you can use the `Atoi` function and then cast the integer to an int64.
 
@@ -94,7 +95,7 @@ i64 := int64(i)
 fmt.Println(i64)
 ```
 
-## convert to uint in Golang
+## convert to uint in Golang <SectionLink id= "convert-to-uint-in-golang" />
 
 The `Atoi` function converts a string to an integer. The integer is an int type. If you need to convert a string to a uint, you can use the `Atoi` function and then cast the integer to a uint.
 
@@ -113,7 +114,7 @@ fmt.Println(u)
   to use the [`strconv.ParseInt()`](/blog/go/golang-parseint/) function.
 </Nugget>
 
-## Atoi vs ParseInt in Golang
+## Atoi vs ParseInt in Golang <SectionLink id= "atoi-vs-parseint-in-golang" />
 
 The `Atoi()` method is a wrapper for the `ParseInt()` method. The `Atoi()` method is a convenience method that calls the `ParseInt()` method with the base 10 and bit size 0. The `ParseInt()` method is more flexible because it allows you to specify the base and bit size.
 

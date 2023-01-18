@@ -19,6 +19,7 @@ tags:
 ---
 
 import Nugget from "@components/Nugget.astro";
+import SectionLink from "@components/SectionLink.jsx";
 
 ## Table of Contents
 
@@ -36,11 +37,11 @@ import Nugget from "@components/Nugget.astro";
 - [Map vs Slice](#map-vs-slice)
 - [Conclusion](#conclusion)
 
-## Introduction
+## Introduction <SectionLink id="introduction" />
 
 Golang maps can also be referred to as hash tables (maps) or dictionaries. It is one of the most important data structures in programming as it allows us to store key-value pairs. We are going to explore the map its usage in Golang and how it differs from other data structures.
 
-## Creating a Map
+## Creating a Map <SectionLink id="creating-a-map" />
 
 A map can be created in two ways in Golang. The first way is by using the `make` function and the second way is by using map literals. The `make` function is used to create a map with a specific size. The map literals are used to create a map with initial values.
 
@@ -61,7 +62,7 @@ func main() {
 }
 ```
 
-## map literals
+## map literals <SectionLink id="map-literals" />
 
 Map literals are used to create a map with initial values. The syntax for map literals is as follows:
 
@@ -78,7 +79,7 @@ func main() {
 }
 ```
 
-## Accessing a Map
+## Accessing a Map <SectionLink id="accessing-a-map" />
 
 We can access a value in a map by using the key. If the key does not exist in the map then the value will be the zero value of the type of the map.
 Map values can be accessed using the `[]` operator. The syntax for accessing a map is as follows:
@@ -97,7 +98,7 @@ func main() {
 }
 ```
 
-## Adding a Key-Value Pair to a Map
+## Adding a Key-Value Pair to a Map <SectionLink id="adding-a-key-value-pair-to-a-map" />
 
 We can add a key-value pair to a map by using the `[]` operator. If the key already exists in the map then the value will be updated. The syntax for adding a key-value pair to a map is as follows:
 
@@ -155,7 +156,7 @@ go run main.go
 map[bar:2 foo:10]
 ```
 
-## Deleting a Key-Value Pair from a Map
+## Deleting a Key-Value Pair from a Map <SectionLink id="deleting-a-key-value-pair-from-a-map" />
 
 We can delete a key-value pair from a map by using the `delete` function. The `delete` function takes in two arguments, the first argument is the map and the second argument is the key.
 
@@ -178,7 +179,7 @@ func main() {
 }
 ```
 
-## Checking if a Key Exists in a Map
+## Checking if a Key Exists in a Map <SectionLink id="checking-if-a-key-exists-in-a-map" />
 
 To check if a key exists in a map we can use the `ok` idiom. The `ok` idiom is used to check if a key exists in a map. The syntax for the `ok` idiom is as follows:
 
@@ -201,7 +202,7 @@ func main() {
 }
 ```
 
-## Iterating Over a Map
+## Iterating Over a Map <SectionLink id="iterating-over-a-map" />
 
 To iterate over a map we can use the `range` keyword and the `for` loop. The `range` keyword returns the key and the value of the map.
 
@@ -230,7 +231,7 @@ foo 1
 
 [Learn more about iteration in Golang](/blog/go/golang-for-loop)
 
-## Nested Maps
+## Nested Maps <SectionLink id="nested-maps" />
 
 To create a nested map we can use the map literals and the `make` function. The syntax for creating a nested map is as follows:
 
@@ -252,7 +253,7 @@ func main() {
 }
 ```
 
-### using the map literals
+### using the map literals <SectionLink id="using-the-map-literals" />
 
 ```go title="main.go"
 package main
@@ -278,7 +279,7 @@ go run main.go
 map[foo:map[bar:1]]
 ```
 
-### Iterating Over a Nested Map
+### Iterating Over a Nested Map <SectionLink id="iterating-over-a-nested-map" />
 
 To iterate over a nested map we can use the `range` keyword and the `for` loop. The `range` keyword returns the key and the value of the map.
 
@@ -322,7 +323,7 @@ bar 2
 foo 1
 ```
 
-## Other Map Functions
+## Other Map Functions <SectionLink id="other-map-functions" />
 
 ### len
 
@@ -373,7 +374,7 @@ func main(){
   </p>
 </Nugget>
 
-## Map vs Struct
+## Map vs Struct <SectionLink id="map-vs-struct" />
 
 > - A struct is a collection of fields. A map is a collection of key-value pairs.
 > - A struct is a value type. A map is a reference type.
@@ -381,7 +382,7 @@ func main(){
 > - A struct is a composite type. A map is a built-in type.
 > - A struct is a collection of fields. A map is a collection of key-value pairs.
 
-## Map vs Slice
+## Map vs Slice <SectionLink id="map-vs-slice" />
 
 > - A slice is a collection of elements. A map is a collection of key-value pairs.
 > - A slice is a reference type. A map is a reference type.
@@ -389,6 +390,6 @@ func main(){
 > - A slice is a composite type. A map is a built-in type.
 > - A slice is a collection of elements. A map is a collection of key-value pairs.
 
-## Conclusion
+## Conclusion <SectionLink id="conclusion" />
 
 In this article, we learned about maps in Go. We learned how to create a map, how to add a key-value pair to a map, how to delete a key-value pair from a map, how to check if a key exists in a map, how to iterate over a map, how to create a nested map, how to iterate over a nested map, and how to use other map functions.

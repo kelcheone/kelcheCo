@@ -18,6 +18,7 @@ tags:
 ---
 
 import Nugget from "@components/Nugget.astro";
+import SectionLink from "@components/SectionLink.jsx";
 
 ## Table of Contents
 
@@ -32,13 +33,13 @@ import Nugget from "@components/Nugget.astro";
     * [Switch Statement with Type Switch](#switch-statement-with-type-switch)
     * [Tl;dr](#tldr)
 
-## What is Switch Statement in Go?
+## What is Switch Statement in Go? <SectionLink id="what-is-switch-statement-in-go" />
 
 The switch statement in Go is a control flow statement that is used to execute a block of code among many alternatives. Switch statements are declared using the `switch` keyword followed by the condition to be evaluated. The condition can be a variable, constant, or expression.
 
 The `switch` statement is similar to the `if-else` statement. The difference is that the `switch` statement can have multiple cases. The `switch` statement is also known as the `switch-case` statement.
 
-## Syntax of Switch Statement in Go
+## Syntax of Switch Statement in Go <SectionLink id="syntax-of-switch-statement-in-go" />
 
 The syntax of the `switch` statement in Go is as follows:
 
@@ -53,7 +54,7 @@ switch condition {
 
 The `switch` statement is followed by the `case` keyword. The `case` keyword is followed by the value to be compared with the condition. The `case` keyword is followed by the code block to be executed if the condition is equal to the value. The `default` keyword is used to execute a block of code if none of the cases is true.
 
-## Example of Switch Statement in Go
+## Example of Switch Statement in Go <SectionLink id="example-of-switch-statement-in-go" />
 
 The following example shows the use of the `switch` statement in Go:
 
@@ -79,7 +80,7 @@ The output of the above program is:
 Number is 10
 ```
 
-## Switch Statement with Multiple Cases
+## Switch Statement with Multiple Cases <SectionLink id="switch-statement-with-multiple-cases" />
 
 The `switch` statement can have multiple cases, you can have as many cases as you want. The following example shows the use of the `switch` statement with multiple cases:
 
@@ -101,7 +102,7 @@ The output of the above program is:
 Number is 20
 ```
 
-## Switch Statement with Fallthrough
+## Switch Statement with Fallthrough <SectionLink id="switch-statement-with-fallthrough" />
 
 Fallthrough is a keyword that is used to execute the next case in a `switch` statement. The `fallthrough` keyword is used to execute the next case even if the condition is not true. The following example shows the use of the `fallthrough` keyword:
 
@@ -127,7 +128,7 @@ Number is 20
 
 In the above example, case 10 is executed and then the `fallthrough` keyword is used to execute the next case which is case 20.
 
-## golang switch case break
+## golang switch case break <SectionLink id="golang-switch-case-break" />
 
 The `break` keyword is used to terminate the `switch` statement when a given condition is true.
 
@@ -155,7 +156,7 @@ The output of the above program is:
 
 Nothing is printed because the switch statement is terminated after the `break` keyword.
 
-## golang switch channel
+## golang switch channel <SectionLink id="golang-switch-channel" />
 
 <Nugget>
   <strong> A channel </strong> is a communication mechanism that allows one
@@ -207,7 +208,7 @@ received two
 
 In the above example, the `select` statement is used to receive the values from the channel. The `select` statement is used to receive the values from the channel. The `select` statement is used to receive the values from the channel.
 
-## Switch Statement with Multiple Conditions
+## Switch Statement with Multiple Conditions <SectionLink id="switch-statement-with-multiple-conditions" />
 
 The `switch` statement can have multiple conditions using the `||`, `&&`, and `!` operators. The following example shows the use of the `switch` statement with multiple conditions:
 
@@ -233,7 +234,7 @@ Number is 10 and x is 20
 
 In the above example, the `switch` statement is used to check if the `num` variable is equal to 10 and the `x` variable is equal to 20.
 
-## Switch Statement with Type Switch
+## Switch Statement with Type Switch <SectionLink id="switch-statement-with-type-switch" />
 
 The `switch` statement can be used to check the type of a variable using the `type` keyword. By combining `type` and `:=` we can create a type <b> switch guard </b>. The following example shows the use of the `switch` statement with the `type` keyword:
 
@@ -276,7 +277,7 @@ if we change the value of the `x` variable to `10` the output will be:
 x is int
 ```
 
-## Tl;dr
+## Tl;dr <SectionLink id="tl-dr" />
 
       * The `switch` statement is used to execute a block of code based on the value of a variable.
       * The `switch` statement can have multiple cases, you can have as many cases as you want.

@@ -19,6 +19,7 @@ tags:
 ---
 
 import Nugget from "@components/Nugget.astro";
+import SectionLink from "@components/SectionLink.jsx";
 
 ## Table of Contents
 
@@ -34,7 +35,7 @@ import Nugget from "@components/Nugget.astro";
 - [Embedding Interfaces](#embedding-interfaces-in-go)
 - [Tldr](#tldr)
 
-## What is an Interface in Go?
+## What is an Interface in Go? <SectionLink id="what-is-an-interface-in-go" />
 
 An interface is a set of methods that a type must implement. In other words, an interface is a contract that a type must follow. If a type implements all the methods of an interface, then it is said to implement the interface.
 
@@ -45,7 +46,7 @@ An interface is a set of methods that a type must implement. In other words, an 
   </p>
 </Nugget>
 
-## How to Declare an Interface in Go?
+## How to Declare an Interface in Go <SectionLink id="how-to-declare-an-interface-in-go" />
 
 An interface is declared using the `interface` keyword. The syntax for declaring an interface is as follows:
 
@@ -68,7 +69,7 @@ type Shape interface {
 
 In the above example, we have declared an interface named `Shape`. The `Shape` interface has two methods: `Area` and `Perimeter`. The `Area` method takes no parameters and returns a `float64` value. Similarly, the `Perimeter` method takes no parameters and returns a `float64` value.
 
-## How to Implement an Interface in Go?
+## How to Implement an Interface in Go <SectionLink id="how-to-implement-an-interface-in-go" />
 
 A type implements an interface by implementing all the methods of the interface. The syntax for implementing an interface is as follows:
 
@@ -167,7 +168,7 @@ If we added a new type to the `Printer` interface, we would have to implement th
   </p>
 </Nugget>
 
-## How to Use an Interface as a Type in Go?
+## How to Use an Interface as a Type in Go <SectionLink id="how-to-use-an-interface-as-a-type-in-go" />
 
 An interface can be used as a type. The syntax for using an interface as a type is as follows:
 
@@ -206,7 +207,7 @@ In the above example, we have declared an interface named `Printer`. The `Printe
 
 We have declared a variable named `p` of type `Printer`. We have assigned a value of type `MyPrinter` to the `p` variable. We have then called the `printIt` method on the `p` variable. The `printIt` method is called on the value of type `MyPrinter`.
 
-## Empty Interface in Go
+## Empty Interface in Go <SectionLink id="empty-interface-in-go" />
 
 An empty interface is an interface that has no methods. The syntax for declaring an empty interface is as follows:
 
@@ -236,7 +237,7 @@ An empty interface can hold any type of value. In the above example, we have dec
 
 This is important in cases where we don't know the type of value that we are working with.
 
-## Type Assertion in Interfaces in Go
+## Type Assertion in Interfaces in Go <SectionLink id="type-assertion-in-interfaces-in-go" />
 
 Type assertion is a way to check the type of a value. The syntax for type assertion is as follows:
 
@@ -294,7 +295,7 @@ Hello true
 
 In the above example, we have declared a variable named `i` of type `interface{}`. We have assigned a value of type `string` to the `i` variable. We have then asserted the type of the `i` variable. The type of the `i` variable is asserted using the simple assertion. The type of the `i` variable is asserted using the comma ok assertion.
 
-## Type Switch in Interfaces in Go
+## Type Switch in Interfaces in Go <SectionLink id="type-switch-in-interfaces-in-go" />
 
 A type switch is a way to check the type of a value. The syntax for the type switch is as follows:
 
@@ -341,7 +342,7 @@ I don't know about type bool!
 
 In the above example, we declare the function `do` which takes an empty interface as a parameter. The function `do` uses a type switch to check the type of the value passed to it. The function `do` prints the value of the value passed to it. We have called the `do` function with three different types of values. The `do` function is called with a value of type `int`, `string`, and `bool`. The `do` function prints the value of the value passed to it.
 
-## Interfaces in variadic functions in Go
+## Interfaces in variadic functions in Go <SectionLink id="interfaces-in-variadic-functions-in-go" />
 
 Interfaces can be used in variadic functions. Let's take a look at an example:
 
@@ -390,7 +391,7 @@ The `printAll` function takes a variadic parameter of type `Printer`. The `print
 
 You can complement variadic functions with interface and switch statements to create a powerful tool for handling different types of data.
 
-## Multiple Interfaces in a struct in Go
+## Multiple Interfaces in a struct in Go <SectionLink id="multiple-interfaces-in-a-struct-in-go" />
 
 A struct can implement multiple interfaces. Let's take a look at an example:
 
@@ -433,7 +434,7 @@ MyPrinterScanner
 
 The `MyPrinterScanner` struct implements both the `Printer` and `Scanner` interfaces. The `MyPrinterScanner` struct has a method named `printIt` which implements the `Printer` interface. The `MyPrinterScanner` struct has a method named `scanIt` which implements the `Scanner` interface. The `MyPrinterScanner` struct is assigned to a variable of type `Printer` and a variable of type `Scanner`. The `printIt` method is called on the `Printer` variable. The `scanIt` method is called on the `Scanner` variable.
 
-## Embeding Interfaces in Go
+## Embeding Interfaces in Go <SectionLink id="embeding-interfaces-in-go" />
 
 Golang does not allow multiple inheritance. However, it does allow the embedding of interfaces. This is by merging the methods of two or more interfaces into a single interface. Let's take a look at an example:
 
@@ -481,6 +482,6 @@ MyPrinterScanner
 
 In the above example, we have declared two interfaces named `Printer` and `Scanner`. We have then declared an interface named `PrinterScanner` which embeds the `Printer` and `Scanner` interfaces. We later declared a struct `MyPrinterScanner` which implements the `PrinterScanner` interface. Finally, we have called the `printIt` and `scanIt` methods on `p` which is of type `PrinterScanner`.
 
-## Tldr
+## Tldr <SectionLink id="tldr" />
 
 Interfaces introduce the concept of `polymorphism` in Go. Interfaces are declared using the `interface` keyword. Interfaces are implemented by structs. A struct implements an interface by implementing all the methods of the interface. A struct can implement multiple interfaces. An interface can be embedded in another interface. Interfaces can be used in variadic functions. Interfaces can be used in type switches. Interfaces can be used in type assertions.

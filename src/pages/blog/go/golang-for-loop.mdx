@@ -19,6 +19,7 @@ tags:
 ---
 
 import Nugget from "@components/Nugget.astro";
+import SectionLink from "@components/SectionLink.jsx";
 
 ## Table of Contents
 
@@ -39,12 +40,12 @@ import Nugget from "@components/Nugget.astro";
 - [Example Application of for loop](#example-application-of-for-loop)
 - [Conclusion](#conclusion)
 
-## Introduction
+## Introduction <SectionLink id="introduction" />
 
 In Golang a for loop is used to iterate over a collection of data. It can also be used to repeat a block of code a specific number of times or until a condition is met.
 For loops behave like while loops in other programming languages.
 
-## Syntax
+## Syntax <SectionLink id="syntax" />
 
 The syntax of a for loop in Go is as follows:
 
@@ -59,7 +60,7 @@ for init; condition; post {
 
 The init statement is executed before the first iteration. The condition is evaluated before every iteration. If the condition is true, the code block is executed. The post statement is executed at the end of every iteration.
 
-## Example
+## Example <SectionLink id="example" />
 
 Let's take a look at an example of a for loop in Go.
 
@@ -89,11 +90,11 @@ go run example.go
 
 In the above example, the init statement is `i := 0`. The condition is `i < 5`. The post statement is `i++`. The code block is `fmt.Println(i)`. The code block is executed 5 times because the condition is true for 5 iterations.
 
-## For loop with range
+## For loop with range <SectionLink id="for-loop-with-range" />
 
 The range keyword is used to iterate over a collection of data. It can be used to iterate over an array, slice, map, string, or channel.
 
-### Iterating over an array
+### Iterating over an array <SectionLink id="iterating-over-an-array" />
 
 Let's take a look at an example of a for loop with `range` to iterate over an array.
 
@@ -122,7 +123,7 @@ go run example.go
 
 In the above example, the range keyword is used to iterate over the array. The variable i is the index of the array and v is the value at the index i.
 
-### Iterating over a slice
+### Iterating over a slice <SectionLink id="iterating-over-a-slice" />
 
 Let's take a look at an example of a for loop with `range` to iterate over a slice.
 
@@ -149,7 +150,7 @@ go run example.go
 4 5
 ```
 
-### Iterating over a map
+### Iterating over a map <SectionLink id="iterating-over-a-map" />
 
 Let's take a look at an example of a for loop with `range` to iterate over a map.
 
@@ -176,7 +177,7 @@ c 3
 
 [Learn more about maps in Golang](/blog/go/golang-map/)
 
-### Iterating over a string
+### Iterating over a string <SectionLink id="iterating-over-a-string" />
 
 Let's take a look at an example of a for loop with` range` to iterate over a string.
 
@@ -211,7 +212,7 @@ go run example.go
   </p>
 </Nugget>
 
-### Iterating over a channel
+### Iterating over a channel <SectionLink id="iterating-over-a-channel" />
 
 Let's take a look at an example of a for loop with `range` to iterate over a channel.
 
@@ -253,7 +254,7 @@ In the above example, the range keyword is used to iterate over the channel. The
   </p>
 </Nugget>
 
-## For loop with continue
+## For loop with continue <SectionLink id="for-loop-with-continue" />
 
 The `continue` keyword is used to skip the current iteration of the loop and continue with the next iteration.
 
@@ -285,7 +286,7 @@ go run example.go
 
 In the above example, the continue keyword is used to skip the iteration when the value of i is 3.
 
-## For loop with break
+## For loop with break <SectionLink id="for-loop-with-break" />
 
 The `break` keyword is used to terminate the loop.
 
@@ -316,7 +317,7 @@ go run example.go
 
 In the above example, the break keyword is used to terminate the loop when the value of i is 3.
 
-## For loop with goto
+## For loop with goto <SectionLink id="for-loop-with-goto" />
 
 The `goto` keyword is used to jump to a label in the program.
 
@@ -352,7 +353,7 @@ In the above example, the goto keyword is used to jump to the label Loop. The la
 
 `goto` is not recommended to be used in Go programs because it makes the code hard to read and understand. It is better to use a for loop with `break` to terminate the loop.
 
-## For loop with labels
+## For loop with labels <SectionLink id="for-loop-with-labels" />
 
 A label is a name given to a statement. It is used to jump to a statement in the program.
 
@@ -386,7 +387,7 @@ go run example.go
 
 In the above example, the label Loop is given to the for loop. The break keyword is used to terminate the loop when the value of i is 3.
 
-## For loop with nested loops
+## For loop with nested loops <SectionLink id="for-loop-with-nested-loops" />
 
 A for loop can be nested inside another for loop. This is useful when you want to iterate over a multidimensional array or a slice of slices or a slice of maps among other things.
 
@@ -420,7 +421,7 @@ go run example.go
 
 In the above example, the for loop is nested inside another for loop. The outer for loop iterates over the slice of slices. The inner for loop iterates over each slice.
 
-## For loop with an infinite loop
+## For loop with an infinite loop <SectionLink id="for-loop-with-an-infinite-loop" />
 
 A for loop can be used to create an infinite loop. An infinite loop is a loop that never terminates. An infinite loop can be important in some cases. For example, a server program can use an infinite loop to keep listening for requests.
 
@@ -455,7 +456,7 @@ In the above example, the for loop is used to create an infinite loop. The loop 
   </p>
 </Nugget>
 
-## Example Application of for loop
+## Example Application of for loop <SectionLink id="example-application-of-for-loop" />
 
 Drawing a staircase using a for loop
 
@@ -496,6 +497,6 @@ In the above example, the outer for loop iterates from 1 to n. The inner for loo
 
 This is a classic example of using a for loop.
 
-## Conclusion
+## Conclusion <SectionLink id="conclusion" />
 
 In this article, we learned about the for loop in Go. We learned about the syntax of the for loop. We also learned about the different ways to use the for loop. We learned about the range keyword. We learned about the continue, break, and goto keywords. We learned about labels. We learned about nested loops. We learned about infinite loops. We also learned about an example application of the for loop.

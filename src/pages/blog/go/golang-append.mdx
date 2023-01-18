@@ -17,12 +17,13 @@ tags:
 ---
 
 import Nugget from "@components/Nugget.astro";
+import SectionLink from "@components/SectionLink.jsx";
 
-## What is the append method in Golang?
+## What is the append method in Golang? <SectionLink id= "what-is-the-append-method-in-golang" />
 
 The append method is a built-in method in Golang used to add more elements to a the end of a slice. It is a variadic function that takes a slice and one or more elements to append to the slice. The append method returns a new slice with the new elements appended to the end of the slice.
 
-## How to use the append method in Golang?
+## How to use the append method in Golang <SectionLink id= "how-to-use-the-append-method-in-golang" />
 
 To use the append method in Golang, we must pass the slice and the elements to append to the slice as arguments to the append method as shown below.
 
@@ -44,7 +45,7 @@ The above code will return a new slice with the new elements appended to the end
 [1 2 3 4 5 6]
 ```
 
-## How to append a slice to another slice in Golang?
+## How to append a slice to another slice in Golang <SectionLink id= "how-to-append-a-slice-to-another-slice-in-golang" />
 
 To append a slice to another slice in Golang, we must pass the slice and the slice to append to the slice as arguments with the ellipsis operator (...). The ellipsis operator is used to unpack the slice and pass the elements of the slice as arguments to the append method.
 
@@ -62,7 +63,7 @@ The output would be:
 [1 2 3 4 5 6]
 ```
 
-## How to append a slice to a map in Golang?
+## How to append a slice to a map in Golang <SectionLink id= "how-to-append-a-slice-to-a-map-in-golang" />
 
 To append a slice to a map in Golang, we must pass the map and the slice to append to the map as arguments with the ellipsis operator (...).
 
@@ -80,7 +81,7 @@ The output would be:
 map[a:[1 2 3 4 5 6]]
 ```
 
-## How to append a slice to a struct in Golang?
+## How to append a slice to a struct in Golang <SectionLink id= "how-to-append-a-slice-to-a-struct-in-golang" />
 
 To append a slice to a struct in Golang, we must pass the struct and the slice to append to the struct as arguments with the ellipsis operator (...).
 
@@ -109,7 +110,7 @@ The output would be:
 {John 30 [Reading Writing Coding Gaming]}
 ```
 
-## How to delete an element from a slice in Golang?
+## How to delete an element from a slice in Golang <SectionLink id= "how-to-delete-an-element-from-a-slice-in-golang" />
 
 To delete an element from a slice in Golang, we must pass a slice and the index of the element to delete as arguments to the append method. The append method will return a new slice with the element at the given index deleted.
 
@@ -128,7 +129,7 @@ The output would be:
 
 In the above code, we are deleting the element at index 2 from the slice, so we are passing the slice from index 0 to index 2 and the slice from index 3 to the end of the slice as arguments to the append method. Since starting index is inclusive and the ending index is exclusive, the element at index 2 will be deleted.
 
-## How to append to a file in Golang?
+## How to append to a file in Golang <SectionLink id= "how-to-append-to-a-file-in-golang" />
 
 To append to a file in Golang, we must open the file in append mode using `os.OpenFile` method. Then we must pass the file and the data to append to the file as arguments to the `Write` method.
 
@@ -147,7 +148,7 @@ if _, err := file.Write([]byte("Hello World")); err != nil {
 
 In the above code, we are opening `file.txt` in append mode and writing `Hello World` to the file.
 
-## How to append a string to a slice in Golang?
+## How to append a string to a slice in Golang <SectionLink id= "how-to-append-a-string-to-a-slice-in-golang" />
 
 To append a string to a slice in Golang, we must pass the slice and the string to append to the slice as arguments to the `append` method.
 
@@ -164,7 +165,7 @@ The output would be:
 [a b c d]
 ```
 
-## How to append a map to another map in Golang?
+## How to append a map to another map in Golang <SectionLink id= "how-to-append-a-map-to-another-map-in-golang" />
 
 To append a map to another map in Golang we must use the `reflect` package. The `reflect` package provides utilities for reflection, allowing a program to manipulate objects with arbitrary types. The `reflect` package is used to get the value of a map and append it to another map.
 
@@ -188,7 +189,7 @@ map[a:1 b:2 c:3 d:4]
 
 In the above code, we are using the `reflect` package to get the map `m2` value and append it to the map `m1`. The `reflect` package provides the `ValueOf` method to get the value of a map. The `SetMapIndex` method is used to append the value of the map to another map.
 
-## How to append an array to another array in Golang?
+## How to append an array to another array in Golang <SectionLink id= "how-to-append-an-array-to-another-array-in-golang" />
 
 Appending to an array is not possible in Golang because array size is fixed. To append an array to another array in Golang, we must convert the array to a slice and then append the slice to another slice.
 
@@ -211,7 +212,7 @@ The output would be:
 
 In the above code, we are converting the array `a1` and `a2` to slices and then appending the slices to another slice.
 
-## How to append multiple slices to a slice in Golang?
+## How to append multiple slices to a slice in Golang <SectionLink id= "how-to-append-multiple-slices-to-a-slice-in-golang" />
 
 To append multiple slices to a slice in Golang, we must pass the slice and the slices to append to the slice as arguments with the ellipsis operator (...).
 
@@ -232,7 +233,7 @@ The output would be:
 [1 2 3 4 5 6 7 8 9]
 ```
 
-## How to append to a nil slice in Golang?
+## How to append to a nil slice in Golang <SectionLink id= "how-to-append-to-a-nil-slice-in-golang" />
 
 To append to a nil slice in Golang, we must pass the nil slice and the elements to append to the slice as arguments to the `append` method.
 
@@ -251,7 +252,7 @@ The output would be:
 [1 2 3]
 ```
 
-## How to append to the front of a slice in Golang?
+## How to append to the front of a slice in Golang <SectionLink id= "how-to-append-to-the-front-of-a-slice-in-golang" />
 
 To append to the front of a slice in Golang, we need to pass first the element to append to the slice and then the slice as arguments to the `append` method. This is possible since a new slice is created when we append it to a slice.
 
@@ -270,7 +271,7 @@ The output would be:
 
 The same would apply to append a slice to the front of another slice.
 
-## How to append bytes to a slice in Golang?
+## How to append bytes to a slice in Golang <SectionLink id= "how-to-append-bytes-to-a-slice-in-golang" />
 
 To append bytes to a slice in Golang, we must pass the slice and the bytes to append to the slice as arguments to the `append` method.
 
@@ -287,6 +288,6 @@ The output would be:
 [1 2 3 4]
 ```
 
-## Tl;dr
+## Tl;dr <SectionLink id= "tldr" />
 
 Append method is a key method in Golang as it gives us the ability to add elements to a slice in various ways and of various types.

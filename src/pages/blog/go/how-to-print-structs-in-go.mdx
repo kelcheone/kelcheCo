@@ -16,7 +16,9 @@ tags:
   - featured
 ---
 
-# How to print structs in Go
+import SectionLink from "@components/SectionLink.jsx";
+
+# How to print structs in Go <SectionLink  id= "how-to-print-structs-in-go" />
 
 To print structs we use the fmt package i.e fmt.Printf("%v", structName). This will print the struct in the format of a map. To print the struct in a more readable format we use the %#v format specifier. This will print the struct in the format of a struct.
 
@@ -86,7 +88,7 @@ Output:
 {"Name":"John","Age":20}
 ```
 
-## How to print a nested struct
+## How to print a nested struct in Go <SectionLink  id= "how-to-print-a-nested-struct-in-go" />
 
 To print a nested struct we use the %#v format specifier. This will print the struct in the format of a struct.
 
@@ -127,7 +129,7 @@ main.Mystruct2{Name:"John", Age:20, Mystruct:main.Mystruct{Name:"John", Age:20}}
 
 ```
 
-## How to print a struct with a slice
+## How to print a struct with a slice in Go <SectionLink  id= "how-to-print-a-struct-with-a-slice-in-go" />
 
 To print a struct with a slice we use the %#v format specifier. This will print the struct in the format of a struct.
 

@@ -15,11 +15,13 @@ tags:
   - go
 ---
 
-## What are Anonymous Structs in Golang?
+import SectionLink from "@components/SectionLink.jsx";
+
+## What are Anonymous Structs in Golang? <SectionLink id= "what-are-anonymous-structs-in-golang" />
 
 An anonymous struct is a struct without a name. It is used to create a struct on the fly without having to define a struct type. It is also useful when you want to create a struct with a single field.
 
-## How to create an Anonymous Struct in Golang?
+## How to create an Anonymous Struct in Golang <SectionLink id= "how-to-create-an-anonymous-struct-in-golang" />
 
 To create an anonymous struct, you can use the following syntax:
 
@@ -49,7 +51,7 @@ s1 := struct {
 ...
 ```
 
-## How to access the fields of an Anonymous Struct in Golang?
+## How to access the fields of an Anonymous Struct in Golang <SectionLink id= "how-to-access-the-fields-of-an-anonymous-struct-in-golang" />
 
 To access the fields of an anonymous struct the `.` operator can be used. The syntax is as follows:
 
@@ -67,7 +69,7 @@ fmt.Println(s1.name) // John
 fmt.Println(s1.age) // 30
 ```
 
-## Anonymous struct array in Golang
+## Anonymous struct array in Golang <SectionLink id= "anonymous-struct-array-in-golang" />
 
 Anonymous structs can be used to create an array of structs. The syntax is as follows:
 
@@ -103,7 +105,7 @@ In the example above, an array of anonymous structs is created. The array has 3 
 
 Since slices are built on top of arrays, anonymous structs can also be used to create a slice of structs.
 
-## Anonymous struct with a method in Golang
+## Anonymous struct with a method in Golang <SectionLink id= "anonymous-struct-with-a-method-in-golang" />
 
 Anonymous structs can also have methods. The syntax is as follows:
 
@@ -129,7 +131,7 @@ s1.greet() // Hello John
 
 In the example above, a method `greet()` for the anonymous struct `s1` is created. The method `greet()` takes the anonymous struct as a receiver. The `greet()` method can be called on the `s1` variable.
 
-## Anonymous struct interface in Golang
+## Anonymous struct interface in Golang <SectionLink id= "anonymous-struct-interface-in-golang" />
 
 Anonymous structs can also implement an interface. The syntax is as follows:
 
@@ -163,7 +165,7 @@ sayHello(s1) // Hello John
 
 In the example above, the anonymous struct `s1` implements the `person` interface. The `sayHello()` function takes the `person` interface as a parameter. The `s1` variable is passed to the `sayHello()` function. The `s1` variable implements the `person` interface, so it can be passed to the `sayHello()` function.
 
-## Nested Anonymous Structs in Golang
+## Nested Anonymous Structs in Golang <SectionLink id= "nested-anonymous-structs-in-golang" />
 
 Anonymous structs can be nested. The syntax is as follows:
 
@@ -196,6 +198,6 @@ fmt.Println(s1.address.city) // New York
 
 In the example above, the `address` field of the anonymous struct `s1` is a nested anonymous struct.
 
-## Conclusion
+## Conclusion <SectionLink id= "conclusion" />
 
 Anonymous structs are useful when you need to create a struct quickly without defining a struct type. They can also be used to construct an array or a struct slice. Anonymous structs can also implement interfaces and have methods. Anonymous structs can be nested as well.
