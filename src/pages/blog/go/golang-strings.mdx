@@ -21,7 +21,7 @@ import SectionLink from "@components/SectionLink.jsx";
 
 # Strings in Go <SectionLink id="strings-in-go" />
 
-In Go, strings are a fundamental data type. They are immutable, meaning they cannot be changed once created. Strings are made up of a sequence of bytes, and are UTF-8 encoded. This means that each character in a string is represented by one or more bytes. For example, the character "é" is represented by two bytes: 0xC3 and 0xA9. The Go language specification defines a string as a sequence of bytes, not necessarily characters. This means that a string can contain any sequence of bytes, including null bytes, and it is up to the user to determine how those bytes should be interpreted.
+In Go, strings are a fundamental data type. They are immutable, meaning they cannot be changed once created. Strings are made up of a sequence of bytes and are UTF-8 encoded. This means that each character in a string is represented by one or more bytes. For example, the character "é" is represented by two bytes: 0xC3 and 0xA9. The Go language specification defines a string as a sequence of bytes, not necessarily characters. This means that a string can contain any sequence of bytes, including null bytes, and it is up to the user to determine how those bytes should be interpreted.
 
 ## Creating Strings in Go <SectionLink id="creating-strings-in-go" />
 
@@ -113,7 +113,7 @@ fmt.Println(s3) // Hello, World!
 
 ## String concatenation with `strings.Builder` <SectionLink id="string-concatenation-with-strings-builder" />
 
-The `strings.Builder` type is a struct that provides a way to efficiently build a string by writing to it. It is similar to the `bytes.Buffer` type, which is used to build a byte slice. The `strings.Builder` type is useful when you need to concatenate a large number of strings, because it avoids the overhead of creating a new string each time you concatenate two strings thus improving performance.
+The `strings.Builder` type is a struct that provides a way to efficiently build a string by writing to it. It is similar to the `bytes.Buffer` type, which is used to build a byte slice. The `strings.Builder` type is useful when you need to concatenate a large number of strings because it avoids the overhead of creating a new string each time you concatenate two strings thus improving performance.
 
 ```go title="example.go"
 
@@ -202,7 +202,7 @@ fmt.Println(strings.Contains(s, "Foo")) // false
 
 ## How to Replace a Substring in a String in Go <SectionLink id="how-to-replace-a-substring-in-a-string-in-go" />
 
-To replace a substring in a string in Go, you can use the `strings.Replace` function. This function takes four arguments: the string to replace in, the substring to replace, the replacement string, and the number of times to replace. It returns a string with the substring replaced.
+To replace a substring in a string in Go, you can use the `strings.Replace` function. This function takes four arguments: the string to replace, the substring to replace, the replacement string, and the number of times to replace. It returns a string with the substring replaced.
 
 ```go title="example.go"
 ...
@@ -243,7 +243,7 @@ s1 := string(r)
 fmt.Println(s1) // !dlroW ,olleH
 ```
 
-The problem with this approach is that it requires you to convert the string to a slice of runes and then back to a string. This is not very efficient. A better approach is to use the `strings.Builder` type. You can use the `strings.Builder` type to build a string by appending to it. You can then use the `strings.Builder.String` method to get the string.
+The problem with this approach is that it requires you to convert the string to a slice of runes and then back to a string. This is not very efficient. A better approach is to use the `strings.Builder` type. You can use the `strings.Builder` type to build a string by appending it to it. You can then use the `strings.Builder.String` method to get the string.
 
 ```go title="example.go"
 ...
@@ -404,3 +404,21 @@ s := "data is the new oil and oil is the new data"
 fmt.Println(strings.Count(s, "data")) // 2
 fmt.Println(strings.Count(s, "oil")) // 2
 ```
+
+## How to convert boolean to string in Go <SectionLink id="how-to-convert-boolean-to-string-in-go" />
+
+To convert a boolean to a string in Go, you can use the `strconv.FormatBool` function. It returns a string representation of the boolean.
+
+```go title="example.go"
+...
+b := true
+
+s := strconv.FormatBool(b)
+
+fmt.Println(s) // true
+fmt.Printf("%T", s) // string
+```
+
+## Conclusion <SectionLink id="conclusion" />
+
+String manipulation is a common task in programming. In this article, we have seen how to manipulate strings in Go. We have seen various functions to manipulate strings in Go using the `strings` package, `cases` package, and `strconv` package.
