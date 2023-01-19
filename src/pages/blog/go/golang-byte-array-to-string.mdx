@@ -15,6 +15,7 @@ tags:
 ---
 
 import SectionLink from "@components/SectionLink.jsx";
+import Nugget from "@components/Nugget.astro";
 
 In Go, you can convert a byte array to a string using the `string()` function. This function takes a byte array as an argument and returns a string. You can also use the `fmt.Sprintf()` function to convert a byte array to a string.`
 
@@ -33,6 +34,32 @@ func main() {
     fmt.Println(str)
 }
 ```
+
+The output of the above program is:
+
+```bash title="Output"
+hello
+```
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+	byteArray := []byte{'h', 'e', 'l', 'l', 'o'}
+	str := string(byteArray[:])
+	fmt.Println(str)
+}
+
+```
+
+<Nugget>
+  <p>
+    <cd> 'h' </cd> is a byte literal. You can also use a byte literal to
+    initialize a byte array.
+  </p>
+</Nugget>
 
 The output of the above program is:
 
@@ -87,3 +114,4 @@ world
 ## Conclusion <SectionLink id="conclusion" />
 
 In this article, we learned how to convert a byte array to a string in Go. We learned how to convert a byte array to a string using the `string()` function, the `fmt.Sprintf()` function, and by slicing the byte array.
+

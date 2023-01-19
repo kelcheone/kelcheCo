@@ -1,0 +1,116 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: Golang Bytes
+description: A byte is an alias for uint8 in Go, and it is equivalent to uint8 in all ways. By convention, it is used to distinguish byte values from 8-bit unsigned integer values.
+date: 19 January 2023
+image: https://images.unsplash.com/photo-1671653687218-4b58c45d2e3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80
+imageDescription: Golang bytes
+imageSource: Unsplash
+imageUrl: https://unsplash.com/photos/EDGs26ZCwSE
+keywords:
+  - Go bytes
+tags:
+  - go
+---
+
+import Nugget from "@components/Nugget.astro";
+import Link from "@components/Link.jsx";
+import SectionLink from "@components/SectionLink.jsx";
+
+## What is a byte?
+
+A byte is an alias for uint8 in Go, and it is equivalent to uint8 in all ways. By convention, it is used to distinguish byte values from 8-bit unsigned integer values.
+
+## How Define a Byte in Go <SectionLink id="how-define-a-byte-in-go" />
+
+To define a byte in Go, you can use the `byte` keyword.
+
+```go title="main.go"
+...
+var b byte = 255
+...
+```
+
+## How to Convert a Byte to a String <SectionLink id="how-to-convert-a-byte-to-a-string" />
+
+To convert a byte to a string, you can use the `string()` function.
+
+```go title="main.go"
+...
+var b byte = 255
+var s string = string(b)
+
+fmt.Println(s)
+fmt.Printf("%T", s)
+...
+```
+
+## How to Create a Byte Slice <SectionLink id="how-to-create-a-byte-slice" />
+
+Bytes can be used to create a byte slice. To create a byte slice, you can use the `make()` function or the `[]byte` literal.
+
+```go title="main.go"
+
+// Using make()
+var b []byte = make([]byte, 5)
+
+// Using []byte literal
+v := []byte{72, 101, 108, 108, 111}
+
+fmt.Println(b)
+fmt.Println(v)
+...
+```
+
+## How to Convert a String to a Byte Slice <SectionLink id="how-to-convert-a-string-to-a-byte-slice" />
+
+To convert a string to a byte slice, you can use the `[]byte()` function.
+
+```go title="main.go"
+...
+var s string = "Hello"
+var b []byte = []byte(s)
+
+fmt.Println(b)
+fmt.Printf("%T", b)
+...
+```
+
+## How to Convert a Byte Slice to a String <SectionLink id="how-to-convert-a-byte-slice-to-a-string" />
+
+To convert a byte slice to a string, you can use the `string()` function.
+
+```go title="main.go"
+...
+var b []byte = []byte{72, 101, 108, 108, 111}
+var s string = string(b)
+
+fmt.Println(s)
+fmt.Printf("%T", s)
+...
+```
+
+Learn more about byte array to string conversion in this <Link url=/blog/golang-convert-byte-array-to-string>blog post</Link>.
+
+## How to Convert a Byte to a String <SectionLink id="how-to-convert-a-byte-to-a-string" />
+
+To convert a byte to a string, you can use the `string()` function.
+
+```go title="main.go"
+...
+var b byte = 72
+var s string = string(b)
+
+fmt.Println(s)
+fmt.Printf("%T", s)
+...
+```
+
+## Byte vs. Rune <SectionLink id="byte-vs-rune" />
+
+A byte is used to represent ASCII characters, while a rune is used to represent Unicode characters encoded in UTF-8 format.
+
+## Byte vs. String <SectionLink id="byte-vs-string" />
+
+A byte is a single byte of data, while a string is a sequence of bytes.

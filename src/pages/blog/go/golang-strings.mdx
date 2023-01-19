@@ -156,6 +156,26 @@ s1 := strings.Join(s, ", ")
 fmt.Println(s1) // Hello, World!
 ```
 
+## How to Split Strings by Index in Go <SectionLink id="how-to-split-strings-by-index-in-go" />
+
+In Go, you can split a string by index using the `strings.SplitN()` function. This function takes a string, a separator, and a number of splits as arguments and returns a slice of strings. The following example shows how to split a string by index using the `strings.SplitN()` function.
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "strings"
+)
+
+func main() {
+  str := "Do or do not, there is no try."
+  strSlice := strings.SplitN(str, " ", 2)
+  fmt.Println(strSlice) // [Do or do not, there is no try.]
+  fmt.Println(len(strSlice)) // 2
+}
+```
+
 ## How to Convert Strings to Numbers in Go <SectionLink id="how-to-convert-strings-to-numbers-in-go" />
 
 To convert a string to a number in Go, you can use the <Link url="/blog/go/golang-atoi/">`strconv.Atoi` </Link> function or the <Link url="/blog/go/golang-parseint/"> `strconv.ParseInt`</Link> function depending on the type of number you want to convert to.
