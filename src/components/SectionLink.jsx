@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { AiOutlineLink } from "react-icons/ai";
+import { AiOutlineLink } from "react-icons/ai/index";
 
 const SectionLink = ({ id, children }) => {
   return (
