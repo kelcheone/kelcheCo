@@ -439,6 +439,22 @@ fmt.Println(s) // true
 fmt.Printf("%T", s) // string
 ```
 
+## How to compare strings in Go <SectionLink id="how-to-compare-strings-in-go" />
+
+To compare strings in Go, you can use the `==` operator. It returns a boolean indicating whether the strings are equal.
+
+```go title="example.go"
+...
+s1 := "Hello, World!"
+s2 := "Hello, World!"
+
+fmt.Println(s1 == s2) // true
+```
+
 ## Conclusion <SectionLink id="conclusion" />
 
 String manipulation is a common task in programming. In this article, we have seen how to manipulate strings in Go. We have seen various functions to manipulate strings in Go using the `strings` package, `cases` package, and `strconv` package.
+
+A byte is an alias for uint8 in Go, and it is equivalent to uint8 in all ways. By convention, it is used to distinguish byte values from 8-bit unsigned integer values.
+
+A byte is an alias for uint8 in Go, and it is equivalent to uint8 in all ways. By convention, it is used to distinguish byte values from 8-bit unsigned integer values. Bytes are in the standard library.
