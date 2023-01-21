@@ -10,17 +10,17 @@ export interface Props {
   page: Page<MarkdownInstance<Frontmatter>>;
 }
 
-export const mdxPosts = await Astro.glob<Frontmatter>("../../blog/**/*.mdx");
-export const mdPosts = await Astro.glob<Frontmatter>("../../blog/**/*.md");
-export const posts = [...mdxPosts, ...mdPosts];
+export const posts = await Astro.glob<Frontmatter>("../../blog/**/*.mdx");
+// export const mdPosts = await Astro.glob<Frontmatter>("../../blog/**/*.md");
+// export const posts = [...mdxPosts, ...mdPosts];
 
 // posts that are not drafts
-export let nonDrafts =[]
+export let nonDrafts = [];
 posts.forEach((post) => {
   if (post.frontmatter.draft != true) {
-    nonDrafts.push(post)
+    nonDrafts.push(post);
   }
-})
+});
 
 export async function getStaticPaths({ paginate }) {
   const allTags = getAllUniqueTags(nonDrafts);

@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue}"],
+  content: ["./src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue,mdx}"],
   theme: {
     extend: {
       keyframes: {
@@ -34,7 +34,11 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/typography"), require("daisyui"), require("@tailwindcss/line-clamp")],
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("daisyui"),
+    require("@tailwindcss/line-clamp"),
+  ],
   // daisyUI config (optional)
   daisyui: {
     theme: ["cmyk", "night"],

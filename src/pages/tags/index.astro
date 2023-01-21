@@ -3,15 +3,15 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import TagButton from "@components/TagButton.astro";
 import { Frontmatter, getAllUniqueTags } from "src/misc";
 
-export const mdposts = await Astro.glob<Frontmatter>(
-  "../../pages/blog/**/*.md"
-);
+// export const mdposts = await Astro.glob<Frontmatter>(
+//   "../../pages/blog/**/*.md"
+// );
 
-export const mdxposts = await Astro.glob<Frontmatter>(
+export const merged = await Astro.glob<Frontmatter>(
   "../../pages/blog/**/*.mdx"
 );
 
-export const merged = [...mdposts, ...mdxposts];
+// export const merged = [...mdposts, ...mdxposts];
 
 const posts = merged.filter((post) => post.frontmatter.draft != true);
 
