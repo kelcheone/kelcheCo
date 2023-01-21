@@ -6,15 +6,13 @@ import { Frontmatter, sortDateDescending } from "src/misc";
 import { MarkdownInstance, Page } from "astro";
 import config from "src/config";
 
-export const mdposts = await Astro.glob<Frontmatter>(
-  "../../pages/blog/**/*.md"
-);
+// export const mdposts = await Astro.glob<Frontmatter>(
+//   "../../pages/blog/**/*.md"
+// );
 
-export const mdxposts = await Astro.glob<Frontmatter>(
+export const merged = await Astro.glob<Frontmatter>(
   "../../pages/blog/**/*.mdx"
 );
-
-export const merged = [...mdposts, ...mdxposts];
 
 merged.map((post) => {
   if (post.frontmatter.draft == false) {
