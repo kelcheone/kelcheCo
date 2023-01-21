@@ -10,29 +10,19 @@ export interface Props {
   page: Page<MarkdownInstance<Frontmatter>>;
 }
 
-export const posts = await Astro.glob<Frontmatter>("../../blog/**/*.mdx");
-// export const mdPosts = await Astro.glob<Frontmatter>("../../blog/**/*.md");
-// export const posts = [...mdxPosts, ...mdPosts];
-
-// posts that are not drafts
-export let nonDrafts = [];
-posts.forEach((post) => {
-  if (post.frontmatter.draft != true) {
-    nonDrafts.push(post);
-  }
-});
-
 export async function getStaticPaths({ paginate }) {
-  const allTags = getAllUniqueTags(nonDrafts);
+  const allPosts = await Astro.glob<Frontmatter>("../../blog/**/*.md");
+  const mdxposts = await Astro.glob<Frontmatter>("../../blog/**/*.mdx");
+
+  const mergedPosts = [...allPosts, ...mdxposts];
+
+  const allTags = getAllUniqueTags(mergedPosts);
   // For every tag, return a paginate() result.
   // Make sure that you pass `{params: {tag}}` to `paginate()`
   // so that Astro knows which tag grouping the result is for.
   return allTags.map((tag) => {
-    // if tag is has a space in it, replace it with a dash
     const filteredPosts = sortDateDescending(
-      // remove spaces from tag
-
-      nonDrafts.filter((post) => {
+      mergedPosts.filter((post) => {
         return (
           post.frontmatter.tags.find((ele) => ele === tag) &&
           post.frontmatter.draft != true

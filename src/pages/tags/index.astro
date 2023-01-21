@@ -16,6 +16,11 @@ export const merged = await Astro.glob<Frontmatter>(
 const posts = merged.filter((post) => post.frontmatter.draft != true);
 
 const uniqueTags = getAllUniqueTags(posts);
+
+// console.log(posts);
+// for (const post of posts) {
+//   console.log(post.frontmatter.title);
+// }
 ---
 
 <BaseLayout title="Tags" activeLink="tags">
