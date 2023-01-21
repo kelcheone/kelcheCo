@@ -9,6 +9,7 @@ const Link = ({ url, children }) => {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label={`Open ${url} in a new tab`}
     >
       {children}
     </a>

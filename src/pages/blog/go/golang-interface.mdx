@@ -4,7 +4,7 @@ author: Kevin Kelche
 title: Golang Interfaces (A Complete Guide)
 description: Interfaces in golang are a powerful tool that allows you to define a set of methods that a type must implement. In this article, we will learn how to use interfaces in golang
 date: 16 January 2023
-image: https://images.unsplash.com/photo-1642367340318-96fdbc5d30f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80
+image: /images/golang-interface.png
 imageDescription: Golang Interfaces (A Complete Guide)
 imageSource: Unsplash
 imageUrl: https://unsplash.com/photos/fd9mIBluHkA
@@ -15,7 +15,7 @@ keywords:
   - go interfaces
 tags:
   - featured
-  - go
+  - golang
 ---
 
 import Nugget from "@components/Nugget.astro";
@@ -158,11 +158,9 @@ Finally, we have a `main` function. In the `main` function, we have created two 
 If we added a new type to the `Printer` interface, we would have to implement the `printIt` method on the new type as well. Also by introducing a foreign type to the `info` slice, we would have to implement the `printIt` method on the foreign type as well, or else we would get a compile-time error.
 
 <Nugget>
+
   <p>
-    <strong>Interfaces are implemented implicitly</strong>
-  </p>
-  <p>
-    There is no explicit declaration of intent and no "implements" keyword. If a
+    There is no explicit declaration of intent and no <code>implements</code> keyword. If a
     type provides all the methods required by an interface, it is said to
     implement the interface.
   </p>

@@ -1,0 +1,326 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: Wrtiting Tests in Golang.
+description: Writing tests in Golang is a great way to ensure that your code is working as expected. In this article, we explore how to write tests in Golang.
+date: 21 January 2023
+image: https://images.unsplash.com/photo-1671738423108-32c0ed3684bd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80
+imageDescription:
+imageSource: Unsplash
+imageUrl: https://unsplash.com/photos/EmJy3_FV1ZI
+keywords:
+  -
+tags:
+  - go
+  - featured
+---
+
+import SectionLink from "@components/SectionLink.jsx";
+import Nugget from "@components/Nugget.astro";
+import Link from "@components/Link.jsx";
+
+## Introduction
+
+Writing tests in Golang and in general is a great way to ensure that your code is working as expected. In this article, we explore how to write tests in Golang.
+
+## Table of Contents
+
+- [How to write tests in Golang](#how-to-write-tests-in-golang)
+- [Table Driven Tests](#table-driven-tests)
+- [Mocking](#mocking)
+- [Testing HTTP](#testing-http)
+- [Testing Concurrency](#testing-concurrency)
+- [Testing Time](#testing-time)
+- [Testing Errors](#testing-errors)
+- [Testing Panics](#testing-panics)
+- [Testing Coverage](#testing-coverage)
+- [Testing Benchmarks](#testing-benchmarks)
+- [Testing Examples](#testing-examples)
+- [Conclusion](#conclusion)
+
+## How to write tests in Golang <SectionLink id="how-to-write-tests-in-golang" />
+
+Golang has an inbuilt testing package that allows us to write tests. The testing package provides a framework for writing tests and running them. The testing package also provides a set of tools for writing tests.
+
+To write a test in Golang, we need to create a file with the suffix `_test.go`. This file will contain the tests for the code in the file that it is testing. The test file will contain a function that starts with the word `Test` followed by the name of the function that it is testing. The function will take a pointer to a `testing.T` type as its only argyment. The `testing.T` type provides a set of methods that we can use to write our tests.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+  fmt.Println("Hello World")
+}
+```
+
+```go title="main_test.go"
+package main
+
+import "testing"
+
+func TestMain(t *testing.T) {
+  // Write your tests here.
+}
+```
+
+To run our tests, we can use the `go test` command. This command will run all the tests in the current directory. We can also use the `-v` flag to get more information about the tests that are being run.
+
+```bash
+go test -v
+```
+
+## Table Driven Tests <SectionLink id="table-driven-tests" />
+
+Table driven tests are a way to write tests in Golang using a table like format. This allows us to write tests in a more concise way. We can use a table to store the input and expected output for our tests. We can then loop through the table and run our tests. The tale is a slice of structs.
+
+```go title="main_test.go"
+package main
+
+import "testing"
+
+func TestMain(t *testing.T) {
+    tests := []struct{
+        name string
+        input string
+        expected string
+    }{
+        {
+            name: "Test 1",
+            input: "Hello World",
+            expected: "Hello World",
+        },
+        {
+            name: "Test 2",
+            input: "Hello World",
+            expected: "Hello World",
+        },
+    }
+
+    for _, test := range tests {
+        t.Run(test.name, func(t *testing.T) {
+            // Write your tests here.
+        })
+    }
+}
+```
+
+## Mocking <SectionLink id="mocking" />
+
+Mocking is way to test our code in isolation. We can mock a function by creating a function with the same signature as the function that we want to mock. We can then use this function to test our code. We can also use the `testing` package to mock functions. The `testing` package provides a `Mock` type that we can use to mock functions. The `Mock` type provides a `Call` method that we can use to mock a function. The `Call` method takes a function as its only argument. The function that we pass to the `Call` method will be called when the function that we are mocking is called.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+  fmt.Println("Hello World")
+}
+```
+
+```go title="main_test.go"
+package main
+
+import (
+    "testing"
+    "github.com/stretchr/testify/mock"
+)
+
+type MockedFunction struct {
+    mock.Mock
+}
+
+func (m *MockedFunction) MockedFunction() {
+    m.Called()
+}
+
+func TestMain(t *testing.T) {
+    mockedFunction := new(MockedFunction)
+    mockedFunction.On("MockedFunction").Return()
+
+    mockedFunction.MockedFunction()
+
+    mockedFunction.AssertExpectations(t)
+}
+```
+
+In the above example, we are mocking the `MockedFunction` function. We are then calling the `MockedFunction` function and asserting that it was called. We can also use the `On` method to set the return value of the function that we are mocking.
+
+## Testing HTTP <SectionLink id="testing-http" />
+
+To test HTTP requests in Golang, we can use the `httptest` package. The `httptest` package provides a `NewRecorder` function that we can use to create a `ResponseRecorder` type. The `ResponseRecorder` type implements the `http.ResponseWriter` interface. We can use the `ResponseRecorder` type to test our HTTP handlers. We can use the `ResponseRecorder` type to get the response from our HTTP handler.
+
+```go title="main.go"
+package main
+
+import (
+    "fmt"
+    "net/http"
+)
+
+func main() {
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintf(w, "Hello World")
+    })
+
+    http.ListenAndServe(":8080", nil)
+}
+```
+
+```go title="main_test.go"
+package main
+
+import (
+    "net/http"
+    "net/http/httptest"
+    "testing"
+)
+
+func TestMain(t *testing.T) {
+    req, err := http.NewRequest("GET", "/", nil)
+    if err != nil {
+        t.Fatal(err)
+    }
+
+    rr := httptest.NewRecorder()
+
+    handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintf(w, "Hello World")
+    })
+
+    handler.ServeHTTP(rr, req)
+
+    if status := rr.Code; status != http.StatusOK {
+        t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
+    }
+
+    expected := "Hello World"
+
+    if rr.Body.String() != expected {
+        t.Errorf("handler returned unexpected body: got %v want %v", rr.Body.String(), expected)
+    }
+}
+```
+
+The output of the above test will be:
+
+```bash title="Output"
+=== RUN   TestMain
+--- PASS: TestMain (0.00s)
+PASS
+ok      Testly  0.010s
+```
+
+In the `main.go` file, we are creating a HTTP server that listens on port `8080`. We are then creating a HTTP handle that returns the string `Hello World` when it receives a request. In the `main_test.go` file, we are create a HTTP request and a `ResponseRecorder` type. We are then calling the HTTP handler with the `ResponseRecorder` type and the HTTP request. We can then use the `ResponseRecorder` type to get the response from the HTTP handler. With this we can test the HTTP handler.
+
+## Testing concurrency <SectionLink id="testing-concurrency" />
+
+To test concurrency in Golang, we can use the `sync` package. The `sync` package provides a `WaitGroup` type that we can use to wait for a group of goroutines to finish. We can use the `Add` method to add a goroutine to the `WaitGroup` type. We can then use the `Wait` method to wait for all the goroutines to finish. We can also use the `Done` method to signal that a goroutine has finished.
+
+```go title="main.go"
+package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func main() {
+    fmt.Println("Hello World")
+    time.Sleep(5 * time.Second)
+}
+```
+
+```go title="main_test.go"
+
+package main
+
+import (
+    "sync"
+    "testing"
+    "time"
+)
+
+func TestMain(t *testing.T) {
+    wg := sync.WaitGroup{}
+    wg.Add(1)
+
+    go func() {
+        defer wg.Done()
+        time.Sleep(5 * time.Second)
+    }()
+
+    wg.Wait()
+}
+```
+
+In the above example, we are creating a `WaitGroup` type and adding a goroutine to it. We are then waiting for the goroutine to finish. We can also use the `Done` method to signal that a goroutine has finished.
+
+## Testing Time <SectionLink id="testing-time" />
+
+To test time in Golang, we can use the `time` package. The `time` package provides a `Now` function that we can use to get the current time. We can use the `Add` method to add a duration to the current time. We can then use the `Equal` method to compare the current time with the time that we want to test.
+
+```go title="main.go"
+package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func main() {
+    fmt.Println("Hello World")
+}
+```
+
+```go title="main_test.go"
+package main
+
+import (
+    "testing"
+    "time"
+)
+
+func TestMain(t *testing.T) {
+    now := time.Now()
+    later := now.Add(5 * time.Second)
+
+    if !later.Equal(now) {
+        t.Errorf("time is not equal")
+    }
+}
+```
+
+In the above example, we are getting the current time and adding 5 seconds to it. We are then comparing the current time with the time that we want to test. If the times are equal, the test will pass. If the times are not equal, the test will fail.
+
+## Testing Errors <SectionLink id="testing-errors" />
+
+To test errors in Golang, the `tesing` package provides a `Errorf` function that we can use to fail a test. We can use the `Errorf` function to print an error message and fail a test.
+
+```go title="main.go"
+package main
+
+import (
+    "fmt"
+)
+
+func main() {
+    fmt.Println("Hello World")
+}
+```
+
+```go title="main_test.go"
+package main
+
+import (
+    "testing"
+    "errors"
+)
+
+func TestMain(t *testing.T) {
+    err := errors.New("error")
+
+    t.Errorf("error: %v", err)
+}
+```

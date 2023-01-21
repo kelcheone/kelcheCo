@@ -4,12 +4,12 @@ import React from "react";
 
 import { AiOutlineLink } from "react-icons/ai/index";
 
-const SectionLink = ({ id, children }) => {
+const SectionLink = ({ id }) => {
   return (
     <a
       className="font-bold inline-block hover:underline"
       href={`#${id}`}
-      aria-label={children}
+      aria-label={`Link to section ${id}`}
     >
       <AiOutlineLink className="inline-block" />
     </a>
