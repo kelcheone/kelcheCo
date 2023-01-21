@@ -17,6 +17,7 @@ const tagColor = tagNames?.[tagName] ?? "default";
   style={`--tag-bg: ${tagColors[tagColor] + "1a"};--tag-prefix: ${
     tagColors[tagColor]
   };`}
+  target="_blank"
   aria-label={`go to ${tagName}`}
   href={`${import.meta.env.BASE_URL}tags/${tagName}/`}>{tagName}</a
 >

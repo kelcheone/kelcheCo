@@ -1,11 +1,11 @@
 ---
 layout: "@layouts/ArticleLayout.astro"
 author: Kevin Kelche
-title: Wrtiting Tests in Golang.
+title: Wrtiting Tests in Golang. (A Complete Guide)
 description: Writing tests in Golang is a great way to ensure that your code is working as expected. In this article, we explore how to write tests in Golang.
 date: 21 January 2023
 image: https://images.unsplash.com/photo-1671738423108-32c0ed3684bd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80
-imageDescription:
+imageDescription: Writing test in Golang
 imageSource: Unsplash
 imageUrl: https://unsplash.com/photos/EmJy3_FV1ZI
 keywords:
@@ -33,9 +33,7 @@ Writing tests in Golang and in general is a great way to ensure that your code i
 - [Testing Time](#testing-time)
 - [Testing Errors](#testing-errors)
 - [Testing Panics](#testing-panics)
-- [Testing Coverage](#testing-coverage)
-- [Testing Benchmarks](#testing-benchmarks)
-- [Testing Examples](#testing-examples)
+- [Test Benchmarks](#test-benchmarks)
 - [Conclusion](#conclusion)
 
 ## How to write tests in Golang <SectionLink id="how-to-write-tests-in-golang" />
@@ -103,6 +101,17 @@ func TestMain(t *testing.T) {
         })
     }
 }
+```
+
+## How to interpret test results <SectionLink id="how-to-interpret-test-results"/>
+
+When we run our tests, we will get a summary of the tests that we run. The summary will tell us how many tests were run, how many tests passed and how many tests failed. The summary will also tell us how long it took to run the tests.
+
+```bash title="Test Summary"
+=== RUN   TestMain
+--- PASS: TestMain (0.00s)
+PASS
+ok      Testly  0.010s
 ```
 
 ## Mocking <SectionLink id="mocking" />
@@ -305,6 +314,10 @@ import (
     "fmt"
 )
 
+func failingFunction() error {
+    return fmt.Errorf("error")
+}
+
 func main() {
     fmt.Println("Hello World")
 }
@@ -315,12 +328,159 @@ package main
 
 import (
     "testing"
-    "errors"
 )
 
-func TestMain(t *testing.T) {
-    err := errors.New("error")
+func TestFailingFunction(t *testing.T) {
+    err := failingFunction()
 
-    t.Errorf("error: %v", err)
+    if err != nil {
+        t.Errorf("failingFunction returned an error: %v", err)
+    }
 }
 ```
+
+In the above example, we are creating a function that returns an error. We are then calling the function and checking if the function returned an error. If the function returned an error, we are failing the test.
+
+## Testing Panics <SectionLink id="testing-panics" />
+
+Panics are a way to handle errors in Golang by crashing the program. To test panics in Golang, we can use the `recover` function. The `recover` function can be used to recover from a panic. We can use this to test if a function panics.
+
+```go title="main.go"
+package main
+
+import (
+    "fmt"
+)
+
+func funcPanics() {
+    panic("panic")
+}
+
+func doesNotPanic() {
+    fmt.Println("does not panic")
+}
+
+func main() {
+    fmt.Println("Hello World")
+}
+```
+
+```go title="main_test.go"
+package main
+
+import (
+    "testing"
+)
+
+func TestFuncPanics(t *testing.T) {
+    defer func() {
+        if r := recover(); r == nil {
+            t.Errorf("funcPanics did not panic")
+        }
+    }()
+
+    funcPanics()
+}
+
+func TestDoesNotPanic(t *testing.T) {
+    defer func() {
+        if r := recover(); r == nil {
+            t.Errorf("doesNotPanic panicked")
+        }
+    }()
+
+    doesNotPanic()
+}
+```
+
+In the above example, we created two functions one that panics and one that does not panic. We are then using the `recover` function to test if the function panics. The first test will pass and the second test will fail.
+
+```bash title="Output"
+
+=== RUN   TestFuncPanics
+--- PASS: TestFuncPanics (0.00s)
+=== RUN   TestDoesNotPanic
+Hello World
+    main_test.go:20: doesNotPanic panicked
+--- FAIL: TestDoesNotPanic (0.00s)
+FAIL
+exit status 1
+FAIL    Testly  0.007s
+```
+
+## Testing Logging <SectionLink id="testing-logging" />
+
+To test logging in Golang, we use `Logf` and `Log` functions from the `testing` package. We can use the `Logf` function to print a formatted message. We can use the `Log` function to print a message.
+
+```go title="main.go"
+package main
+
+import (
+    "fmt"
+    "log"
+)
+
+func funcLogs() {
+    log.Println("log")
+}
+
+func funcLogsF() {
+    log.Printf("log %v", "formatted")
+}
+
+func main() {
+    fmt.Println("Hello World")
+}
+```
+
+```go title="main_test.go"
+package main
+
+import (
+    "testing"
+)
+
+func TestFuncLogs(t *testing.T) {
+    t.Logf("funcLogs: %v", "log")
+}
+
+func TestFuncLogsF(t *testing.T) {
+    t.Logf("funcLogsF: %v", "log formatted")
+}
+```
+
+## Test Benchmarks <SectionLink id="test-benchmarks" />
+
+To test benchmarks in Golang, we can use the `testing` package. The `testing` package provides a `Benchmark` function that we can use to run benchmarks. We can use the `Benchmark` function to run benchmarks for a function.
+
+```go title="main.go"
+package main
+
+import (
+    "fmt"
+)
+
+func main() {
+    fmt.Println("Hello World")
+}
+```
+
+```go title="main_test.go"
+package main
+
+import (
+    "testing"
+)
+
+func BenchmarkMain(b *testing.B) {
+    for i := 0; i < b.N; i++ {
+        main()
+    }
+}
+```
+
+Testing benchmarks is covered in more details in the <Link url="/blog/go/golang-benchmarking"> Golang Benchmarking </Link> article.
+
+## Conclusion <SectionLink id="conclusion" />
+
+In this article, we learned how to test Golang code. We learned how to test functions, variables, and constants. We learned how to test time, errors, panics, and logging. We also learned how to test benchmarks. We learned how to use the `testing` package to test Golang code.

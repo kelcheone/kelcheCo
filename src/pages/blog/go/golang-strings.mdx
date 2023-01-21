@@ -455,6 +455,59 @@ fmt.Println(s1 == s2) // true
 
 String manipulation is a common task in programming. In this article, we have seen how to manipulate strings in Go. We have seen various functions to manipulate strings in Go using the `strings` package, `cases` package, and `strconv` package.
 
-A byte is an alias for uint8 in Go, and it is equivalent to uint8 in all ways. By convention, it is used to distinguish byte values from 8-bit unsigned integer values.
+The `testing` package is a built-in package that comes with Go. It is used to write unit tests for your code. It also has a built-in benchmarking tool that you can use to benchmark your code. To use it, you need to write a benchmark function that starts with `Benchmark` and takes a `*testing.B` as a parameter. The `*testing.B` is used to run the benchmark and report the results. Here is an example of a benchmark function:
 
-A byte is an alias for uint8 in Go, and it is equivalent to uint8 in all ways. By convention, it is used to distinguish byte values from 8-bit unsigned integer values. Bytes are in the standard library.
+```go title="main.go"
+package main
+
+import "fmt"
+
+func funcToBenchmark() {
+  var a int
+  for i := 0; i < 1000000; i++ {
+    a += i
+  }
+}
+
+func main() {
+  fmt.Println("Hello, World!")
+}
+```
+
+```go title="main_test.go"
+package main
+
+import "testing"
+
+func BenchmarkFuncToBenchmark(b *testing.B) {
+  for i := 0; i < b.N; i++ {
+    funcToBenchmark()
+  }
+}
+```
+
+To run the benchmark, you can use the `go test` command. You can also use the `-bench` flag to specify which benchmark to run. Here is an example of running the benchmark:
+
+```bash title="Terminal"
+go test -bench=.
+```
+
+By including the `.` in the `-bench` flag, you are telling Go to run all benchmarks in the package. If you want to run a specific benchmark, you can specify the name of the benchmark. Here is an example of running a specific benchmark:
+
+```bash title="Terminal"
+go test -bench=BenchmarkFuncToBenchmark
+```
+
+The output of the benchmark will look something like this:
+
+```bash title="Terminal"
+goos: linux
+goarch: amd64
+pkg: Testly
+cpu: Intel(R) Core(TM) i5-6300U CPU @ 2.40GHz
+BenchmarkFuncToBenchmark-4           386           2633543 ns/op
+PASS
+ok      Testly  2.419s
+```
+
+The first line of the output is the operating system and architecture that the benchmark was run on. The second line is the package that the benchmark was run on. The third line is the CPU that the benchmark was run on. The fourth line is the name of the benchmark, the number of CPUs that the benchmark was run on, the number of iterations that the benchmark was run, and the time it took to run the benchmark. The last line is the result of the benchmark.

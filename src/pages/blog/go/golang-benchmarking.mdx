@@ -1,0 +1,122 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: Golang Benchmarking
+description: In Go, Benchmarking is a method of evaluating a program's performance by measuring how long it takes to execute and how much memory it consumes under various conditions. It can assist you in identifying areas of your code that can be optimized and comparing different implementations to determine which is the most effective. Benchmarking is an important tool for optimizing code for performance.
+date: 20 January 2023
+image: https://images.unsplash.com/photo-1671738423108-32c0ed3684bd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80
+imageDescription:
+imageSource: Unsplash
+imageUrl: https://unsplash.com/photos/EmJy3_FV1ZI
+keywords:
+  -
+tags:
+  - go
+  - featured
+
+draft: true
+---
+
+import SectionLink from "@components/SectionLink.jsx";
+import Nugget from "@components/Nugget.astro";
+import Link from "@components/Link.jsx";
+
+## Introduction
+
+In Go, Benchmarking is a method of evaluating a program's performance by measuring how long it takes to execute and how much memory it consumes under various conditions. It can assist you in identifying areas of your code that can be optimized and comparing different implementations to determine which is the most effective. Benchmarking is an important tool for optimizing code for performance.
+
+## How to Write a Benchmark
+
+Writing benchmarks involve using the `testing` package. To write a benchmark to a function, in a `fileName_test.go` file, declare a function with a `Benchmark` prefix. The function should take a pointer to a `testing.B` as its only argument. The `testing.B` has a `N` field that is the number of times the benchmark should be run. The function should run the code to be benchmarked `b.N` times.
+
+By using the `testing.B`'s `N` field, the benchmark will run the code to be benchmarked `b.N` times. The benchmark will then report the average time it took to run the code to be benchmarked. The benchmark will also report the number of times the code to be benchmarked was run per second.
+
+```go title="example.go"
+package main
+
+import "fmt"
+
+func myFunction(){
+  for i := 0; i < 1000000; i++ {
+    fmt.Println(i)
+  }
+}
+
+```
+
+```go title="example_test.go"
+package main
+
+import "testing"
+
+func BenchmarkMyFunction(b *testing.B) {
+  for i := 0; i < b.N; i++ {
+    myFunction()
+  }
+}
+
+```
+
+## How to Run a Benchmark
+
+To run a benchmark, use the `go test` command. The `-bench` flag is used to specify the benchmark to run. The `-benchmem` flag is used to report the memory allocations made by the benchmark. The `-benchtime` flag is used to specify the amount of time to run the benchmark. The `-count` flag is used to specify the number of times to run the benchmark.
+
+```bash title="Command"
+go test -bench=. -benchmem -benchtime=10s -count=5
+```
+
+Lets look at the output of the above command.
+
+```bash title="Output"
+goos: linux
+goarch: amd64
+pkg: github.com/kelcheone/benchmarking
+cpu: Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+BenchmarkMyFunction-12    	 1000000	      1000 ns/op	     0 B/op	       0 allocs/op
+PASS
+ok  	github.com/kelcheone/benchmarking	10.000s
+```
+
+The first line of the output is the operating system and architecture of the machine the benchmark was run on. The second line is the package that was benchmarked. The third line is the CPU that was used to run the benchmark. The fourth line is the name of the benchmark and the number of CPUs that were used to run the benchmark. The fifth line is the number of times the benchmark was run, the average time it took to run the benchmark, the average number of bytes allocated per operation, and the average number of allocations per operation. The sixth line is the result of the benchmark. The seventh line is the package that was benchmarked and the amount of time it took to run the benchmark.
+
+## How to Write a Benchmark with different inputs
+
+To write a benchmark with different inputs, use the `testing.B`'s `Run` method. The `Run` method takes a string and a function as arguments. The string is the name of the benchmark. The function takes a pointer to a `testing.B` as its only argument. The function should run the code to be benchmarked `b.N` times.
+
+```go title="example.go"
+
+package main
+
+func fibbonacci(n int) int {
+  if n <= 1 {
+    return n
+  }
+  return fibbonacci(n-1) + fibbonacci(n-2)
+}
+
+```
+
+```go title="example_test.go"
+package main
+
+import "testing"
+
+func BenchmarkFibbonacci(b *testing.B) {
+  b.Run("10", func(b *testing.B) {
+    for i := 0; i < b.N; i++ {
+      fibbonacci(10)
+    }
+  })
+  b.Run("20", func(b *testing.B) {
+    for i := 0; i < b.N; i++ {
+      fibbonacci(20)
+    }
+  })
+  b.Run("30", func(b *testing.B) {
+    for i := 0; i < b.N; i++ {
+      fibbonacci(30)
+    }
+  })
+}
+
+```
