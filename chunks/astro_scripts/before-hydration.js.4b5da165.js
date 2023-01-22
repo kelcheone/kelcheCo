@@ -1,0 +1,22 @@
+import{x as b,L as E,Z as v}from"../lit-html.4d4d5e43.js";
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */const d={ATTRIBUTE:1,CHILD:2,PROPERTY:3,BOOLEAN_ATTRIBUTE:4,EVENT:5,ELEMENT:6},g=t=>null===t||"object"!=typeof t&&"function"!=typeof t,m=(t,e)=>void 0===e?void 0!==t?._$litType$:t?._$litType$===e,A=t=>void 0===t.strings
+/**
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */,{R:T,D:w,V:u,I:h,F:x}=E,P=(t,e,r={})=>{if(void 0!==e._$litPart$)throw Error("container already contains a live render");let n,o;const a=[],i=document.createTreeWalker(e,NodeFilter.SHOW_COMMENT,null,!1);let l;for(;null!==(l=i.nextNode());){const e=l.data;if(e.startsWith("lit-part")){if(0===a.length&&void 0!==n)throw Error("there must be only one root part per container");o=$(t,l,a,r),null!=n||(n=o)}else if(e.startsWith("lit-node"))R(l,a,r);else if(e.startsWith("/lit-part")){if(1===a.length&&o!==n)throw Error("internal error");o=I(l,o,a)}}console.assert(void 0!==n,"there should be exactly one root part in a render container"),e._$litPart$=n},$=(t,e,r,n)=>{let o,a;if(0===r.length)a=new h(e,null,void 0,n),o=t;else{const t=r[r.length-1];if("template-instance"===t.type)a=new h(e,null,t.instance,n),t.instance.u.push(a),o=t.result.values[t.instancePartIndex++],t.templatePartIndex++;else if("iterable"===t.type){a=new h(e,null,t.part,n);const r=t.iterator.next();if(r.done)throw o=void 0,t.done=!0,Error("Unhandled shorter than expected iterable");o=r.value,t.part._$AH.push(a)}else a=new h(e,null,t.part,n)}if(o=u(a,o),o===b)r.push({part:a,type:"leaf"});else if(g(o))r.push({part:a,type:"leaf"}),a._$AH=o;else if(m(o)){const t="lit-part "+_(o);if(e.data!==t)throw Error("Hydration value mismatch: Unexpected TemplateResult rendered to part");{const t=h.prototype._$AC(o),e=new T(t,a);r.push({type:"template-instance",instance:e,part:a,templatePartIndex:0,instancePartIndex:0,result:o}),a._$AH=e}}else w(o)?(r.push({part:a,type:"iterable",value:o,iterator:o[Symbol.iterator](),done:!1}),a._$AH=[]):(r.push({part:a,type:"leaf"}),a._$AH=o??"");return a},I=(t,e,r)=>{if(void 0===e)throw Error("unbalanced part marker");e._$AB=t;const n=r.pop();if("iterable"===n.type&&!n.iterator.next().done)throw Error("unexpected longer than expected iterable");if(r.length>0)return r[r.length-1].part},R=(t,e,r)=>{var n;const o=/lit-node (\d+)/.exec(t.data),a=parseInt(o[1]),i=null!==(n=t.previousElementSibling)&&void 0!==n?n:t.parentElement;if(null===i)throw Error("could not find node for attribute parts");i.removeAttribute("defer-hydration");const l=e[e.length-1];if("template-instance"!==l.type)throw Error("internal error");{const t=l.instance;for(;;){const e=t._$AD.parts[l.templatePartIndex];if(void 0===e||e.type!==d.ATTRIBUTE&&e.type!==d.ELEMENT||e.index!==a)break;if(e.type===d.ATTRIBUTE){const n=new e.ctor(i,e.name,e.strings,l.instance,r),o=A(n)?l.result.values[l.instancePartIndex]:l.result.values,a=!(n.type===d.EVENT||n.type===d.PROPERTY);n._$AI(o,n,l.instancePartIndex,a),l.instancePartIndex+=e.strings.length-1,t.u.push(n)}else{const e=new x(i,l.instance,r);u(e,l.result.values[l.instancePartIndex++]),t.u.push(e)}l.templatePartIndex++}}},_=t=>{const e=new Uint32Array(2).fill(5381);for(const r of t.strings)for(let t=0;t<r.length;t++)e[t%2]=33*e[t%2]^r.charCodeAt(t);return btoa(String.fromCharCode(...new Uint8Array(e.buffer)))};
+/**
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+globalThis.litElementHydrateSupport=({LitElement:t})=>{const e=Object.getOwnPropertyDescriptor(Object.getPrototypeOf(t),"observedAttributes").get;Object.defineProperty(t,"observedAttributes",{get(){return[...e.call(this),"defer-hydration"]}});const r=t.prototype.attributeChangedCallback;t.prototype.attributeChangedCallback=function(t,e,o){"defer-hydration"===t&&null===o&&n.call(this),r.call(this,t,e,o)};const n=t.prototype.connectedCallback;t.prototype.connectedCallback=function(){this.hasAttribute("defer-hydration")||n.call(this)};const o=t.prototype.createRenderRoot;t.prototype.createRenderRoot=function(){return this.shadowRoot?(this._$AG=!0,this.shadowRoot):o.call(this)};const a=Object.getPrototypeOf(t.prototype).update;t.prototype.update=function(t){const e=this.render();a.call(this,t),this._$AG?(this._$AG=!1,P(e,this.renderRoot,this.renderOptions)):v(e,this.renderRoot,this.renderOptions)}};
