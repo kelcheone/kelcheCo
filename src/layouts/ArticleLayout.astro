@@ -36,6 +36,8 @@ const date = new Date(content.date);
         <img
           class="w-10/12 mx-auto aspect-auto rounded-md"
           src={image}
+          loading="lazy"
+          decoding="async"
           alt={imageDescription ?? title}
         />
       </Fragment>
