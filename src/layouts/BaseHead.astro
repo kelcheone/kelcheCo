@@ -13,7 +13,6 @@ const {
   metaData: { authorName, category, summary, keywords, icon },
 } = config;
 const baseSite = import.meta.env.BASE_URL;
-console.log(image);
 ---
 
 <title>{title}</title>
@@ -33,6 +32,7 @@ console.log(image);
 <meta name="category" content={category} />
 <link rel="canonical" href={url} />
 <meta name="generator" content={Astro.generator} />
+<meta name="image:src" content={image} />
 
 <!-- Robot.txt -->
 <meta name="robots" content="index,follow" />
@@ -46,16 +46,17 @@ console.log(image);
 <meta property="og:type" content="website" />
 <meta property="og:url" content={url} />
 
+<meta property="og:image" content={image} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={title} />
+<meta property="type" content="website" />
+<meta property="og:locale" content="en_US" />
+
 <!-- Twitter Meta data -->
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@kelcheone" />
 <meta name="twitter:creator" content="@kelcheone" />
-<meta name="twitter:url" content={url} />
-<meta name="twitter:title" content={title} />
-<meta name="twitter:account_id" content="1378184753006981121" />
-<meta name="twitter:site" content={url} />
-<meta name="twitter:image:src" content={image} />
-<meta name="application-name" content={title} />
-<meta name="twitter:description" content={description} />
 
 <meta name="apple-mobile-web-app-title" content={title} />
 <meta name="apple-touch-icon" content={baseSite + icon} />

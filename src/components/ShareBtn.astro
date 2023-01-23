@@ -3,9 +3,6 @@
 const { title } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const url = canonicalURL.href;
-console.log(url);
-
-console.log(title);
 ---
 
 <div class="flex flex-wrap items-center justify-between flex-1 -mt-3">

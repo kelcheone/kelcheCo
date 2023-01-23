@@ -4,7 +4,7 @@ import BaseLayout from "./BaseLayout.astro";
 import TagButton from "@components/TagButton.astro";
 import ShareBtn from "@components/ShareBtn.astro";
 const { minutesRead } = Astro.props.frontmatter;
-
+import { Image } from "@astrojs/image/components";
 export interface Props {
   content: Frontmatter;
 }
@@ -22,7 +22,6 @@ const {
   author,
 } = content;
 const date = new Date(content.date);
-console.log(title);
 ---
 
 <BaseLayout
@@ -40,12 +39,13 @@ console.log(title);
   {
     image ? (
       <Fragment>
-        <img
+        <Image
           class="w-10/12 mx-auto aspect-auto rounded-md"
           src={image}
-          loading="lazy"
-          decoding="async"
+          width={1200}
           alt={imageDescription ?? title}
+          aspectRatio="16:9"
+          format="avif"
         />
       </Fragment>
     ) : null

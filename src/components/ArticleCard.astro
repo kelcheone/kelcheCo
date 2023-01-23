@@ -1,9 +1,9 @@
 ---
 import { MarkdownInstance } from "astro";
 import { parse } from "node-html-parser";
-import readingTime from "reading-time";
 import { Frontmatter } from "src/misc";
 import TagButton from "./TagButton.astro";
+import { Image } from "@astrojs/image/components";
 
 export interface Props {
   // content can be either a MarkdownInstance or any other type
@@ -26,7 +26,7 @@ const description =
     content.frontmatter.image ? (
       <Fragment>
         <figure class="pt-4 sm:pt-0 rounded">
-          <img
+          <Image
             width="300"
             height="200"
             loading={lazyLoading ? "lazy" : "eager"}
@@ -50,7 +50,7 @@ const description =
         ))
       }
     </div>
-    <p class="line-clamp-4 md:line-clamp-3">
+    <p class="line-clamp-4 md:line-clamp-3 text-sm">
       {description}
     </p>
     <div class="card-actions justify-end items-center">

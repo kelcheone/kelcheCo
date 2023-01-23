@@ -1,7 +1,6 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
-
 import {
   astroCodeSnippets,
   codeSnippetAutoImport,
@@ -27,6 +26,9 @@ import lit from "@astrojs/lit";
 import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
+import image from "@astrojs/image";
+
+// https://astro.build/config
 export default defineConfig({
   integrations: [
     AutoImport({
@@ -42,6 +44,9 @@ export default defineConfig({
     react(),
     lit(),
     partytown(),
+    image({
+      serviceEntryPoint: "@astrojs/image/sharp",
+    }),
   ],
   site: "https://www.kelche.co",
   base: "/",
