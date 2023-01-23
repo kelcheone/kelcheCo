@@ -16,8 +16,6 @@ import Nugget from "@components/Nugget.astro";
 import Link from "@components/Link.jsx";
 import SectionLink from "@components/SectionLink.jsx";
 
-<Link url="https:kelche.co">Back to Home</Link>
-
 ## What is Atomic? <SectionLink id="what-is-atomic" />
 
 In Golang, atomic is a package that provides low-level atomic memory primitives useful for implementing synchronization algorithms. Atomic operations execute in constant time and are implemented in assembly language on supported platforms. They are provided for int32, int64, uint32, uint64, uintptr, unsafe.Pointer, and unsafe.Size values.
@@ -56,7 +54,7 @@ go run main.go
 88
 ```
 
-This has the drawback that it cannot be assumed that the counter will be increased by 100. This occurs as a result of numerous goroutines simultaneously accessing the counter. The operating system refers to this phenomenon as a <Link url="https://en.wikipedia.org/wiki/Race_condition#:~:text=A%20race%20condition%20can%20arise,bugs%20due%20to%20unanticipated%20behavior."> race condition </Link> when multiple users simultaneously access the same memory address. Atomic operations are useful in this situation.
+This has the drawback that it cannot be assumed that the counter will be increased by 100. This occurs as a result of numerous goroutines simultaneously accessing the counter. The operating system refers to this phenomenon as a <Link url="https://en.wikipedia.org/wiki/Race_condition#:~:text=A%20race%20condition%20can%20arise,bugs%20due%20to%20unanticipated%20behavior."> race condition </Link> {" "}when multiple users simultaneously access the same memory address. Atomic operations are useful in this situation.
 
 To fix this, use the `atomic.AddInt64` function to increment the counter by 100.
 

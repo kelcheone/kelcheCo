@@ -12,6 +12,8 @@ const Link = ({ url, children }) => {
       aria-label={`Open ${url} in a new tab`}
     >
       {children}
+      {/*  add space to the end*/}
+      <span className="sr-only"> </span>
     </a>
   );
 };

@@ -2,6 +2,7 @@
 import { Frontmatter } from "src/misc";
 import BaseLayout from "./BaseLayout.astro";
 import TagButton from "@components/TagButton.astro";
+import ShareBtn from "@components/ShareBtn.astro";
 const { minutesRead } = Astro.props.frontmatter;
 
 export interface Props {
@@ -21,6 +22,7 @@ const {
   author,
 } = content;
 const date = new Date(content.date);
+console.log(title);
 ---
 
 <BaseLayout title={title} description={description} keywords={keywords}>
@@ -103,5 +105,8 @@ const date = new Date(content.date);
   <!-- Content -->
   <div class="prose md:prose-lg 2xl:prose-xl px-4 mx-auto prose-pre:font-mono">
     <slot />
+    <div class="mt-3">
+      <ShareBtn title={title} />
+    </div>
   </div>
 </BaseLayout>

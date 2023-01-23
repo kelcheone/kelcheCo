@@ -29,7 +29,7 @@ In Go, Benchmarking is a method of evaluating a program's performance by measuri
 
 ## How to Write a Benchmark
 
-Writing benchmarks involve using the <Link url="/blog/go/golang-tests/">testing </Link> package. To write a benchmark to a function, in a `fileName_test.go` file, declare a function with a `Benchmark` prefix. The function should take a pointer to a `testing.B` as its only argument. The `testing.B` has a `N` field that is the number of times the benchmark should be run. The function should run the code to be benchmarked `b.N` times.
+Writing benchmarks involve using the <Link url="/blog/go/golang-tests/">testing </Link>{" "} package. To write a benchmark to a function, in a `fileName_test.go` file, declare a function with a `Benchmark` prefix. The function should take a pointer to a `testing.B` as its only argument. The `testing.B` has a `N` field that is the number of times the benchmark should be run. The function should run the code to be benchmarked `b.N` times.
 
 By using the `testing.B`'s `N` field, the benchmark will run the code to be benchmarked `b.N` times. The benchmark will then report the average time it took to run the code to be benchmarked. The benchmark will also report the number of times the code to be benchmarked was run per second.
 
