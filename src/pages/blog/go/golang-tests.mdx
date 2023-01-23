@@ -1,7 +1,7 @@
 ---
 layout: "@layouts/ArticleLayout.astro"
 author: Kevin Kelche
-title: Wrtiting Tests in Golang. (A Complete Guide)
+title: Writing Tests in Golang. (A Complete Guide)
 description: Writing tests in Golang is a great way to ensure that your code is working as expected. In this article, we explore how to write tests in Golang.
 date: 21 January 2023
 image: /images/golang-tests.svg
@@ -38,7 +38,7 @@ Writing tests in Golang and in general is a great way to ensure that your code i
 
 Golang has an inbuilt testing package that allows us to write tests. The testing package provides a framework for writing tests and running them. The testing package also provides a set of tools for writing tests.
 
-To write a test in Golang, we need to create a file with the suffix `_test.go`. This file will contain the tests for the code in the file that it is testing. The test file will contain a function that starts with the word `Test` followed by the name of the function that it is testing. The function will take a pointer to a `testing.T` type as its only argyment. The `testing.T` type provides a set of methods that we can use to write our tests.
+To write a test in Golang, we need to create a file with the suffix `_test.go`. This file will contain the tests for the code in the file that it is testing. The test file will contain a function that starts with the word `Test` followed by the name of the function that it is testing. The function will take a pointer to a `testing.T` type as its only argument. The `testing.T` type provides a set of methods that we can use to write our tests.
 
 ```go title="main.go"
 package main
@@ -68,7 +68,7 @@ go test -v
 
 ## Table Driven Tests <SectionLink id="table-driven-tests" />
 
-Table driven tests are a way to write tests in Golang using a table like format. This allows us to write tests in a more concise way. We can use a table to store the input and expected output for our tests. We can then loop through the table and run our tests. The tale is a slice of structs.
+Table-driven tests are a way to write tests in Golang using a table-like format. This allows us to write tests more concisely. We can use a table to store the input and expected output for our tests. We can then loop through the table and run our tests. The tale is a slice of structs.
 
 ```go title="main_test.go"
 package main
@@ -103,7 +103,7 @@ func TestMain(t *testing.T) {
 
 ## How to interpret test results <SectionLink id="how-to-interpret-test-results"/>
 
-When we run our tests, we will get a summary of the tests that we run. The summary will tell us how many tests were run, how many tests passed and how many tests failed. The summary will also tell us how long it took to run the tests.
+When we run our tests, we will get a summary of the tests that we run. The summary will tell us how many tests were run, how many tests passed, and how many tests failed. The summary will also tell us how long it took to run the tests.
 
 ```bash title="Test Summary"
 === RUN   TestMain
@@ -114,7 +114,7 @@ ok      Testly  0.010s
 
 ## Mocking <SectionLink id="mocking" />
 
-Mocking is way to test our code in isolation. We can mock a function by creating a function with the same signature as the function that we want to mock. We can then use this function to test our code. We can also use the `testing` package to mock functions. The `testing` package provides a `Mock` type that we can use to mock functions. The `Mock` type provides a `Call` method that we can use to mock a function. The `Call` method takes a function as its only argument. The function that we pass to the `Call` method will be called when the function that we are mocking is called.
+Mocking is a way to test our code in isolation. We can mock a function by creating a function with the same signature as the function that we want to mock. We can then use this function to test our code. We can also use the `testing` package to mock functions. The `testing` package provides a `Mock` type that we can use to mock functions. The `Mock` type provides a `Call` method that we can use to mock a function. The `Call` method takes a function as its only argument. The function that we pass to the `Call` method will be called when the function that we are mocking is called.
 
 ```go title="main.go"
 package main
@@ -219,7 +219,7 @@ PASS
 ok      Testly  0.010s
 ```
 
-In the `main.go` file, we are creating a HTTP server that listens on port `8080`. We are then creating a HTTP handle that returns the string `Hello World` when it receives a request. In the `main_test.go` file, we are create a HTTP request and a `ResponseRecorder` type. We are then calling the HTTP handler with the `ResponseRecorder` type and the HTTP request. We can then use the `ResponseRecorder` type to get the response from the HTTP handler. With this we can test the HTTP handler.
+In the `main.go` file, we are creating an HTTP server that listens on port `8080`. We are creating an HTTP handler that returns the string `Hello World` when it receives a request. We can then test the handlers.
 
 ## Testing concurrency <SectionLink id="testing-concurrency" />
 
@@ -303,7 +303,7 @@ In the above example, we are getting the current time and adding 5 seconds to it
 
 ## Testing Errors <SectionLink id="testing-errors" />
 
-To test errors in Golang, the `tesing` package provides a `Errorf` function that we can use to fail a test. We can use the `Errorf` function to print an error message and fail a test.
+To test errors in Golang, the `tesing` package provides an `Errorf` function that we can use to fail a test. We can use the `Errorf` function to print an error message and fail a test.
 
 ```go title="main.go"
 package main
@@ -477,8 +477,8 @@ func BenchmarkMain(b *testing.B) {
 }
 ```
 
-Testing benchmarks is covered in more details in the <Link url="/blog/go/golang-benchmarking"> Golang Benchmarking </Link> article.
+Testing benchmarks are covered in more detail in the <Link url="/blog/go/golang-benchmarking/"> Golang Benchmarking </Link> article.
 
 ## Conclusion <SectionLink id="conclusion" />
 
-In this article, we explored techniques for testing Golang code. We discussed how to test functions, variables, constants, time, errors, panics, logging, and benchmarks. Additionally, we discussed the use of the testing package to help facilitate the testing of Golang code.
+In this article, we explored techniques for testing Golang code. We discussed how to test functions, variables, constants, time, errors, panics, logging, and benchmarks. Additionally, we discussed the use of the testing package to help facilitate the testing of the Golang code.
