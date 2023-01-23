@@ -6,7 +6,6 @@ import { Frontmatter, sortDateDescending, capitalizeString } from "src/misc";
 
 const allPosts = await Astro.glob<Frontmatter>("../pages/blog/**/*.mdx");
 
-
 const posts = sortDateDescending(
   allPosts.filter(
     (post) =>
@@ -27,8 +26,8 @@ const {
     <img
       width="200"
       height="300"
-      src="images/bf.png"
-      alt="avatar"
+      src="/images/bf.png"
+      alt="Kevin Kelche"
       class="rounded-md h-fit self-center justify-self-center"
     />
     <div class="flex flex-col flex-wrap flex-grow">
