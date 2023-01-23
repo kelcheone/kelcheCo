@@ -25,7 +25,12 @@ const date = new Date(content.date);
 console.log(title);
 ---
 
-<BaseLayout title={title} description={description} keywords={keywords}>
+<BaseLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+  image={image}
+>
   <h1
     class="text-3xl md:text-5xl 2xl:text-6xl mb-[0.8em] font-extrabold mx-auto w-fit text-center"
   >
