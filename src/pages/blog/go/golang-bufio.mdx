@@ -31,6 +31,7 @@ import Link from "@components/Link.jsx";
       - [Creating a Buffered Writer](#creating-a-buffered-writer)
       - [Reading from a Buffered Reader](#reading-from-a-buffered-reader)
       - [Writing to a Buffered Writer](#writing-to-a-buffered-writer)
+    - [Change the Buffer Size](#change-the-buffer-size)
     - [Bufio vs. I/O](#bufio-vs-io)
     - [Other Bufio Functions](#other-bufio-functions)
     - [Other Bufio Types](#other-bufio-types)
@@ -184,6 +185,43 @@ func main() {
 ```
 
 This will create a file called `file.txt` and write `Hello World!` to it. The `bufio.Writer.Write` function will not write the data to the file until the `bufio.Writer.Flush` function is called.
+
+## Change the Buffer Size <SectionLink id="change-the-buffer-size" />
+
+The default buffer size for a buffered writer is 4096 bytes. This means that the data will be written to the writer in chunks of 4096 bytes. If you want to change the buffer size, you can use the `bufio.NewWriterSize` function.
+
+```go title="main.go"
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+)
+
+func main() {
+    file, err := os.Create("file2.txt")
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+
+    writer := bufio.NewWriterSize(file, 100)
+    _, err = writer.Write([]byte("Hello World!"))
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+
+    err = writer.Flush()
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+}
+```
+
+In the above program, we changed the buffer size to 100 bytes. This means that the data will be written to the writer in chunks of 100 bytes. This will make the writer slower but it will also use less memory.
 
 ## Bufio vs. I/O <SectionLink id="bufio-vs-io" />
 
