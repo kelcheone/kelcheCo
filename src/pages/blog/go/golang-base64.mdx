@@ -201,10 +201,7 @@ eyJBY2UiOjMwLCJOYW1lIjoiSm9obiBEb2UifQ==
 - `NewEncoder` - returns a new base64 stream encoder. Writes to the returned writer encode base64 data to w.
 - `NewDecoder` - returns a new base64 stream decoder. Reads from r decode base64 data to w.
 - `NewEncoding` - returns a new custom Encoding defined by the given alphabet, which must be a 64-byte string that does not contain the padding character '='.
-- `RawURLEncoding` - returns the standard raw, unpadded base64 encoding, but with - an \_ substituted for + and / in the encoding alphabet.
 - `RawStdEncoding` - returns the standard raw, unpadded base64 encoding.
-- `StdEncoding` - returns the standard base64 encoding with padding as defined in RFC 4648.
-- `URLEncoding` - returns the standard base64 encoding with padding, but with - and \_ substituted for + and / in the encoding alphabet.
 
 ## Other Types in the Base64 Package <SectionLink id="other-types-in-the-base64-package" />
 

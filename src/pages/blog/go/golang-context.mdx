@@ -1,0 +1,390 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: Golang Context (A Complete Guide)
+description: In Go, contexts are used to pass request-scoped values, deadlines, and cancellation signals between processes and API boundaries.
+date: 24 January 2023
+image: /images/golang-context.svg
+imageDescription: Golang Context
+keywords:
+  - golang context
+  - context
+tags:
+  - golang
+
+draft: true
+---
+
+import SectionLink from "@components/SectionLink.jsx";
+import Nugget from "@components/Nugget.astro";
+import Link from "@components/Link.jsx";
+import { Image } from "@astrojs/image/components";
+
+## Introduction <SectionLink id="introduction" />
+
+In Go, contexts are used to pass request-scoped values, deadlines, and cancellation signals between processes and API boundaries. Since contexts are immutable, it is safe to pass them around even between different goroutines.
+
+Context is implemented in the standard library and you can find the docs <Link url="https://pkg.go.dev/context">here</Link>.
+
+In this article, we are going to explore how to use context in real-world applications.
+
+## Creating Contexts <SectionLink id="creating-contexts" />
+
+Contexts can be created in two ways:
+
+1. Using the `context.Background` function
+2. Using the `context.TODO` function
+
+The `context.Background` function is used to create a context with no parent and is the root context. This context is used to create other contexts. The `context.TODO` function is used to create a context with no parent and is used when the parent context is not yet available.
+
+<div class="flex justify-center">
+  <img
+    src="/images/golang-context-background.svg"
+    alt="Demonstration of how context.Background works as a root context"
+    loading={"lazy"}
+    width="500"
+  />
+</div>
+
+```go title="main.go"
+package main
+
+import (
+    "context"
+    "fmt"
+)
+
+func main() {
+    ctx := context.Background()
+    fmt.Println(ctx)
+
+    ctx = context.TODO()
+    fmt.Println(ctx)
+}
+```
+
+## Passing Values with Context <SectionLink id="passing-values-with-context" />
+
+One of the applications of context is to pass values between processes. This is done by using the `context.WithValue` function. This function takes a context and a key-value pair and returns a new context with the key-value pair added to it.
+
+To access the values in the context, we can use the `context.Value` function. This function takes a context and a key and returns the value associated with the key.
+
+```go title="main.go"
+package main
+
+import (
+    "context"
+    "fmt"
+)
+
+
+type User struct {
+    Name string
+    Age int
+}
+
+func someFunc(ctx context.Context) context.Context{
+    return context.WithValue(ctx, "user", User{
+        Name: "John Doe",
+        Age: 20,
+    })
+}
+
+func main() {
+    ctx := context.Background()
+    ctx = someFunc(ctx)
+
+    user := ctx.Value("user").(User)
+    fmt.Println(user)
+}
+```
+
+The above program prints the following output:
+
+```bash title="output"
+{John Doe 20}
+```
+
+In the above program, we are passing a `User` struct as a value in the context. We can also give primitive types like `string`, `int`, `bool`, etc. as values in the context. In the main function, we are accessing the value using the `context.Value` function and type asserting it to the `User` struct.
+
+## Cancellation with Context <SectionLink id="cancellation-with-context" />
+
+Cancellation is important in cases where we want to stop a process if it takes too long. For example, if we are requesting an API endpoint and the request takes too long, we can cancel the request and return an error. This will prevent the request from hanging indefinitely and misusing resources.
+
+Contexts can also be used to cancel a process. This is done by using the `context.WithCancel` function. This function takes a context and returns a new context and cancel function. The cancel function is then used to cancel the context.
+
+```go title="main.go"
+package main
+
+import (
+    "context"
+    "fmt"
+    "time"
+)
+
+func someFunc(ctx context.Context) {
+    select {
+    case <-ctx.Done():
+        fmt.Println("Context cancelled")
+    case <-time.After(5 * time.Second):
+        fmt.Println("Context not cancelled")
+    }
+}
+
+func main() {
+    ctx := context.Background()
+    ctx, cancel := context.WithCancel(ctx)
+
+    go someFunc(ctx)
+
+    time.Sleep(2 * time.Second)
+    cancel()
+
+    time.Sleep(2 * time.Second)
+}
+```
+
+A lot is going on in the above program. Let's break it down.
+
+In the `someFunc` function, we are using the `select` statement to check if the context has been canceled. If the context has been canceled, we print `Context canceled`. If the context has not been canceled, we print `Context not canceled`.
+
+The `ctx.Done` function returns a channel that is closed when the context is canceled. This is a method implemented on the `context.Context` interface. The `time.After` function returns a channel that sends the current time after the duration has elapsed. This is used to simulate a process that takes a long time.
+
+In the main function, we are creating a context using the `context.Background` function. We are then creating a new context using the `context.WithCancel` function. This function takes a root context and returns a new context and a cancel function. The cancel function is used to cancel the context. We are then passing the new context to the `someFunc` function.
+
+The main function then sleeps for 2 seconds and then calls the cancel function. This cancels the context and the `ctx.Done` channel is closed. This causes the `select` statement in the `someFunc` function to print `Context canceled`.
+
+The main function again sleeps for 2 seconds and then exits. This is to show that the `time.After` channel does not send the current time after 5 seconds. This is because the context was canceled after 2 seconds.
+
+The above program prints the following output:
+
+```bash title="output"
+Context not canceled
+Context canceled
+```
+
+## Timeout with Context <SectionLink id="timeout-with-context" />
+
+Timeout is another important application of context. This is used to cancel a process if it takes too long. This is done by using the `context.WithTimeout` function. This function takes a context and a duration and returns a new context and cancel function. The cancel function is then used to cancel the context.
+
+```go title="main.go"
+package main
+
+import (
+    "context"
+    "fmt"
+    "time"
+)
+
+func someFunc(ctx context.Context) {
+    select{
+        case <- ctx.Done():
+            fmt.Println("Timed out")
+        case <- time.After(5 * time.Second):
+            fmt.Println("Not timed out")
+    }
+}
+
+func main() {
+    ctx := context.Background()
+    ctx, cancel := context.WithTimeout(ctx, 2 * time.Second)
+
+    go someFunc(ctx)
+
+    time.Sleep(3 * time.Second)
+    cancel()
+
+    time.Sleep(2 * time.Second)
+}
+```
+
+The difference between `context.WithCancel` and `context.WithTimeout` is that the `context.WithTimeout` function takes a duration as an argument. This is the duration after which the context is canceled. The `context.WithCancel` function does not take a duration as an argument. This is because the cancel function can be called at any time to cancel the context.
+
+The above program prints the following output:
+
+```bash title="output"
+Timed out
+```
+
+## Deadline with Context <SectionLink id="deadline-with-context" />
+
+Deadlines are similar to timeouts. The difference is that deadlines are absolute times. This is done by using the `context.WithDeadline` function. This function takes a context and a time and returns a new context and cancel function. The cancel function is then used to cancel the context.
+
+<Nugget>
+  Absolute time is the time since the Unix epoch. This is the time since January
+  1, 1970 at 00:00:00 UTC.
+</Nugget>
+
+```go title="main.go"
+package main
+
+import (
+    "context"
+    "fmt"
+    "time"
+)
+
+func someFunc(ctx context.Context) {
+    select{
+        case <- ctx.Done():
+            fmt.Println("Deadline exceeded")
+        case <- time.After(5 * time.Second):
+            fmt.Println("Deadline not exceeded")
+    }
+}
+
+func main() {
+    ctx := context.Background()
+    ctx, cancel := context.WithDeadline(ctx, time.Now().Add(2 * time.Second))
+
+    go someFunc(ctx)
+
+    time.Sleep(3 * time.Second)
+    cancel()
+
+    time.Sleep(2 * time.Second)
+}
+```
+
+The above program prints the following output:
+
+```bash title="output"
+Deadline exceeded
+```
+
+## Example: Context with HTTP Server <SectionLink id="example-context-with-http-server" />
+
+In this example, we are going to create a simple HTTP server that implements a context middleware function to handle any timeouts.
+
+Create a new directory and initialize a new go program.
+
+```bash title="Terminal"
+mkdir server
+cd server
+touch main.go
+go mod init server
+```
+
+Open the program in your preferred editor.
+
+```go title="server/main.go"
+package main
+
+import (
+	"context"
+	"fmt"
+	"net/http"
+	"time"
+)
+
+func middleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
+		ctx, cancel := context.WithTimeout(ctx, 2*time.Second)
+		defer cancel()
+
+		r = r.WithContext(ctx)
+		next.ServeHTTP(w, r)
+	})
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	select {
+	case <-ctx.Done():
+		fmt.Println("Context cancelled")
+		err := ctx.Err()
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	case <-time.After(5 * time.Second):
+		fmt.Println("Context not cancelled")
+	}
+}
+
+func main() {
+	http.HandleFunc("/", handler)
+	http.ListenAndServe(":8080", middleware(http.DefaultServeMux))
+}
+
+```
+
+Create a new directory out of the server folder.
+
+```bash title="Terminal"
+mkdir client
+cd client
+touch main.go
+go mod init client
+```
+
+```go title="client/main.go"
+package main
+
+import (
+	"context"
+	"io"
+	"log"
+	"net/http"
+	"os"
+	"time"
+)
+
+func main() {
+	ctx := context.Background()
+	ctx, cancel := context.WithTimeout(ctx, time.Second)
+	defer cancel()
+
+	req, err := http.NewRequest(http.MethodGet, "http://localhost:8080", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	req = req.WithContext(ctx)
+
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if res.StatusCode != http.StatusOK {
+		log.Fatal(res.StatusCode)
+	}
+
+	io.Copy(os.Stdout, res.Body)
+}
+```
+
+Run the server program.
+
+```bash title="Terminal"
+cd server
+go run main.go
+```
+
+You could also test the server program using `curl`.
+
+```bash title="Terminal"
+curl localhost:8080
+```
+
+Run the client program.
+
+```bash title="Terminal"
+cd client
+go run main.go
+```
+
+In the Server program, the `middleware` function acts as a middleware function that adds context to the request. The context is canceled after 2 seconds. This is done by using the `context.WithTimeout` function. The `handler` function then checks if the context is canceled. If the context is canceled, the `handler` function prints the error and returns a `500` status code. If the context is not canceled, the `handler` function prints a message and returns a `200` status code.
+
+The client program creates a context with a timeout of 1 second. This is done by using the `context.WithTimeout` function. The context is then added to the request. The request is then sent to the server. The server then checks if the context is canceled. If the context is canceled, the server returns a `500` status code. If the context is not canceled, the server returns a `200` status code.
+
+The above program prints the following output:
+
+```bash title="output"
+Context canceled
+context deadline exceeded
+```
+
+## Conclusion <SectionLink id="conclusion" />
+
+In this article, we discussed the context package and its components, including the `context.Context` interface, the `context.WithCancel`, `context.WithTimeout`, and `context.WithDeadline` functions, and how to use the context package to handle timeouts in HTTP servers.

@@ -5,6 +5,7 @@ import TagButton from "@components/TagButton.astro";
 import ShareBtn from "@components/ShareBtn.astro";
 const { minutesRead } = Astro.props.frontmatter;
 import { Image } from "@astrojs/image/components";
+import Link from "@components/Link.jsx";
 export interface Props {
   content: Frontmatter;
 }
@@ -112,6 +113,13 @@ const date = new Date(content.date);
   <!-- Content -->
   <div class="prose md:prose-lg 2xl:prose-xl px-4 mx-auto prose-pre:font-mono">
     <slot />
+    <div class="mt-2">
+      <p>
+        Thanks for reading! Have any questions? Feel free to reach out to me on <Link
+          url="https://twitter.com/kelcheone">Twitter</Link
+        > or <Link url="https://linkedin.com/in/kelche">LinkedIn</Link>.
+      </p>
+    </div>
     <div class="mt-3">
       <ShareBtn title={title} />
     </div>
