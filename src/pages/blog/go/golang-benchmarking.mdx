@@ -27,7 +27,7 @@ In Go, Benchmarking is a method of evaluating a program's performance by measuri
   benchmarks may be more sensitive to the environment than others.
 </Nugget>
 
-## How to Write a Benchmark <SectionLink id="how-to-write-a-benchmark" />
+## How to Write a Benchmark <SectionLink client:load id="how-to-write-a-benchmark" />
 
 Writing benchmarks involve using the <Link url="/blog/go/golang-tests/">testing </Link>{" "} package. To write a benchmark to a function, in a `fileName_test.go` file, declare a function with a `Benchmark` prefix. The function should take a pointer to a `testing.B` as its only argument. The `testing.B` has a `N` field that is the number of times the benchmark should be run. The function should run the code to be benchmarked `b.N` times.
 
@@ -59,7 +59,7 @@ func BenchmarkMyFunction(b *testing.B) {
 
 ```
 
-## How to Run a Benchmark <SectionLink id="how-to-run-a-benchmark" />
+## How to Run a Benchmark <SectionLink client:load id="how-to-run-a-benchmark" />
 
 To run a benchmark, use the `go test` command. The `-bench` flag is used to specify the benchmark to run. The `-benchmem` flag is used to report the memory allocations made by the benchmark. The `-benchtime` flag is used to specify the amount of time to run the benchmark. The `-count` flag is used to specify the number of times to run the benchmark.
 
@@ -81,7 +81,7 @@ ok  	github.com/kelcheone/benchmarking	10.000s
 
 The first line of the output is the operating system and architecture of the machine the benchmark was run on. The second line is the package that was benchmarked. The third line is the CPU that was used to run the benchmark. The fourth line is the name of the benchmark and the number of CPUs that were used to run the benchmark. The fifth line is the number of times the benchmark was run, the average time it took to run the benchmark, the average number of bytes allocated per operation, and the average number of allocations per operation. The sixth line is the result of the benchmark. The seventh line is the package that was benchmarked and the amount of time it took to run the benchmark.
 
-### How to run Benchmarks only <SectionLink id="how-to-run-benchmarks-only" />
+### How to run Benchmarks only <SectionLink client:load id="how-to-run-benchmarks-only" />
 
 By default, the `go test` command will run all tests and benchmarks in the package. To run only benchmarks, use the `-run` flag and set it to `^$`. This will run no tests.
 
@@ -89,7 +89,7 @@ By default, the `go test` command will run all tests and benchmarks in the packa
 go test -bench=. -run=^$
 ```
 
-## How to Write a Benchmark Table <SectionLink id="how-to-write-a-benchmark-table" />
+## How to Write a Benchmark Table <SectionLink client:load id="how-to-write-a-benchmark-table" />
 
 Benchmark tables are a way to compare the performance of different implementations of the same function. To create a benchmark table, use the `testing.B`'s `Run` method. The `Run` method takes a string and a function as arguments. The string is the name of the benchmark. The function is the code to be benchmarked. The function should take a pointer to a `testing.B` as its only argument. The `testing.B` has a `N` field that is the number of times the benchmark should be run. The function should run the code to be benchmarked `b.N` times.
 
@@ -148,7 +148,7 @@ func randomFunction(m myStruct) {
 
 In the above example, we are comparing the performance of calling a method on a struct vs calling a function with a struct as an argument. The `Run` method is used to create two benchmarks. The first benchmark is named `Method` and the second benchmark is named `Function`. The `Method` benchmark calls the `randomFunction` method on the struct. The `Function` benchmark calls the `randomFunction` function with the struct as an argument.
 
-## How to Benchmark a Function with Arguments <SectionLink id="how-to-benchmark-a-function-with-arguments" />
+## How to Benchmark a Function with Arguments <SectionLink client:load id="how-to-benchmark-a-function-with-arguments" />
 
 Below is an example of how to benchmark a function with arguments.
 
@@ -176,7 +176,7 @@ func BenchmarkMyFunction(b *testing.B) {
 
 ```
 
-## How to Benchmark an API Call <SectionLink id="how-to-benchmark-an-api-call" />
+## How to Benchmark an API Call <SectionLink client:load id="how-to-benchmark-an-api-call" />
 
 Below is an example of how to benchmark an API call.
 
@@ -211,7 +211,7 @@ func BenchmarkMyFunction(b *testing.B) {
 
 ```
 
-## Example 1: Benchmarking Linear Search <SectionLink id="example-1-benchmarking-linear-search" />
+## Example 1: Benchmarking Linear Search <SectionLink client:load id="example-1-benchmarking-linear-search" />
 
 In this example, we are going to benchmark the performance of a function that does a linear search on a slice of integers. The function will return the index of the first occurrence of the integer in the slice. If the integer is not in the slice, the function will return `-1`.
 
@@ -257,7 +257,7 @@ PASS
 ok      github.com/kelcheone/example  1.889s
 ```
 
-## Example 2: Benchmarking Binary Search <SectionLink id="example-2-benchmarking-binary-search" />
+## Example 2: Benchmarking Binary Search <SectionLink client:load id="example-2-benchmarking-binary-search" />
 
 In this example, we are going to benchmark the performance of a function that does a binary search on a slice of integers. The function will return the index of the first occurrence of the integer in the slice. If the integer is not in the slice, the function will return `-1`.
 
@@ -313,6 +313,6 @@ ok      github.com/kelcheone/example  3.111s
 
 In **Example 1**, the linear search function took `16.94 ns/op` to run. In **Example 2**, the binary search function took `2.470 ns/op` to run. The binary search function is `6.8` times faster than the linear search function. Even though the binary search function is faster, it is more complex to implement. The binary search function is a good example of the tradeoff between performance and complexity.
 
-## Conclusion <SectionLink id="conclusion" />
+## Conclusion <SectionLink client:load id="conclusion" />
 
 We discussed techniques for benchmarking functions in Go, such as benchmarking a method on a struct or benchmarking a function with arguments, in this article. We also investigated how to benchmark an API call, as well as the performance of a linear search function versus a binary search function, while keeping the tradeoffs between performance and complexity in mind.

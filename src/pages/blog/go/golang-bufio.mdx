@@ -37,13 +37,13 @@ import Link from "@components/Link.jsx";
     - [Other Bufio Types](#other-bufio-types)
     - [Conclusion](#conclusion)
 
-## What is Buffered I/O? <SectionLink id="what-is-buffered-io" />
+## What is Buffered I/O? <SectionLink client:load id="what-is-buffered-io" />
 
 Buffered I/O is a technique that allows a program to read or write data in chunks rather than one byte at a time. This is useful because it allows the program to read or write data more efficiently. It also allows the program to read or write data more predictably.
 
 In Go, this is done by using the `bufio` package. This package provides buffered readers and writers.
 
-## How to Use Bufio <SectionLink id="how-to-use-bufio" />
+## How to Use Bufio <SectionLink client:load id="how-to-use-bufio" />
 
 The file we'll be using in this guide is:
 
@@ -51,7 +51,7 @@ The file we'll be using in this guide is:
 Ex ad mollit laborum non esse nostrud excepteur. Mollit fugiat nisi magna est deserunt excepteur pariatur id. Reprehenderit irure ad pariatur consectetur aute sint aute cupidatat dolor. Laboris mollit incididunt consectetur nulla sint laboris proident Lorem Lorem. Incididunt labore consequat velit labore enim ea voluptate dolor aliquip. Tempor exercitation nisi incididunt exercitation non et laboris esse fugiat esse quis duis. Nulla sint sit officia mollit cupidatat Lorem irure do.
 ```
 
-### Creating a Buffered Reader <SectionLink id="creating-a-buffered-reader" />
+### Creating a Buffered Reader <SectionLink client:load id="creating-a-buffered-reader" />
 
 To create a buffered reader, you can use the `bufio.NewReader` function. This function takes an `io.Reader` as an argument. This means that you can pass in any type that implements the `io.Reader` interface. This includes `os.File`, `strings.Reader`, and `bytes.Buffer`.
 
@@ -79,7 +79,7 @@ func main() {
 
 In the above example, we are creating a buffered reader from a file. We are then printing the buffered reader to the console. The buffered reader is a pointer to a `bufio.Reader` struct.
 
-## Reading from a Buffered Reader <SectionLink id="reading-from-a-buffered-reader" />
+## Reading from a Buffered Reader <SectionLink client:load id="reading-from-a-buffered-reader" />
 
 To read from a buffered reader, you can use the `bufio.Reader.Read` function. This function takes a byte slice as an argument. This byte slice is where the data will be read into.
 
@@ -119,7 +119,7 @@ The output of the above program is:
 Ex ad mollit laborum non esse nostrud excepteur. Mollit fugiat nisi magna est deserunt excepteur par
 ```
 
-### Creating a Buffered Writer <SectionLink id="creating-a-buffered-writer" />
+### Creating a Buffered Writer <SectionLink client:load id="creating-a-buffered-writer" />
 
 To create a buffered writer, you can use the `bufio.NewWriter` function. This function takes an `io.Writer` as an argument. This means that you can pass in any type that implements the `io.Writer` interface. This includes `os.File`, `strings.Builder`, and `bytes.Buffer`.
 
@@ -147,7 +147,7 @@ func main() {
 
 In the above example, we are creating a buffered writer from a file. We are then printing the buffered writer to the console. The buffered writer is a pointer to a `bufio.Writer` struct.
 
-### Writing to a Buffered Writer <SectionLink id="writing-to-a-buffered-writer" />
+### Writing to a Buffered Writer <SectionLink client:load id="writing-to-a-buffered-writer" />
 
 To write to a buffered writer, you can use the `bufio.Writer.Write` function. This function takes a byte slice as an argument. This byte slice is the data that will be written to the writer.
 
@@ -186,7 +186,7 @@ func main() {
 
 This will create a file called `file.txt` and write `Hello World!` to it. The `bufio.Writer.Write` function will not write the data to the file until the `bufio.Writer.Flush` function is called.
 
-## Change the Buffer Size <SectionLink id="change-the-buffer-size" />
+## Change the Buffer Size <SectionLink client:load id="change-the-buffer-size" />
 
 The default buffer size for a buffered writer is 4096 bytes. This means that the data will be written to the writer in chunks of 4096 bytes. If you want to change the buffer size, you can use the `bufio.NewWriterSize` function.
 
@@ -223,7 +223,7 @@ func main() {
 
 In the above program, we changed the buffer size to 100 bytes. This means that the data will be written to the writer in chunks of 100 bytes. This will make the writer slower but it will also use less memory.
 
-## Bufio vs. I/O <SectionLink id="bufio-vs-io" />
+## Bufio vs. I/O <SectionLink client:load id="bufio-vs-io" />
 
 The main difference between buffered I/O and normal I/O is that buffered I/O reads or writes data in chunks rather than one byte at a time. While on the other side normal I/O reads or writes data one byte at a time. This might not seem like a big difference but it can make a big difference in performance.
 
@@ -339,7 +339,7 @@ As you can see, the buffered I/O function is much faster with a runtime of `39.2
 
 Learn more about benchmarks in the <Link url="/blog/go/golang-benchmarking">Golang Benchmarking</Link> article.
 
-## Other Bufio Functions <SectionLink id="other-bufio-functions" />
+## Other Bufio Functions <SectionLink client:load id="other-bufio-functions" />
 
 There are many other functions in the `bufio` package that can be used to read and write data. Here are some of the most commonly used functions:
 
@@ -617,7 +617,7 @@ func main() {
 }
 ```
 
-## Other Bufio Types <SectionLink id="other-bufio-types"/>
+## Other Bufio Types <SectionLink client:load id="other-bufio-types"/>
 
 ### `bufio.Writer`
 

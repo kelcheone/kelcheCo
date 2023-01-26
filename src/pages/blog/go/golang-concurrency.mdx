@@ -1,0 +1,40 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: Concurrency in Go and Goroutines
+description: Example description
+date: 25 January 2023
+image: /images/golang-concurrency.svg
+imageDescription:
+keywords:
+  -
+tags:
+  - golang
+draft: true
+---
+
+import SectionLink from "@components/SectionLink.jsx";
+import Nugget from "@components/Nugget.astro";
+import Link from "@components/Link.jsx";
+
+## Introduction
+
+### Concurrency
+
+Concurrency is the ability of a program to run multiple tasks at the same time. Concurrency is important for programs that need to do m>
+
+### Goroutines
+
+Goroutines enable concurrency in Go. Goroutines can be defined as a lightweight thread of execution. Goroutines are multiplexed onto mu>
+
+### Goroutine Scheduling
+
+Goroutines are scheduled by the Go runtime. The Go runtime uses a cooperative scheduling model. This means that goroutines are schedule>
+
+### How Goroutines Work
+
+When a Go program starts, it creates a single goroutine, called the main goroutine. The main goroutine is responsible for calling the m>
+
+Goroutines are scheduled by the Go runtime. The Go runtime uses a scheduler to schedule goroutines onto OS threads. The Go runtime uses>
+
+Another important thing to note is that goroutines are not preemptively scheduled. This means that goroutines are not scheduled based o>

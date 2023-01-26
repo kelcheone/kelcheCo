@@ -19,7 +19,7 @@ import Nugget from "@components/Nugget.astro";
 import Link from "@components/Link.jsx";
 import { Image } from "@astrojs/image/components";
 
-## Introduction <SectionLink id="introduction" />
+## Introduction <SectionLink client:load id="introduction" />
 
 In Go, contexts are used to pass request-scoped values, deadlines, and cancellation signals between processes and API boundaries. Since contexts are immutable, it is safe to pass them around even between different goroutines.
 
@@ -27,7 +27,7 @@ Context is implemented in the standard library and you can find the docs <Link u
 
 In this article, we are going to explore how to use context in real-world applications.
 
-## Creating Contexts <SectionLink id="creating-contexts" />
+## Creating Contexts <SectionLink client:load id="creating-contexts" />
 
 Contexts can be created in two ways:
 
@@ -62,7 +62,7 @@ func main() {
 }
 ```
 
-## Passing Values with Context <SectionLink id="passing-values-with-context" />
+## Passing Values with Context <SectionLink client:load id="passing-values-with-context" />
 
 One of the applications of context is to pass values between processes. This is done by using the `context.WithValue` function. This function takes a context and a key-value pair and returns a new context with the key-value pair added to it.
 
@@ -116,7 +116,7 @@ The above program prints the following output:
 
 In the above program, we are passing a `User` struct as a value in the context. We can also give primitive types like `string`, `int`, `bool`, etc. as values in the context. In the main function, we are accessing the value using the `context.Value` function and type asserting it to the `User` struct.
 
-## Cancellation with Context <SectionLink id="cancellation-with-context" />
+## Cancellation with Context <SectionLink client:load id="cancellation-with-context" />
 
 Cancellation is important in cases where we want to stop a process if it takes too long. For example, if we are requesting an API endpoint and the request takes too long, we can cancel the request and return an error. This will prevent the request from hanging indefinitely and misusing resources.
 
@@ -172,7 +172,7 @@ Context not canceled
 Context canceled
 ```
 
-## Timeout with Context <SectionLink id="timeout-with-context" />
+## Timeout with Context <SectionLink client:load id="timeout-with-context" />
 
 Timeout is another important application of context. This is used to cancel a process if it takes too long. This is done by using the `context.WithTimeout` function. This function takes a context and a duration and returns a new context and cancel function. The cancel function is then used to cancel the context.
 
@@ -215,7 +215,7 @@ The above program prints the following output:
 Timed out
 ```
 
-## Deadline with Context <SectionLink id="deadline-with-context" />
+## Deadline with Context <SectionLink client:load id="deadline-with-context" />
 
 Deadlines are similar to timeouts. The difference is that deadlines are absolute times. This is done by using the `context.WithDeadline` function. This function takes a context and a time and returns a new context and cancel function. The cancel function is then used to cancel the context.
 
@@ -261,7 +261,7 @@ The above program prints the following output:
 Deadline exceeded
 ```
 
-## Example: Context with HTTP Server <SectionLink id="example-context-with-http-server" />
+## Example: Context with HTTP Server <SectionLink client:load id="example-context-with-http-server" />
 
 In this example, we are going to create a simple HTTP server that implements a context middleware function to handle any timeouts.
 
@@ -392,6 +392,6 @@ Context canceled
 context deadline exceeded
 ```
 
-## Conclusion <SectionLink id="conclusion" />
+## Conclusion <SectionLink client:load id="conclusion" />
 
 In this article, we discussed the context package and its components, including the `context.Context` interface, the `context.WithCancel`, `context.WithTimeout`, and `context.WithDeadline` functions, and how to use the context package to handle timeouts in HTTP servers.

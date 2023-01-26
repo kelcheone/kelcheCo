@@ -16,11 +16,11 @@ tags:
 import SectionLink from "@components/SectionLink.jsx";
 import Link from "@components/Link.jsx";
 
-## What is Assert in Golang? <SectionLink id = "what-is-assert-in-golang" />
+## What is Assert in Golang? <SectionLink client:load id = "what-is-assert-in-golang" />
 
 Assert is a package that provides a set of helper functions that make it easier to test various properties in your Go programs. It is intended to be used in the xtest files of your package, as an aid in writing tests.
 
-## How to use Assert in Golang <SectionLink id = "how-to-use-assert-in-golang" />
+## How to use Assert in Golang <SectionLink client:load id = "how-to-use-assert-in-golang" />
 
 ### Installation
 
@@ -73,9 +73,9 @@ ok      assert  0.010s
 
 ```
 
-## Major Assert Methods <SectionLink id = "major-assert-methods" />
+## Major Assert Methods <SectionLink client:load id = "major-assert-methods" />
 
-### 1. Equal and NotEqual <SectionLink id = "equal-and-notequal" />
+### 1. Equal and NotEqual <SectionLink client:load id = "equal-and-notequal" />
 
 `assert.Equal()` and `assert.NotEqual()` are used to check if the two objects are equal or not. It takes three arguments, the first one is the testing object, the second one is the expected object and the third one is the actual object.
 
@@ -85,7 +85,7 @@ assert.Equal(t, "Hello, World!", greeting())
 assert.NotEqual(t, "Hello, World!", "Hello, Universe!")
 ```
 
-### 3. Nil and NotNil <SectionLink id = "nil-and-notnil" />
+### 3. Nil and NotNil <SectionLink client:load id = "nil-and-notnil" />
 
 `assert.Nil()` and `assert.NotNil()` are used to check if the object is nil or not. It takes two arguments, the first one is the testing object and the second one is the object to be checked.
 
@@ -95,7 +95,7 @@ assert.Nil(t, nil)
 assert.NotNil(t, "Hello, World!")
 ```
 
-### 5. True and False <SectionLink id = "true-and-false" />
+### 5. True and False <SectionLink client:load id = "true-and-false" />
 
 `assert.True()` and `assert.False()` are used to check if the object is true or false, they are both usually used with boolean values or functions returning boolean values. It takes two arguments, the first one is the testing object and the second one is the object to be checked.
 
@@ -105,7 +105,7 @@ assert.True(t, true)
 assert.False(t, false)
 ```
 
-### 6. Empty and NotEmpty <SectionLink id = "empty-and-notempty" />
+### 6. Empty and NotEmpty <SectionLink client:load id = "empty-and-notempty" />
 
 `assert.Empty()` and `assert.NotEmpty()` are used to check if the object is empty or not. It takes two arguments, the first one is the testing object and the second one is the object to be checked.
 
@@ -115,7 +115,7 @@ assert.Empty(t, "")
 assert.NotEmpty(t, "Hello, World!")
 ```
 
-### 7. Len <SectionLink id = "len" />
+### 7. Len <SectionLink client:load id = "len" />
 
 `assert.Len()` is used to check if the length of the object is equal to the expected length. It takes three arguments, the first one is the testing object, the second one is the object to be checked and the third one is the expected length.
 
@@ -125,7 +125,7 @@ j := []int{1, 2, 3}
 assert.Len(t, j, 3)
 ```
 
-### 8. Contains <SectionLink id = "contains" />
+### 8. Contains <SectionLink client:load id = "contains" />
 
 `assert.Contains()` is used to check if the object contains the expected value. It takes three arguments, the first one is the testing object, the second one is the object to be checked and the third one is the expected value.
 
@@ -135,7 +135,7 @@ j := []int{1, 2, 3}
 assert.Contains(t, j, 2)
 ```
 
-### 9. Panics and NotPanics <SectionLink id = "panics-and-notpanics" />
+### 9. Panics and NotPanics <SectionLink client:load id = "panics-and-notpanics" />
 
 `assert.Panics()` and `assert.NotPanics()` is used to check if the function panics or not. It takes two arguments, the first one is the testing object and the second one is the function to be checked.
 
@@ -155,7 +155,7 @@ func TestPanic(t *testing.T) {
 }
 ```
 
-### 10. Error and NoError <SectionLink id = "error-and-noerror" />
+### 10. Error and NoError <SectionLink client:load id = "error-and-noerror" />
 
 `assert.Error()` and `assert.NoError()` is used to check if the error is nil or not. It takes two arguments, the first one is the testing object and the second one is the error to be checked.
 
@@ -175,7 +175,7 @@ func TestError(t *testing.T) {
 }
 ```
 
-## Conclusion <SectionLink id = "conclusion" />
+## Conclusion <SectionLink client:load id = "conclusion" />
 
 writing tests is a very important part of the development process, and it is very important to write tests for your code. In this article, we have learned how to use the assert package in Golang. We have also learned about the major assert methods. I hope you have enjoyed this article.
 

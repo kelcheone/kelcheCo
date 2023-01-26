@@ -34,7 +34,7 @@ Writing tests in Golang and in general is a great way to ensure that your code i
 - [Test Benchmarks](#test-benchmarks)
 - [Conclusion](#conclusion)
 
-## How to write tests in Golang <SectionLink id="how-to-write-tests-in-golang" />
+## How to write tests in Golang <SectionLink client:load id="how-to-write-tests-in-golang" />
 
 Golang has an inbuilt testing package that allows us to write tests. The testing package provides a framework for writing tests and running them. The testing package also provides a set of tools for writing tests.
 
@@ -66,7 +66,7 @@ To run our tests, we can use the `go test` command. This command will run all th
 go test -v
 ```
 
-## Table Driven Tests <SectionLink id="table-driven-tests" />
+## Table Driven Tests <SectionLink client:load id="table-driven-tests" />
 
 Table-driven tests are a way to write tests in Golang using a table-like format. This allows us to write tests more concisely. We can use a table to store the input and expected output for our tests. We can then loop through the table and run our tests. The tale is a slice of structs.
 
@@ -101,7 +101,7 @@ func TestMain(t *testing.T) {
 }
 ```
 
-## How to interpret test results <SectionLink id="how-to-interpret-test-results"/>
+## How to interpret test results <SectionLink client:load id="how-to-interpret-test-results"/>
 
 When we run our tests, we will get a summary of the tests that we run. The summary will tell us how many tests were run, how many tests passed, and how many tests failed. The summary will also tell us how long it took to run the tests.
 
@@ -112,7 +112,7 @@ PASS
 ok      Testly  0.010s
 ```
 
-## Mocking <SectionLink id="mocking" />
+## Mocking <SectionLink client:load id="mocking" />
 
 Mocking is a way to test our code in isolation. We can mock a function by creating a function with the same signature as the function that we want to mock. We can then use this function to test our code. We can also use the `testing` package to mock functions. The `testing` package provides a `Mock` type that we can use to mock functions. The `Mock` type provides a `Call` method that we can use to mock a function. The `Call` method takes a function as its only argument. The function that we pass to the `Call` method will be called when the function that we are mocking is called.
 
@@ -154,7 +154,7 @@ func TestMain(t *testing.T) {
 
 In the above example, we are mocking the `MockedFunction` function. We are then calling the `MockedFunction` function and asserting that it was called. We can also use the `On` method to set the return value of the function that we are mocking.
 
-## Testing HTTP <SectionLink id="testing-http" />
+## Testing HTTP <SectionLink client:load id="testing-http" />
 
 To test HTTP requests in Golang, we can use the `httptest` package. The `httptest` package provides a `NewRecorder` function that we can use to create a `ResponseRecorder` type. The `ResponseRecorder` type implements the `http.ResponseWriter` interface. We can use the `ResponseRecorder` type to test our HTTP handlers. We can use the `ResponseRecorder` type to get the response from our HTTP handler.
 
@@ -221,7 +221,7 @@ ok      Testly  0.010s
 
 In the `main.go` file, we are creating an HTTP server that listens on port `8080`. We are creating an HTTP handler that returns the string `Hello World` when it receives a request. We can then test the handlers.
 
-## Testing concurrency <SectionLink id="testing-concurrency" />
+## Testing concurrency <SectionLink client:load id="testing-concurrency" />
 
 To test concurrency in Golang, we can use the `sync` package. The `sync` package provides a `WaitGroup` type that we can use to wait for a group of goroutines to finish. We can use the `Add` method to add a goroutine to the `WaitGroup` type. We can then use the `Wait` method to wait for all the goroutines to finish. We can also use the `Done` method to signal that a goroutine has finished.
 
@@ -264,7 +264,7 @@ func TestMain(t *testing.T) {
 
 In the above example, we are creating a `WaitGroup` type and adding a goroutine to it. We are then waiting for the goroutine to finish. We can also use the `Done` method to signal that a goroutine has finished.
 
-## Testing Time <SectionLink id="testing-time" />
+## Testing Time <SectionLink client:load id="testing-time" />
 
 To test time in Golang, we can use the `time` package. The `time` package provides a `Now` function that we can use to get the current time. We can use the `Add` method to add a duration to the current time. We can then use the `Equal` method to compare the current time with the time that we want to test.
 
@@ -301,7 +301,7 @@ func TestMain(t *testing.T) {
 
 In the above example, we are getting the current time and adding 5 seconds to it. We are then comparing the current time with the time that we want to test. If the times are equal, the test will pass. If the times are not equal, the test will fail.
 
-## Testing Errors <SectionLink id="testing-errors" />
+## Testing Errors <SectionLink client:load id="testing-errors" />
 
 To test errors in Golang, the `tesing` package provides an `Errorf` function that we can use to fail a test. We can use the `Errorf` function to print an error message and fail a test.
 
@@ -339,7 +339,7 @@ func TestFailingFunction(t *testing.T) {
 
 In the above example, we are creating a function that returns an error. We are then calling the function and checking if the function returned an error. If the function returned an error, we are failing the test.
 
-## Testing Panics <SectionLink id="testing-panics" />
+## Testing Panics <SectionLink client:load id="testing-panics" />
 
 Panics are a way to handle errors in Golang by crashing the program. To test panics in Golang, we can use the `recover` function. The `recover` function can be used to recover from a panic. We can use this to test if a function panics.
 
@@ -406,7 +406,7 @@ exit status 1
 FAIL    Testly  0.007s
 ```
 
-## Testing Logging <SectionLink id="testing-logging" />
+## Testing Logging <SectionLink client:load id="testing-logging" />
 
 To test logging in Golang, we use `Logf` and `Log` functions from the `testing` package. We can use the `Logf` function to print a formatted message. We can use the `Log` function to print a message.
 
@@ -447,7 +447,7 @@ func TestFuncLogsF(t *testing.T) {
 }
 ```
 
-## Test Benchmarks <SectionLink id="test-benchmarks" />
+## Test Benchmarks <SectionLink client:load id="test-benchmarks" />
 
 To test benchmarks in Golang, we can use the `testing` package. The `testing` package provides a `Benchmark` function that we can use to run benchmarks. We can use the `Benchmark` function to run benchmarks for a function.
 
@@ -479,6 +479,6 @@ func BenchmarkMain(b *testing.B) {
 
 Testing benchmarks are covered in more detail in the <Link url="/blog/go/golang-benchmarking/"> Golang Benchmarking </Link> article.
 
-## Conclusion <SectionLink id="conclusion" />
+## Conclusion <SectionLink client:load id="conclusion" />
 
 In this article, we explored techniques for testing Golang code. We discussed how to test functions, variables, constants, time, errors, panics, logging, and benchmarks. Additionally, we discussed the use of the testing package to help facilitate the testing of the Golang code.

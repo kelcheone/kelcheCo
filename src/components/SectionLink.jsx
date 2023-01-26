@@ -5,13 +5,24 @@ import React from "react";
 import { AiOutlineLink } from "react-icons/ai/index";
 
 const SectionLink = ({ id }) => {
+  // on click, copy the link to the clipboard
+  const copyLink = () => {
+    const rawLink = window.location.href;
+    const link = rawLink.split("#")[0] + `#${id}`;
+    navigator.clipboard.writeText(link);
+  };
+
   return (
     <a
       className="font-bold inline-block hover:underline"
       href={`#${id}`}
       aria-label={`Link to section ${id}`}
     >
-      <AiOutlineLink className="inline-block" />
+      <AiOutlineLink
+        onClick={copyLink}
+        title="Copy section link to clipboard"
+        className="inline-block"
+      />
     </a>
   );
 };

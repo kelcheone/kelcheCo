@@ -22,7 +22,7 @@ A byte is an unsigned integer that represents a single byte of data it is repres
 
 Just like <Link url="/blog/go/golang-strings/"> strings </Link> {" "}byte manipulation can be done using the `bytes` package found in the standard library.
 
-## How to define a byte in Go. <SectionLink id="how-to-define-a-byte-in-go" />
+## How to define a byte in Go. <SectionLink client:load id="how-to-define-a-byte-in-go" />
 
 A byte is defined using the `byte` keyword. It must be declared implicity since the compiler can't infer the type.
 
@@ -42,7 +42,7 @@ var b byte = 1
 ...
 ```
 
-## Bytes array or slice <SectionLink id="bytes-array-slice" />
+## Bytes array or slice <SectionLink client:load id="bytes-array-slice" />
 
 Just like any other data type in Go, a byte can be declared as an array or a slice.
 
@@ -54,7 +54,7 @@ var b [1]byte
 ...
 ```
 
-## Bytes and strings <SectionLink id="bytes-and-strings" />
+## Bytes and strings <SectionLink client:load id="bytes-and-strings" />
 
 Bytes can be converted to strings and vice versa.
 
@@ -77,7 +77,7 @@ fmt.Println(c) // Is this a string?
   <p> []byte() is a type conversion while []byte\{} is a slice literal. </p>
 </Nugget>
 
-## Bytes and runes <SectionLink id="bytes-and-runes" />
+## Bytes and runes <SectionLink client:load id="bytes-and-runes" />
 
 A rune is a Go type that represents a Unicode code point while a byte is a Go type that represents a single byte of data. A rune is 4 bytes long while a byte is 1 byte long.
 
@@ -107,7 +107,7 @@ fmt.Println(b) // 65
 fmt.Printf("%T", b) // uint8
 ```
 
-## Byte manipulation with the `bytes` package <SectionLink id="byte-manipulation-with-the-bytes-package" />
+## Byte manipulation with the `bytes` package <SectionLink client:load id="byte-manipulation-with-the-bytes-package" />
 
 The `bytes` package provides functions for manipulating byte slices and arrays.
 

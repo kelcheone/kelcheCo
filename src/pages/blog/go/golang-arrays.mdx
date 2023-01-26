@@ -44,7 +44,7 @@ import SectionLink from "@components/SectionLink.jsx";
 - [Array of Pointers](#array-of-pointers-in-golang)
 - [Tl;dr](#tldr)
 
-## What is an Array in Go? <SectionLink id="what-is-an-array-in-go" />
+## What is an Array in Go? <SectionLink client:load id="what-is-an-array-in-go" />
 
 An array is a fixed-length sequence of elements of a single type. Arrays are mutable, meaning that the elements of an array can be changed after it is created. Arrays are a fundamental data structure in Go.
 
@@ -57,7 +57,7 @@ An array is a fixed-length sequence of elements of a single type. Arrays are mut
   </p>
 </Nugget>
 
-## Creating an Array in Go <SectionLink id="creating-an-array-in-go" />
+## Creating an Array in Go <SectionLink client:load id="creating-an-array-in-go" />
 
 Arrays are used to store multiple values in a single variable, instead of declaring separate variables for each value. To declare an array, define the type of elements it will hold, and the number of elements it will hold.
 
@@ -83,7 +83,7 @@ Here we have assigned values to the elements of the array. We can also declare a
 arr := [4]int{1, 2, 3, 4}
 ```
 
-## Accessing Array Elements in Golang <SectionLink id="accessing-array-elements-in-golang" />
+## Accessing Array Elements in Golang <SectionLink client:load id="accessing-array-elements-in-golang" />
 
 Array elements can be accessed using the index of the element. The index of the first element is 0, and the index of the last element is the length of the array minus 1.
 
@@ -95,7 +95,7 @@ fmt.Println(arr[2]) // 3
 fmt.Println(arr[3]) // 4
 ```
 
-## Iterating Over an Array in Golang <SectionLink id="iterating-over-an-array-in-golang" />
+## Iterating Over an Array in Golang <SectionLink client:load id="iterating-over-an-array-in-golang" />
 
 Array elements can be accessed using a for loop. The index of the first element is 0, and the index of the last element is the length of the array minus 1.
 
@@ -140,7 +140,7 @@ The output of the above code is:
   </p>
 </Nugget>
 
-## Array Length in Golang <SectionLink id="array-length-in-golang" />
+## Array Length in Golang <SectionLink client:load id="array-length-in-golang" />
 
 Arrays have the `len` function that returns the length of the array.
 
@@ -151,7 +151,7 @@ fmt.Println(len(arr)) // 4
 
 Since arrays are fixed-length, the length of an array cannot be changed after it is created.
 
-## Array Slicing in Golang <SectionLink id="array-slicing-in-golang" />
+## Array Slicing in Golang <SectionLink client:load id="array-slicing-in-golang" />
 
 Array slicing is a technique to access a subset of an array. The syntax for array slicing is `array[start:end]`. The `start` index is inclusive, and the `end` index is exclusive. The `start` index defaults to 0, and the `end` index defaults to the length of the array.
 
@@ -163,7 +163,7 @@ fmt.Println(arr[2:]) // [3 4]
 fmt.Println(arr[:]) // [1 2 3 4]
 ```
 
-## Array Comparison in Golang <SectionLink id="array-comparison-in-golang" />
+## Array Comparison in Golang <SectionLink client:load id="array-comparison-in-golang" />
 
 Arrays can be compared using the `==` operator. The `==` operator returns true if the two arrays have the same length and the same elements in the same order.
 
@@ -178,7 +178,7 @@ fmt.Println(arr1 == arr3) // false
 
 The last print statement returns false because the elements of `arr1` and `arr3` do not contain the same values.
 
-## Array Sorting in Golang <SectionLink id="array-sorting-in-golang" />
+## Array Sorting in Golang <SectionLink client:load id="array-sorting-in-golang" />
 
 Arrays can be sorted using the `sort` package. The `sort` package provides the `sort.Ints` function that sorts an array of integers in ascending order.
 
@@ -214,7 +214,7 @@ for i := 0; i < len(arr); i++ {
 fmt.Println(arr) // [1 2 3 4]
 ```
 
-## Array Copy in Golang <SectionLink id="array-copy-in-golang" />
+## Array Copy in Golang <SectionLink client:load id="array-copy-in-golang" />
 
 Arrays can be copied using the `copy` function. The `copy` function takes two arguments: the destination array and the source array. The `copy` function returns the number of elements copied.
 
@@ -227,7 +227,7 @@ fmt.Println(arr2) // [1 2 3 4]
 fmt.Println(n) // 4
 ```
 
-## Array Delete in Golang <SectionLink id="array-delete-in-golang" />
+## Array Delete in Golang <SectionLink client:load id="array-delete-in-golang" />
 
 Elements of an array can be deleted by setting the value of the element to the zero value of the type of the element. The zero value of an integer is 0.
 
@@ -238,7 +238,7 @@ arr[1] = 0
 fmt.Println(arr) // [1 0 3 4]
 ```
 
-## Array Contains in Golang <SectionLink id="array-contains-in-golang" />
+## Array Contains in Golang <SectionLink client:load id="array-contains-in-golang" />
 
 To check if array contains a value, we can use the `sort.Search` function from the `sort` package. The `sort.Search` function takes three arguments: the length of the array, a function that returns true if the element at the given index is greater than or equal to the value, and the value to search for.
 
@@ -257,7 +257,7 @@ The output of the above code is:
 found 3 at index 2
 ```
 
-## Array Reverse in Golang <SectionLink id="array-reverse-in-golang" />
+## Array Reverse in Golang <SectionLink client:load id="array-reverse-in-golang" />
 
 Arrays can be reversed in two ways. The first way is to replace the first element with the last element, the second element with the second last element, and so on. The second way is to use the `sort.Reverse` function from the `sort` package.
 
@@ -277,13 +277,13 @@ sort.Sort(sort.Reverse(sort.IntSlice(arr[:])))
 fmt.Println(arr) // [4 3 2 1]
 ```
 
-## Multidimensional Arrays in Golang <SectionLink id="multidimensional-arrays-in-golang" />
+## Multidimensional Arrays in Golang <SectionLink client:load id="multidimensional-arrays-in-golang" />
 
 Arrays can have more than one dimension. A multidimensional array is an array of arrays. The syntax for declaring a multidimensional array is `var arr [rows][columns]type`. The `rows` and `columns` are the number of rows and columns in the multidimensional array, and `type` is the type of the elements in the multidimensional array.
 
 Most of the operations that can be performed on a 1D array can also be performed on a multidimensional array.
 
-### 2D Array in Golang <SectionLink id="2d-array-in-golang" />
+### 2D Array in Golang <SectionLink client:load id="2d-array-in-golang" />
 
 A 2D array is an array of arrays. The syntax for declaring a 2D array is `var arr [rows][columns]type`. The `rows` and `columns` are the number of rows and columns in the 2D array, and `type` is the type of the elements in the 2D array.
 
@@ -294,7 +294,7 @@ var arr [2][3]int
 
 The above code declares a 2D array with 2 rows and 3 columns. The elements of the 2D array are integers.
 
-### Accessing 2D Array Elements in Golang <SectionLink id="accessing-2d-array-elements-in-golang" />
+### Accessing 2D Array Elements in Golang <SectionLink client:load id="accessing-2d-array-elements-in-golang" />
 
 2D array elements can be accessed using the row and column index of the element. The row index of the first element is 0, and the column index of the first element is 0. The row index of the last element is the number of rows minus 1, and the column index of the last element is the number of columns minus 1.
 
@@ -309,7 +309,7 @@ fmt.Println(arr[1][1]) // 5
 fmt.Println(arr[1][2]) // 6
 ```
 
-### 2D Array Length in Golang <SectionLink id="2d-array-length-in-golang" />
+### 2D Array Length in Golang <SectionLink client:load id="2d-array-length-in-golang" />
 
 The `len` function returns the number of rows in a 2D array. The `len` function does not return the number of columns in a 2D array. However, we can loop through the rows of a 2D array and use the `len` function to get the number of columns in each row.
 
@@ -322,7 +322,7 @@ for i := 0; i < len(arr); i++ {
 }
 ```
 
-## Array of Slices in Golang <SectionLink id="array-of-slices-in-golang" />
+## Array of Slices in Golang <SectionLink client:load id="array-of-slices-in-golang" />
 
 An array of slices is an array where each element is a slice. The syntax for declaring an array of slices is `var arr [size]type`, where `size` is the number of elements in the array, and `type` is the type of the elements in the array.
 
@@ -333,7 +333,7 @@ var arr [2][]int
 
 The above code declares an array of slices with 2 elements. The elements of the array are slices of integers.
 
-## Array of Maps in Golang <SectionLink id="array-of-maps-in-golang" />
+## Array of Maps in Golang <SectionLink client:load id="array-of-maps-in-golang" />
 
 An array of maps is one in which each element is a map. The syntax for declaring an array of maps is `var arr [size]type`.
 
@@ -347,7 +347,7 @@ arr[1] = map[string]int{"c": 3, "d": 4}
 
 The above code declares an array of maps with 2 elements. The elements of the array are maps with string keys and integer values.
 
-## Array of Functions in Golang <SectionLink id="array-of-functions-in-golang" />
+## Array of Functions in Golang <SectionLink client:load id="array-of-functions-in-golang" />
 
 An array of functions is one where each element is a function. The syntax for declaring an array of functions is `var arr [size]type`.
 
@@ -365,7 +365,7 @@ arr[1] = func(x int) int {
 
 The above code declares an array of functions with 2 elements. The elements of the array are functions that take an integer as an argument and return an integer.
 
-## Array of Interfaces in Golang <SectionLink id="array-of-interfaces-in-golang" />
+## Array of Interfaces in Golang <SectionLink client:load id="array-of-interfaces-in-golang" />
 
 An array of interfaces is one where each element is an interface. The syntax for declaring an array of interfaces is `var arr [size]type`.
 
@@ -379,7 +379,7 @@ arr[1] = "hello"
 
 The above code declares an array of interfaces with 2 elements. The elements of the array are an integer and a string.
 
-## Array of Pointers in Golang <SectionLink id="array-of-pointers-in-golang" />
+## Array of Pointers in Golang <SectionLink client:load id="array-of-pointers-in-golang" />
 
 An array of pointers is one where each element is a pointer. The syntax for declaring an array of pointers is `var arr [size]type`.
 
@@ -395,7 +395,7 @@ arr[1] = &b
 
 The above code declares an array of pointers with 2 elements. The elements of the array are pointers to integers.
 
-## Array of Channels in Golang <SectionLink id="array-of-channels-in-golang" />
+## Array of Channels in Golang <SectionLink client:load id="array-of-channels-in-golang" />
 
 An array of channels is one where each element is a channel. The syntax for declaring an array of channels is `var arr [size]type`.
 
@@ -409,7 +409,7 @@ arr[1] = make(chan int)
 
 The above code declares an array of channels with 2 elements. The elements of the array are channels of integers.
 
-## Array of Structs in Golang <SectionLink id="array-of-structs-in-golang" />
+## Array of Structs in Golang <SectionLink client:load id="array-of-structs-in-golang" />
 
 An array of structs is one where each element is a struct. The syntax for declaring an array of structs is `var arr [size]type`.
 
@@ -428,6 +428,6 @@ arr[1] = Person{Name: "Jane", Age: 21}
 
 The above code declares an array of structs with 2 elements. The elements of the array are `Person` structs.
 
-## Tl;dr <SectionLink id="tldr" />
+## Tl;dr <SectionLink client:load id="tldr" />
 
 Arrays are a data structure that stores a fixed number of elements of the same type. Arrays are zero-indexed, meaning an array's first element is at index 0. Arrays can be declared using the `var` keyword, and the elements of an array can be accessed using the index of the element.

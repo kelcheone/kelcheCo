@@ -17,11 +17,11 @@ import Nugget from "@components/Nugget.astro";
 import Link from "@components/Link.jsx";
 import SectionLink from "@components/SectionLink.jsx";
 
-# Strings in Go <SectionLink id="strings-in-go" />
+# Strings in Go <SectionLink client:load id="strings-in-go" />
 
 In Go, strings are a fundamental data type. They are immutable, meaning they cannot be changed once created. Strings are made up of a sequence of bytes and are UTF-8 encoded. This means that each character in a string is represented by one or more bytes. For example, the character "é" is represented by two bytes: 0xC3 and 0xA9. The Go language specification defines a string as a sequence of bytes, not necessarily characters. This means that a string can contain any sequence of bytes, including null bytes, and it is up to the user to determine how those bytes should be interpreted.
 
-## Creating Strings in Go <SectionLink id="creating-strings-in-go" />
+## Creating Strings in Go <SectionLink client:load id="creating-strings-in-go" />
 
 To create a string in Go, you can use either double quotes or backticks. Double quotes are used to create a string literal, while backticks are used to create a raw string literal. A string literal is a sequence of characters surrounded by double quotes or backticks. A raw string literal is a string literal that is interpreted literally, without any escape sequences.
 
@@ -35,11 +35,11 @@ fmt.Println(s1 == s2) // true
 
 ```
 
-## String Manipulation in Go <SectionLink id="string-manipulation-in-go" />
+## String Manipulation in Go <SectionLink client:load id="string-manipulation-in-go" />
 
 Go provides a powerful set of tools for manipulating strings. Whether you're looking to do basic slicing and dicing, more complex pattern matching, or something else entirely, Go has you covered.
 
-## How to Get the Length of a String in Go <SectionLink id="how-to-get-the-length-of-a-string-in-go" />
+## How to Get the Length of a String in Go <SectionLink client:load id="how-to-get-the-length-of-a-string-in-go" />
 
 To get the length of a string in Go, you can use the `len` function. This is possible because Go strings are made up of a sequence of bytes. The `len` function returns the number of bytes in a string.
 
@@ -50,7 +50,7 @@ s := "Hello, World!"
 fmt.Println(len(s)) // 13
 ```
 
-## How to trim whitespace in Go <SectionLink id="how-to-trim-whitespace-in-go" />
+## How to trim whitespace in Go <SectionLink client:load id="how-to-trim-whitespace-in-go" />
 
 To trim whitespace from a string in Go, you can use the `strings.TrimSpace` function. This function takes a string as an argument and returns a string with all leading and trailing whitespace removed.
 
@@ -86,7 +86,7 @@ fmt.Println(s2) //  Hello, World!
 fmt.Println(len(s2)) // 14
 ```
 
-## How to Concatenate Strings in Go <SectionLink id="how-to-concatenate-strings-in-go" />
+## How to Concatenate Strings in Go <SectionLink client:load id="how-to-concatenate-strings-in-go" />
 
 To concatenate two strings in Go, you can use the + operator. The + operator can be used to concatenate any number of strings.
 
@@ -113,7 +113,7 @@ s3 := fmt.Sprintf("%s%s", s1, s2)
 fmt.Println(s3) // Hello, World!
 ```
 
-## String concatenation with `strings.Builder` <SectionLink id="string-concatenation-with-strings-builder" />
+## String concatenation with `strings.Builder` <SectionLink client:load id="string-concatenation-with-strings-builder" />
 
 The `strings.Builder` type is a struct that provides a way to efficiently build a string by writing to it. It is similar to the `bytes.Buffer` type, which is used to build a byte slice. The `strings.Builder` type is useful when you need to concatenate a large number of strings because it avoids the overhead of creating a new string each time you concatenate two strings thus improving performance.
 
@@ -132,7 +132,7 @@ s3 := b.String()
 fmt.Println(s3) // Hello, World!
 ```
 
-## How to Split Strings in Go <SectionLink id="how-to-split-strings-in-go" />
+## How to Split Strings in Go <SectionLink client:load id="how-to-split-strings-in-go" />
 
 To split a string into a slice of strings, you can use the `strings.Split` function. This function takes two arguments: the string to split and the delimiter to split on. It returns a slice of strings that are the result of splitting the string on the delimiter.
 
@@ -145,7 +145,7 @@ s1 := strings.Split(s, ", ")
 fmt.Println(s1) // [Hello World!]
 ```
 
-## How to Join Strings in Go <SectionLink id="how-to-join-strings-in-go" />
+## How to Join Strings in Go <SectionLink client:load id="how-to-join-strings-in-go" />
 
 To join a slice of strings into a single string, you can use the `strings.Join` function. This function takes two arguments: the slice of strings to join and the delimiter to join on. It returns a string that is the result of joining the slice of strings on the delimiter.
 
@@ -158,7 +158,7 @@ s1 := strings.Join(s, ", ")
 fmt.Println(s1) // Hello, World!
 ```
 
-## How to Split Strings by Index in Go <SectionLink id="how-to-split-strings-by-index-in-go" />
+## How to Split Strings by Index in Go <SectionLink client:load id="how-to-split-strings-by-index-in-go" />
 
 In Go, you can split a string by index using the `strings.SplitN()` function. This function takes a string, a separator, and a number of splits as arguments and returns a slice of strings. The following example shows how to split a string by index using the `strings.SplitN()` function.
 
@@ -178,7 +178,7 @@ func main() {
 }
 ```
 
-## How to Convert Strings to Numbers in Go <SectionLink id="how-to-convert-strings-to-numbers-in-go" />
+## How to Convert Strings to Numbers in Go <SectionLink client:load id="how-to-convert-strings-to-numbers-in-go" />
 
 To convert a string to a number in Go, you can use the <Link url="/blog/go/golang-atoi/">`strconv.Atoi` </Link> function or the <Link url="/blog/go/golang-parseint/"> `strconv.ParseInt`</Link> function depending on the type of number you want to convert to.
 
@@ -209,7 +209,7 @@ if err != nil {
 fmt.Printf("%T\n", i) // int64
 ```
 
-## How to Check if a String Contains a Substring in Go <SectionLink id="how-to-check-if-a-string-contains-a-substring-in-go" />
+## How to Check if a String Contains a Substring in Go <SectionLink client:load id="how-to-check-if-a-string-contains-a-substring-in-go" />
 
 To check if a string contains a substring in Go, you can use the `strings.Contains` function. This function takes two arguments: the string to check and the substring to check for. It returns a boolean indicating whether the string contains the substring.
 
@@ -222,7 +222,7 @@ fmt.Println(strings.Contains(s, "World")) // true
 fmt.Println(strings.Contains(s, "Foo")) // false
 ```
 
-## How to Replace a Substring in a String in Go <SectionLink id="how-to-replace-a-substring-in-a-string-in-go" />
+## How to Replace a Substring in a String in Go <SectionLink client:load id="how-to-replace-a-substring-in-a-string-in-go" />
 
 To replace a substring in a string in Go, you can use the `strings.Replace` function. This function takes four arguments: the string to replace, the substring to replace, the replacement string, and the number of times to replace. It returns a string with the substring replaced.
 
@@ -246,7 +246,7 @@ s1 := strings.ReplaceAll(s, "awesome", "great")
 fmt.Println(s1) // Golang is great and great!
 ```
 
-## How to Reverse a String in Go <SectionLink id="how-to-reverse-a-string-in-go" />
+## How to Reverse a String in Go <SectionLink client:load id="how-to-reverse-a-string-in-go" />
 
 To reverse a string in Go, you need to convert the string to a slice of runes. You can then a <Link url="/blog/go/golang-for-loop/">for loop </Link> to iterate over the slice of runes and append each rune to a new slice of runes. Finally, you can convert the slice of runes to a string.
 
@@ -302,7 +302,7 @@ s1 := b.String()
 fmt.Println(s1) // 犬 yzal eht revo depmuj 狐 nworb kciuq ehT
 ```
 
-## How to Convert a String to Uppercase or Lowercase in Go <SectionLink id="how-to-convert-a-string-to-uppercase-or-lowercase-in-go" />
+## How to Convert a String to Uppercase or Lowercase in Go <SectionLink client:load id="how-to-convert-a-string-to-uppercase-or-lowercase-in-go" />
 
 To convert a string to uppercase in Go, you can use the `strings.ToUpper` function. The function returns a string with all the characters in uppercase.
 
@@ -327,7 +327,7 @@ fmt.Println(s1) // hello, world!
 
 ```
 
-## How to Convert a String to Title Case in Go <SectionLink id="how-to-convert-a-string-to-title-case-in-go" />
+## How to Convert a String to Title Case in Go <SectionLink client:load id="how-to-convert-a-string-to-title-case-in-go" />
 
 To convert a string to title case in Go, you can use the `cases.Title` function from the <Link url="https://golang.org/x/text/cases">`golang.org/x/text/cases`</Link> package.
 
@@ -366,7 +366,7 @@ fmt.Println(strings.ToTitle(str)) // ǲ
 fmt.Println(strings.ToUpper(str)) // ǲ
 ```
 
-## How to Check if a String starts or ends with a Substring in Go <SectionLink id="how-to-check-if-a-string-starts-or-ends-with-a-substring-in-go" />
+## How to Check if a String starts or ends with a Substring in Go <SectionLink client:load id="how-to-check-if-a-string-starts-or-ends-with-a-substring-in-go" />
 
 To check if a string starts with a substring in Go, you can use the `strings.HasPrefix` function. It returns a boolean indicating whether the string starts with the substring.
 
@@ -388,7 +388,7 @@ fmt.Println(strings.HasSuffix(s, "Hello")) // false
 fmt.Println(strings.HasSuffix(s, "World!")) // true
 ```
 
-## How to find the Index of a Substring in a String in Go <SectionLink id="how-to-find-the-index-of-a-substring-in-a-string-in-go" />
+## How to find the Index of a Substring in a String in Go <SectionLink client:load id="how-to-find-the-index-of-a-substring-in-a-string-in-go" />
 
 To find the index of a substring in a string in Go, you can use the `strings.Index` function. It returns the index of the first occurrence of the substring in the string.
 
@@ -415,7 +415,7 @@ fmt.Println(strings.LastIndex(s, "data")) // 39
 fmt.Println(strings.LastIndex(s, "oil")) // 24
 ```
 
-## How to Count the Number of Occurrences of a Substring in a String in Go <SectionLink id="how-to-count-the-number-of-occurrences-of-a-substring-in-a-string-in-go" />
+## How to Count the Number of Occurrences of a Substring in a String in Go <SectionLink client:load id="how-to-count-the-number-of-occurrences-of-a-substring-in-a-string-in-go" />
 
 To count the number of occurrences of a substring in a string in Go, you can use the `strings.Count` function. It returns the number of occurrences of the substring in the string.
 
@@ -427,7 +427,7 @@ fmt.Println(strings.Count(s, "data")) // 2
 fmt.Println(strings.Count(s, "oil")) // 2
 ```
 
-## How to convert boolean to string in Go <SectionLink id="how-to-convert-boolean-to-string-in-go" />
+## How to convert boolean to string in Go <SectionLink client:load id="how-to-convert-boolean-to-string-in-go" />
 
 To convert a boolean to a string in Go, you can use the `strconv.FormatBool` function. It returns a string representation of the boolean.
 
@@ -441,7 +441,7 @@ fmt.Println(s) // true
 fmt.Printf("%T", s) // string
 ```
 
-## How to compare strings in Go <SectionLink id="how-to-compare-strings-in-go" />
+## How to compare strings in Go <SectionLink client:load id="how-to-compare-strings-in-go" />
 
 To compare strings in Go, you can use the `==` operator. It returns a boolean indicating whether the strings are equal.
 
@@ -453,6 +453,6 @@ s2 := "Hello, World!"
 fmt.Println(s1 == s2) // true
 ```
 
-## Conclusion <SectionLink id="conclusion" />
+## Conclusion <SectionLink client:load id="conclusion" />
 
 String manipulation is a common task in programming. In this article, we have seen how to manipulate strings in Go. We have seen various functions to manipulate strings in Go using the `strings` package, `cases` package, and `strconv` package.

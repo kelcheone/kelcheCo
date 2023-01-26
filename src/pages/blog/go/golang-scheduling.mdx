@@ -19,11 +19,11 @@ import Nugget from "@components/Nugget.astro";
 import Link from "@components/Link.jsx";
 import { Image } from "@astrojs/image/components";
 
-## Introduction <SectionLink id="introduction" />
+## Introduction <SectionLink client:load id="introduction" />
 
 What makes Go, a great language to work with is the concept of concurrency. Concurrency in its most basic definition is the ability to run multiple tasks at the same time. This is a very powerful concept, but it comes with a lot of challenges. Thank god for the Go team, they have made it very easy to work with concurrency in Go. In this article, we take a look under the hood of the Go runtime and see how the scheduler works.
 
-### Some Prehumble <SectionLink id="some-prehumble" />
+### Some Prehumble <SectionLink client:load id="some-prehumble" />
 
 ```go
 ...
@@ -77,13 +77,13 @@ Any execution happens through the running or kernel threads in the cores. There 
 
 After this now it begs the question, how do we get the goroutines to run on the cores? As in a way to map our goroutines to the kernel threads. This is where **user space scheduling** comes in.
 
-## The Scheduler <SectionLink id="the-scheduler" />
+## The Scheduler <SectionLink client:load id="the-scheduler" />
 
 Now that we have a basic understanding of how the Go runtime works, we can take a look at the scheduler.
 
 In computing, a scheduler is a program that decides which process should be executed next. The Golang scheduler is responsible for scheduling the goroutines to the kernel threads. There are various types of schedulers, but the one we are interested in is the **user space schedulers**. The user space scheduler is responsible for scheduling tasks between the user space and the kernel space.
 
-## The M:N Scheduler <SectionLink id="the-mn-scheduler" />
+## The M:N Scheduler <SectionLink client:load id="the-mn-scheduler" />
 
 There are different types of user space schedulers, but we are interested in the one implemented by the Go runtime, which is **M:N**. The `M:N` scheduler is a scheduler that maps `N` goroutines to `M` kernel threads. The `M:N` scheduler is implemented in the Go runtime, and it is responsible for scheduling the goroutines to the kernel threads.
 
@@ -98,7 +98,7 @@ The advantage of such a scheduler is that it is flexible and allows the existenc
 />
 <p class="text-center text-xs dark:text-gray-300">M:N scheduler</p>
 
-### States of a Goroutine <SectionLink id="states-of-a-goroutine" />
+### States of a Goroutine <SectionLink client:load id="states-of-a-goroutine" />
 
 A goroutine can be in one of the following states:
 
@@ -115,7 +115,7 @@ A goroutine can be in one of the following states:
 - **Running**: A goroutine is running when it is being executed by a kernel thread.
 - **Blocked**: A goroutine is blocked when it is waiting for an event to happen. This can be a channel operation, a system call, or a mutex.
 
-## How Does the Scheduler keep track of Goroutines? <SectionLink id="how-does-the-scheduler-keep-track-of-goroutines" />
+## How Does the Scheduler keep track of Goroutines? <SectionLink client:load id="how-does-the-scheduler-keep-track-of-goroutines" />
 
 The scheduler keeps track of the goroutines in a **run queue**. The run queue is a queue of goroutines that are ready to be executed. The scheduler is responsible for adding goroutines to the run queue and removing them from the run queue. The run queue follows the **FIFO** (First In First Out) principle.
 
@@ -134,7 +134,7 @@ This is how the scheduler was implemented in Go 1.0. The problem with such an im
 
 Before coming back to this let's explore the concept of **Fairness**.
 
-## Fairness <SectionLink id="fairness" />
+## Fairness <SectionLink client:load id="fairness" />
 
 In the context of the scheduler, fairness is the ability of the scheduler to give each goroutine a fair chance to be executed. The scheduler should not give more time to goroutines that are more active than others. This is because it will lead to starvation of less active goroutines.
 
@@ -160,9 +160,9 @@ func main() {
 
 If the above program was run in a runtime that does not have fairness, the goroutine that prints `Hello` will be constantly added to the run queue. This will lead to starvation of the goroutine that prints `World`.
 
-## How Fairness was Achieved in the Go Scheduler <SectionLink id="how-fairness-was-achieved-in-the-go-scheduler" />
+## How Fairness was Achieved in the Go Scheduler <SectionLink client:load id="how-fairness-was-achieved-in-the-go-scheduler" />
 
-### Preemption <SectionLink id="preemption" />
+### Preemption <SectionLink client:load id="preemption" />
 
 Another important concept in the scheduler is **preemption**. Preemption is the ability of the scheduler to preempt (stop) a goroutine that is currently running and execute another goroutine. This is done to make sure that goroutines that are time-blocking goroutines don't consume a lot of time and give a chance to other goroutines to be executed.
 
@@ -170,7 +170,7 @@ The scheduler uses a time slice to determine when to preempt a goroutine. The ti
 
 A preempted goroutine will be added to the end of the global run queue which is a FIFO queue. This means that the goroutine will be executed after all the other goroutines in the global run queue.
 
-### Local Run Queues <SectionLink id="local-run-queues" />
+### Local Run Queues <SectionLink client:load id="local-run-queues" />
 
 There was the introduction of a new concept called **local run queues**. A local run queue is a run queue that is local to a kernel thread. This means that each kernel thread has its run queue. This solves the problem of fairness because each kernel thread will have its run queue and will not be affected by the other kernel threads in terms of resource sharing.
 
@@ -188,7 +188,7 @@ Local run queues introduced a concept called **per-thread state**
 
 The local run queue has a dedicated length of 256 goroutines. If the local run queue is full, the goroutine will be added to the global run queue. The global run queue is a queue that is shared between all the kernel threads.
 
-### M:P:N Threading Model <SectionLink id="m-p-n-threading-model" />
+### M:P:N Threading Model <SectionLink client:load id="m-p-n-threading-model" />
 
 With the introduction of the p-thread state, if a thread is blocked in a system call, the thread does not need to maintain its local run queue. Subsequently, those goroutines will be run elsewhere.
 
@@ -209,7 +209,7 @@ The number of processors is the maximum number of GOMAXPROCS.
 
 This threading model is important when exploring the concepts of **work stealing** and **Handoff**.
 
-### Work Stealing <SectionLink id="work-stealing" />
+### Work Stealing <SectionLink client:load id="work-stealing" />
 
 The modern Go scheduler uses a technique called **work stealing**. Work stealing is a technique that is used to balance the load between the processor's kernel threads. The idea behind work stealing is that if a processor is idle, it will steal work from another processor or the global run queue, or the network poller. This is done by taking half of the work from the other processor's run queue and adding it to its run queue.
 
@@ -241,7 +241,7 @@ As you can see in the above diagram, processor 2 is idle. It will check its run 
 
 As you can see in the above diagram, processor 2 will steal only 2 goroutines from the global run queue. This is because to get a fair chance, each processor should only steal the equivalent of the number of goroutines available by the number of processors. In this case, we have 3 processors, and 6 goroutines in the global run queue. This means that each processor should steal 2 goroutines.
 
-### Network Poller <SectionLink id="network-poller" />
+### Network Poller <SectionLink client:load id="network-poller" />
 
 The **network poller** is another component in the go runtime that is responsible for handling asynchronous system calls such as network I/O. For instance, if a goroutine is waiting for a network request to complete, the goroutine will be added to the network poller. This is to avoid blocking the kernel thread.
 
@@ -258,7 +258,7 @@ If the global run queue is also empty, the processor will then have to poll the 
 
 If there is a runnable goroutine in the network poller (ready), the processor will add it to its local run queue.
 
-### Cases where the global run queue, local run queue, and network poller are empty <SectionLink id="cases-where-the-global-run-queue-local-run-queue-and-network-poller-are-empty" />
+### Cases where the global run queue, local run queue, and network poller are empty <SectionLink client:load id="cases-where-the-global-run-queue-local-run-queue-and-network-poller-are-empty" />
 
 There are cases where the global run queue and local run queue are empty and the network poller is also empty or has blocked goroutines. In this case, the processor will then have to steal work from another processor. The processor randomly picks a processor to steal work from (including itself). When it finds a processor with runnable goroutines, it will steal half of the goroutines from the other processor and add them to its run queue.
 
@@ -298,7 +298,7 @@ runtime.schedule(){
 }
 ```
 
-### Fairness Hierarchy <SectionLink id="fairness-hierarchy" />
+### Fairness Hierarchy <SectionLink client:load id="fairness-hierarchy" />
 
 The go runtime uses a hierarchy of fairness to ensure that goroutines are not starved. The hierarchy is as follows:
 
@@ -309,7 +309,7 @@ The go runtime uses a hierarchy of fairness to ensure that goroutines are not st
 
 All these steps result in fairness at a minimal cost.
 
-## Handoff <SectionLink id="handoff" />
+## Handoff <SectionLink client:load id="handoff" />
 
 We have seen how goroutines end up running on the kernel threads, but what happens when a thread blocks itself? For instance, if a goroutine does a system call, it will block the kernel thread causing the other goroutines in the local run queue to be starved.
 
@@ -341,11 +341,11 @@ To optimize this the go runtime handles the handoff in a slightly intelligent wa
 - The go scheduler will do immediate handoff if it knows that the syscall will be blocking for a long time. For instance, doing a read on a socket will block the kernel thread for a long time.
 - In other cases, it will let the processor be in a block. It will then set the status to reflect that it is in a syscall. Using **Sysmon** the go runtime will periodically check if the processor is still in a syscall. If it is still in a syscall, it will do a handoff.
 
-### What happens when you return from a handed-off syscall? <SectionLink id="what-happens-when-you-return-from-a-handed-off-syscall" />
+### What happens when you return from a handed-off syscall? <SectionLink client:load id="what-happens-when-you-return-from-a-handed-off-syscall" />
 
 When you return from a syscall the scheduler will check if the old processor (the one that was handed off) is available. If it is, the goroutine will associate itself with it. If the older processor is not available, the goroutine will associate itself with any idle processor. And if there are no idle processors, the goroutine will be added to the global run queue. Subsequently, it also parks that were in the syscall.
 
-## Rutime APIs <SectionLink id="rutime-apis" />
+## Rutime APIs <SectionLink client:load id="rutime-apis" />
 
 The go runtime provides a few APIs that can be used to control the scheduler. I'd recommend that you not use these APIs unless it is necessary. These APIs are:
 
