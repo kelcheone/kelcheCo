@@ -47,6 +47,7 @@ export default defineConfig({
     image({
       serviceEntryPoint: "@astrojs/image/sharp",
     }),
+    // purgecss(),
   ],
   site: "https://www.kelche.co",
   base: "/",

@@ -3,7 +3,7 @@ layout: "@layouts/ArticleLayout.astro"
 author: Kevin Kelche
 title: Golang Context (A Complete Guide)
 description: In Go, contexts are used to pass request-scoped values, deadlines, and cancellation signals between processes and API boundaries.
-date: 24 January 2023
+date: 25 January 2023
 image: /images/golang-context.svg
 imageDescription: Golang Context
 keywords:
@@ -11,8 +11,7 @@ keywords:
   - context
 tags:
   - golang
-
-draft: true
+  - featured
 ---
 
 import SectionLink from "@components/SectionLink.jsx";
@@ -69,6 +68,14 @@ One of the applications of context is to pass values between processes. This is 
 
 To access the values in the context, we can use the `context.Value` function. This function takes a context and a key and returns the value associated with the key.
 
+<Nugget>
+  <strong> Note: </strong>
+  Passing values should only be done when necessary otherwise use arguments to pass
+  values. Values in the context should be request-scoped and not application-scoped.
+</Nugget>
+
+To avoid collisions, it is recommended to use a custom type as the key.
+
 ```go title="main.go"
 package main
 
@@ -83,8 +90,10 @@ type User struct {
     Age int
 }
 
+type key string
+
 func someFunc(ctx context.Context) context.Context{
-    return context.WithValue(ctx, "user", User{
+    return context.WithValue(ctx, key("user"), User{
         Name: "John Doe",
         Age: 20,
     })
@@ -94,7 +103,7 @@ func main() {
     ctx := context.Background()
     ctx = someFunc(ctx)
 
-    user := ctx.Value("user").(User)
+    user := ctx.Value(key("user")).(User)
     fmt.Println(user)
 }
 ```
@@ -262,7 +271,6 @@ Create a new directory and initialize a new go program.
 mkdir server
 cd server
 touch main.go
-go mod init server
 ```
 
 Open the program in your preferred editor.
@@ -314,7 +322,6 @@ Create a new directory out of the server folder.
 mkdir client
 cd client
 touch main.go
-go mod init client
 ```
 
 ```go title="client/main.go"
