@@ -1,0 +1,175 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: Golang constants
+description: In Go, a constant is an immutable value that can be used in place of a variable. Constants are declared like variables, but with the const keyword.
+date: 27 January 2023
+image: /images/golang-constants.svg
+imageDescription:
+keywords:
+  - golang constants
+  - golang const
+tags:
+  - golang
+
+draft: true
+---
+
+import SectionLink from "@components/SectionLink.jsx";
+import Nugget from "@components/Nugget.astro";
+import Link from "@components/Link.jsx";
+import Table from "@components/Table.jsx";
+
+## Introduction
+
+In Go, a constant is an immutable value that can be used in place of a variable. Constants can be string, boolean, or numeric values. Constants cannot be declared using the `:= `syntax.
+
+## How to declare a constant <SectionLink id="how-to-declare-a-constant" />
+
+Constants are declared like variables, but with the `const` keyword. The `:=` syntax is only used for declaring variables. Constants cannot be declared using the `:=` syntax. This forms one of the main differences between constants and variables.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+const Pi = 3.14
+
+func main() {
+  fmt.Println(Pi)
+}
+```
+
+`Pi` is a constant of type `float64` and can be used in place of a variable.
+
+## How to declare multiple constants <SectionLink id="how-to-declare-multiple-constants" />
+
+To declare multiple constants, use the `const` and place the variables in a parenthesis.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+  const (
+    Pi = 3.14
+    Language = "Go"
+    Version = 1.19
+  )
+
+  fmt.Println(Pi, Language, Version)
+}
+```
+
+Here we have declared three constants of type `float64`, `string`, and `int`.
+
+The output of the above code is:
+
+```bash title="output"
+3.14 Go 1.19
+```
+
+## How to declare a constant with an explicit type <SectionLink id="how-to-declare-a-constant-with-an-explicit-type" />
+
+Even though constants are immutable, they can still have an explicit type. This is done by placing the type after the constant name.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+  const (
+    Pi float64 = 3.14
+    Language string = "Go"
+    Random int = 10e6
+  )
+
+    fmt.Printf("%T %T %T\n", Pi, Language, Version)
+}
+```
+
+The output of the above code is:
+
+```bash title="output"
+float64 string int
+```
+
+## Constant edge cases <SectionLink id="constant-edge-cases" />
+
+### Maps cannot be constants <SectionLink id="maps-cannot-be-constants" />
+
+Maps cannot be constants because they are mutable. This is because the length of a map is not known at compile time.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+  const m = map[string]int{
+    "one": 1,
+    "two": 2,
+  }
+
+  fmt.Println(m)
+}
+```
+
+The output of the above code is:
+
+```bash title="output"
+./main.go:6:13: map[string]int{…} (value of type map[string]int) is not constant
+```
+
+### Constant values should be known at compile time <SectionLink id="constant-values-should-be-known-at-compile-time" />
+
+Constant values should be known at compile time. This means that the value of a constant should be able to be determined at compile time. This includes values that are the result of a function call.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+  const Pi = math.Pi
+
+  fmt.Println(Pi)
+}
+```
+
+The output of the above code is:
+
+```bash title="output"
+3.14
+```
+
+If we were to introduce a function call, the compiler would throw an error.
+
+```go title="main.go"
+package main
+
+import (
+    "fmt"
+    "math"
+)
+
+func main() {
+  const Pi = math.Sin(1.57)
+
+  fmt.Println(Pi)
+}
+```
+
+The output of the above code is:
+
+```bash title="output"
+./expr.go:12:13: math.Sin(1.57) (value of type float64) is not constant
+```
+
+Function calls are not allowed in constants because the value of the function call cannot be determined at compile time.
+
+## Conclusion
+
+In this article, we have learned how to declare constants in Go. We have also learned about some of the edge cases that can occur when declaring constants.
