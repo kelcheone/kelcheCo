@@ -1,0 +1,178 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: Golang defer
+description: Defer in Golang, is a way to execute a function after the current function has finished.
+date: 27 January 2023
+image: /images/golang-defer.svg
+imageDescription:
+keywords:
+  -
+tags:
+  - golang
+---
+
+import SectionLink from "@components/SectionLink.jsx";
+import Nugget from "@components/Nugget.astro";
+import Link from "@components/Link.jsx";
+import Table from "@components/Table.jsx";
+
+## What is defer?
+
+The defer keyword in Golang is a way to execute a function after the current function has finished. This is regardless of whether the surrounding function completes execution typically or with a panic. This can be useful for cleaning up resources, such as closing a file or a network connection, that need to be closed regardless of how the surrounding function completes execution.
+
+## How to use defer <SectionLink client:load id="how-to-use-defer" />
+
+Defer is used by calling the `defer` keyword before a function call. For example:
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+  defer fmt.Println("world")
+
+  fmt.Println("hello")
+}
+```
+
+This will print:
+
+```bash
+hello
+world
+```
+
+### Example opening a file <SectionLink client:load id="example-opening-a-file" />
+
+Defer is useful for things like closing a file or a WebSocket connection. For example:
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "os"
+)
+
+func main() {
+  f, err := os.Open("test.txt")
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+  defer f.Close()
+
+  // do something with the file
+}
+```
+
+## The order of defer <SectionLink client:load id="the-order-of-defer" />
+
+Defer is based on a stack. Meaning that it implements a last in first out (LIFO) order. So if multiple defer statements are used within a function, they will be executed in reverse order. This can be useful for logically structuring the clean-up code.
+
+<img
+  src="/images/defer/stack-order.png"
+  loading="lazy"
+  alt="golang order of defer"
+  width="100%"
+  height="auto"
+/>
+
+<p class="text-xs dark:text-gray-300 text-center"> Defer in a stack </p>
+
+For example:
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+    defer fmt.Println("world")
+    defer fmt.Println("hello")
+    defer fmt.Println("!")
+
+    fmt.Println("Hello")
+}
+```
+
+<img
+  src="/images/defer/lifo.png"
+  loading="lazy"
+  alt="LIFO in action"
+  width="100%"
+  height="auto"
+/>
+
+<p class="text-xs dark:text-gray-300 text-center"> Lifo In action</p>
+
+The output of this will be:
+
+```bash title="output"
+Hello
+!
+hello
+world
+```
+
+In this scenario, the `!` is the last to enter into the stack and the first to be executed. This also applies to other functions in the stack.
+
+## Defer in a for loop <SectionLink client:load id="defer-in-a-for-loop" />
+
+When using defer in a for loop, for each iteration, the defer function will be added to the stack. After the loop has finished executing, the defer functions will then be executed in reverse order. For example:
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+  for i := 0; i < 5; i++ {
+    defer fmt.Println(i)
+  }
+}
+```
+
+This will print:
+
+```bash
+4
+3
+2
+1
+0
+```
+
+## Defer in an if statement <SectionLink client:load id="defer-in-an-if-statement" />
+
+The behavior of defer in an if statement is similar to that of any other execution occurring in an if statement. The function will only be deferred if the condition is true. For example:
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main(){
+    num := 10
+    if num > 5 {
+        defer fmt.Println("num is greater than 5")
+    }else{
+        defer fmt.Println("num is less than 5")
+    }
+
+    fmt.Println("num is", num)
+}
+```
+
+This will print:
+
+```bash
+num is 10
+num is greater than 5
+```
+
+## Conclusion
+
+In this article, we looked at defer in Golang. We looked at how to use defer, the order of defer, defer in a for loop, and defer in an if statement. We also looked at some examples of how to use defer.

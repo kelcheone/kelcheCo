@@ -7,8 +7,9 @@ date: 19 January 2023
 image: /images/golang-strings.svg
 imageDescription: Golang String Manipulation
 keywords:
-  - math.Abs()
-  - absolute value golang
+  - Golang strings
+  - Golang string manipulation
+  - golang multiline strings
 tags:
   - golang
 ---
@@ -33,6 +34,16 @@ s2 := `Hello, World!`
 
 fmt.Println(s1 == s2) // true
 
+```
+
+## How to Create multiline strings in Golang <SectionLink client:load id="how-to-create-multiline-strings-in-golang" />
+
+To create a multiline string in Go, you can use backticks.You could also use the `+` operator to concatenate multiple strings, but this is not recommended because it is less efficient.
+
+```go title="example.go"
+...
+query := `SELECT * FROM users
+WHERE id = 1 AND name = "John"`
 ```
 
 ## String Manipulation in Go <SectionLink client:load id="string-manipulation-in-go" />
