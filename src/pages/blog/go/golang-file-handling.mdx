@@ -1,0 +1,619 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: File Handling in Golang (A Complete Guide)
+description: Learn how to handle files in Golang with efficient and easy-to-use built-in functions for reading, writing, and manipulating files.
+date: 28 January 2023
+image: /images/golang-files.svg
+imageDescription:
+keywords:
+  -
+tags:
+  - golang
+
+draft: true
+---
+
+import SectionLink from "@components/SectionLink.jsx";
+import Nugget from "@components/Nugget.astro";
+import Link from "@components/Link.jsx";
+import Table from "@components/Table.jsx";
+
+## Introduction
+
+File handling is an essential part of any programming language, and Golang is no exception. In this article, we will explore the various built-in functions in Golang that allow you to efficiently and easily work with files. From reading and writing to manipulating and processing, we will cover everything you need to know to handle files in Golang like a pro. Whether you're a beginner or an experienced developer, this article will give you a comprehensive understanding of file handling in Golang. So let's get started!
+
+## Table of Contents
+
+- [How to Create a File in Golang](#how-to-create-a-file-in-golang)
+- [How to Check if a File Exists in Golang](#how-to-check-if-a-file-exists-in-golang)
+- [How to Write to a File in Golang](#how-to-write-to-a-file-in-golang)
+- [How to Append to a File in Golang](#how-to-append-to-a-file-in-golang)
+- [How to Read a File in Golang](#how-to-read-a-file-in-golang)
+- [How to Read a File Line by Line in Golang](#how-to-read-a-file-line-by-line-in-golang)
+- [How to Delete a File in Golang](#how-to-delete-a-file-in-golang)
+- [How to Rename a File in Golang](#how-to-rename-a-file-in-golang)
+- [How to Copy a File in Golang](#how-to-copy-a-file-in-golang)
+- [How to Check if a File is Empty in Golang](#how-to-check-if-a-file-is-empty-in-golang)
+- [How to Get the Size of a File in Golang](#how-to-get-the-size-of-a-file-in-golang)
+- [How to Check File Types in Golang](#how-to-check-file-types-in-golang)
+- [How to list Files in a Directory in Golang](#how-to-list-files-in-a-directory-in-golang)
+- [How to Check File Extensions in Golang](#how-to-check-file-extensions-in-golang)
+- [ How to Check File Permissions in Golang](#how-to-check-file-permissions-in-golang)
+
+## How to Create a File in Golang <SectionLink client:load id="how-to-create-a-file-in-golang" />
+
+**To create a file in Golang, you can use the `os.Create()` function.** The function takes the file path as a parameter and returns a file object and an error object. If the file is successfully created, the file object will contain the file's metadata, and the error object will be nil. Otherwise, the error object will contain the error message.
+
+Here's an example of how to create a file in Golang:
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "os"
+)
+
+func main() {
+  file, err := os.Create("file.txt")
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+  defer file.Close()
+
+  fmt.Println("File created successfully")
+}
+```
+
+## How to Check if a File Exists in Golang <SectionLink client:load id="how-to-check-if-a-file-exists-in-golang" />
+
+**To check if a file exists in Golang, you can use the `os.Stat()` function.** The function takes the file path as a parameter and returns a file object or an error object. If the file exists, the file object will contain the file's metadata and the error object will be nil. Otherwise, the error object will contain the error message and the file object will be nil.
+
+`os.IsNotExist()` is a helper function that returns a boolean value indicating whether the file exists or not. If the file exists, the function returns `false`. Otherwise, it returns `true`.
+
+Here's an example of how to check if a file exists in Golang:
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "os"
+)
+
+func main() {
+  _, err := os.Stat("file.txt")
+  if os.IsNotExist(err) {
+    fmt.Println("File does not exist")
+  } else {
+    fmt.Println("File exists")
+  }
+}
+```
+
+## How to Write to a File in Golang <SectionLink client:load id="how-to-write-to-a-file-in-golang" />
+
+**There three ways to write to a file in Golang: `ioutil.WriteFile()`, `bufio.NewWriter()`, and `os.OpenFile()`.**
+
+### 1. Writing to a File Using ioutil.WriteFile()
+
+The `ioutil.WriteFile()` function takes the file path, the data to write, and the file mode as parameters. The file mode specifies the permissions to use when creating the file. If the file doesn't exist, it will be created. If the file already exists, it will be overwritten.
+
+Here's an example of how to write to a file using `ioutil.WriteFile()`:
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "io/ioutil"
+)
+
+func main() {
+  data := []byte("Hello World!")
+  err := ioutil.WriteFile("file-n.txt", data, 0644)
+  if err != nil {
+    fmt.Println("File writing error", err)
+    return
+  }
+  fmt.Println("Data successfully written to file")
+}
+```
+
+The `0644` file mode specifies that the file is readable and writable by the owner, and readable by everyone else.
+
+### 2. Writing to a File Using bufio.NewWriter()
+
+To write to a file using `bufio.NewWriter()`, you need to create a new `bufio.Writer` object and pass the file path as a parameter. Then, you can use the `Write()` method to write to the file. The `Write()` method takes a byte slice as a parameter. You can then use the `Flush()` method to write the data to the file.
+
+Here's an example of how to write to a file using `bufio.NewWriter()`:
+
+```go title="main.go"
+package main
+
+import (
+  "bufio"
+  "fmt"
+  "os"
+)
+
+func main() {
+  file, err := os.Create("file-n.txt")
+  if err != nil {
+    fmt.Println("File creation error", err)
+    return
+  }
+  defer file.Close()
+
+  writer := bufio.NewWriter(file)
+  writer.Write([]byte("Here via bufio.Writer"))
+  writer.Flush()
+
+  fmt.Println("Data successfully written to file")
+}
+```
+
+This method will always create a new file. If the file already exists, it will be overwritten.
+
+### 3. Writing to a File Using os.OpenFile()
+
+The `os.OpenFile()` function takes the file path, the file mode, and the file permission as parameters. The file mode specifies the action to perform on the file. In this case, we are writing to the file, so we use the `os.O_WRONLY` flag. The file permission specifies the permissions to use when creating the file. If the file doesn't exist, it will be created. If the file already exists, it will be overwritten.
+
+Here's an example of how to write to a file using `os.OpenFile()`:
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "os"
+)
+
+func main() {
+  file, err := os.OpenFile("file-n.txt", os.O_WRONLY, 0644)
+  if err != nil {
+    fmt.Println("File opening error", err)
+    return
+  }
+  defer file.Close()
+
+  file.Write([]byte("Here via os.OpenFile"))
+
+  fmt.Println("Data successfully written to file")
+}
+```
+
+## How to Append to a File in Golang <SectionLink client:load id="how-to-append-to-a-file-in-golang" />
+
+**To append to a file in Golang, you can use the `os.OpenFile()` function with the `os.O_APPEND` flag.** The `os.O_APPEND` flag specifies that the data should be appended to the file.If the file doesn't exist, it will be created.
+
+Here's an example of how to append to a file in Golang:
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "os"
+)
+
+func main(){
+  file, err := os.OpenFile("file-n.txt", os.O_APPEND|os.O_WRONLY, 0644)
+  if err != nil {
+    fmt.Println("File opening error", err)
+    return
+  }
+  defer file.Close()
+
+  file.Write([]byte(" The earth can be flat but the sky is always blue."))
+  fmt.Println("Data successfully appended to file")
+}
+```
+
+`fmt.Fprintf()`, `fmt.Fprintln()`, and `fmt.Fprint()` are also useful functions for appending to a file. They take a file object as a parameter and write to the file.
+
+```go title="main.go"
+...
+fmt.Fprintln(file, "The earth can be flat but the sky is always blue.")
+...
+```
+
+## How to Read a File in Golang <SectionLink client:load id="how-to-read-a-file-in-golang" />
+
+**Reading a file in Golang is a simple process. You can use the `ioutil.ReadFile()` function to read the entire contents of a file into a byte slice.** The function takes the file path as a parameter and returns a byte slice and an error. If the file is successfully read, the error will be nil. Otherwise, it will contain an error message.
+
+Here's an example of how to read a file in Golang:
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "io/ioutil"
+)
+
+func main() {
+  data, err := ioutil.ReadFile("file.txt")
+  if err != nil {
+    fmt.Println("File reading error", err)
+    return
+  }
+
+  fmt.Println("Contents of file:", string(data))
+}
+```
+
+The `ioutil.ReadFile()` function is a simple and easy way to read a file in Golang. However, it has some drawbacks.
+
+**First, it reads the entire file into memory, which can be a problem if the file is large.**
+
+<strong>Second, it doesn't allow you to read the file line by line.</strong>
+
+## How to Read a File Line by Line in Golang <SectionLink client:load id="how-to-read-a-file-line-by-line-in-golang" />
+
+**To read a file line by line in Golang, you can use the `bufio` package. The `bufio` package provides buffered I/O, which means that it reads data from an input stream in chunks rather than reading it byte by byte. This allows you to read the file line by line without having to read the entire file into memory**
+
+### Reading a File Line by Line Using bufio.NewScanner
+
+To read a file line by line using `bufio.NewScanner`, you need to create a new `Scanner` object and pass the file path as a parameter. Then, you can use the `Scan()` method to read the file line by line. The `Scan()` method returns a boolean value that indicates whether the file has been read completely or not. If the file has been read completely, the method returns `false`. Otherwise, it returns `true`.
+
+Here's an example of how to read a file line by line using `bufio.NewScanner`:
+
+```go title="main.go"
+package main
+
+import (
+  "bufio"
+  "fmt"
+  "log"
+  "os"
+)
+
+func main() {
+  file, err := os.Open("file.txt")
+  if err != nil {
+    log.Fatal(err)
+  }
+  defer file.Close()
+
+  scanner := bufio.NewScanner(file)
+  for scanner.Scan() {
+    fmt.Println(scanner.Text())
+  }
+
+  if err := scanner.Err(); err != nil {
+    log.Fatal(err)
+  }
+
+}
+```
+
+### Reading a File Line by Line Using bufio.NewReader
+
+`bufio.NewReader` is another way to read a file line by line in Golang. The `bufio.NewReader` object reads data from an input stream in chunks and stores it in a buffer. You can use the `ReadString()` method or `Read()` method to read the file line by line. The `ReadString()` method reads the file until it encounters a specified delimiter. The `Read()` method reads the file until it encounters a specified number of bytes. Both methods return a string and an error. If the file is successfully read, the error will be nil. Otherwise, it will contain an error message.
+
+Here's an example of how to read a file line by line using `bufio.NewReader`:
+
+```go title="main.go"
+package main
+
+import (
+  "bufio"
+  "fmt"
+  "log"
+  "os"
+)
+
+func main() {
+  file, err := os.Open("file.txt")
+  if err != nil {
+    log.Fatal(err)
+  }
+  defer file.Close()
+
+  reader := bufio.NewReader(file)
+  for {
+    line, err := reader.ReadString('\n')
+    if err != nil {
+      break
+    }
+    fmt.Print(line)
+  }
+}
+
+```
+
+Using the `Read()` method, you can read the file until it encounters a specified number of bytes. Here's an example of how to do that:
+
+```go title="main.go"
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+)
+
+func main() {
+    file, err := os.Open("file.txt")
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+
+    reader := bufio.NewReader(file)
+    data := make([]byte, 1024)
+    _, err = reader.Read(data)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+
+    fmt.Println(string(data))
+}
+```
+
+Using the `bufio.NewReader` object is a bit more complicated than using the `bufio.NewScanner` object. However, it gives you more control over how you read the file. You can use the `ReadString()` method to read the file until it encounters a specified delimiter, or you can use the `Read()` method to read the file until it encounters a specified number of bytes.
+
+## How to Delete a File in Golang <SectionLink client:load id="how-to-delete-a-file-in-golang" />
+
+**To delete a file in Golang, you can use the `os.Remove()` function.** The function takes the file path as a parameter and returns an error. If the file is successfully deleted, the error will be nil. Otherwise, it will contain an error message.
+
+Here's an example of how to delete a file in Golang:
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "os"
+)
+
+func main() {
+  err := os.Remove("file.txt")
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+
+  fmt.Println("File deleted")
+}
+```
+
+## How to Rename a File in Golang <SectionLink client:load id="how-to-rename-a-file-in-golang" />
+
+**To rename a file in Golang, you can use the `os.Rename()` function.** The function takes the old file path and the new file path as parameters and returns an error. If the file is successfully renamed, the error will be nil. Otherwise, it will contain an error message.
+
+Here's an example of how to rename a file in Golang:
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "os"
+)
+
+func main() {
+  err := os.Rename("file.txt", "newfile.txt")
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+
+  fmt.Println("File renamed")
+}
+```
+
+## How to Copy a File in Golang <SectionLink client:load id="how-to-copy-a-file-in-golang" />
+
+**The `io.Copy()` function is used to copy a file in Golang.** The function takes two parameters: the destination and the source. The destination can be a file or a writer. The source can be a file or a reader. The function returns the number of bytes copied and an error. If the file is successfully copied, the error will be nil. Otherwise, it will contain an error message.
+
+Here's an example of how to copy a file in Golang:
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "io"
+  "os"
+)
+
+func main() {
+  source, err := os.Open("file.txt")
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+
+  destination, err := os.Create("newfile.txt")
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+
+  nBytes, err := io.Copy(destination, source)
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+
+  fmt.Println(nBytes, "bytes copied")
+}
+```
+
+## How to Check if a File is Empty in Golang <SectionLink client:load id="how-to-check-if-a-file-is-empty-in-golang" />
+
+**To check if a file is empty in Golang, you can use the `os.Stat()` function.** The function takes the file path as a parameter and returns a `FileInfo` object and an error. If the file is successfully read, the error will be nil. Otherwise, it will contain an error message. The `FileInfo` object contains information about the file, including the file size. If the file size is 0, the file is empty.
+
+Here's an example of how to check if a file is empty in Golang:
+
+```go title="main.go"
+
+package main
+
+import (
+  "fmt"
+  "os"
+)
+
+func main() {
+  fileInfo, err := os.Stat("file.txt")
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+
+  if fileInfo.Size() == 0 {
+    fmt.Println("File is empty")
+  } else {
+    fmt.Println("File is not empty")
+  }
+}
+```
+
+## How to Check File Types in Golang <SectionLink client:load id="how-to-check-file-types-in-golang" />
+
+**To check file types in Golang, you can use the `os.Stat()` function.** When the `FileInfo` object is returned, you can use the `Mode()` method to get the file mode. The file mode contains information about the file type. You can use the `IsDir()` method to check if the file is a directory. You can also use the `IsRegular()` method to check if the file is a regular file.
+
+Here's an example of how to check file types in Golang:
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "os"
+)
+
+func main() {
+  fileInfo, err := os.Stat("file.txt")
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+
+  fileMode := fileInfo.Mode()
+  if fileMode.IsDir() {
+    fmt.Println("File is a directory")
+  } else if fileMode.IsRegular() {
+    fmt.Println("File is a regular file")
+  }
+}
+```
+
+## How to Check File Size in Golang <SectionLink client:load id="how-to-check-file-size-in-golang" />
+
+**To check file size in Golang, you can use the `os.Stat()` function.** When the `FileInfo` object is returned, you can use the `Size()` method to get the file size in bytes.
+
+Here's an example of how to check file size in Golang:
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "os"
+)
+
+func main() {
+  fileInfo, err := os.Stat("file.txt")
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+
+  fmt.Println(fileInfo.Size(), "bytes")
+}
+```
+
+## How to list Files in a Directory in Golang <SectionLink client:load id="how-to-list-files-in-a-directory-in-golang" />
+
+**To list files in a directory in Golang, you can use the `ioutil.ReadDir()` function.** The function takes the directory path as a parameter and returns a slice of files and an error. If the directory is successfully read, the error will be nil. Otherwise, it will contain an error message.
+
+Here's an example of how to list files in a directory in Golang:
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "io/ioutil"
+)
+
+func main() {
+  files, err := ioutil.ReadDir("dir")
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+
+  for _, file := range files {
+    fmt.Println(file.Name())
+  }
+}
+```
+
+## How to Check File Extensions in Golang <SectionLink client:load id="how-to-check-file-extensions-in-golang" />
+
+**To check file extensions in Golang, you can use the `path.Ext()` function.** The function takes the file path as a parameter and returns the file extension. If the file path doesn't contain an extension, the function will return an empty string.
+
+Here's an example of how to check file extensions in Golang:
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "os"
+  "path"
+)
+
+func main() {
+  files, err := ioutil.ReadDir("dir")
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+
+  for _, file := range files {
+    if path.Ext(file.Name()) == ".txt" {
+      fmt.Println(file.Name())
+    }
+  }
+}
+```
+
+## How to Check File Permissions in Golang <SectionLink client:load id="how-to-check-file-permissions-in-golang" />
+
+**To check file permissions in Golang, you can use the `os.Stat()` function.** When the `FileInfo` object is returned, you can use the `Mode()` method to get the file mode. The file mode contains information about the file permissions. You can use the `Perm()` method to get the file permissions in octal format. You can then convert the octal format to binary and check the permissions.
+
+Here's an example of how to check file permissions in Golang:
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "os"
+)
+
+func main() {
+  fileInfo, err := os.Stat("file.txt")
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+
+  fileMode := fileInfo.Mode()
+  filePerm := fileMode.Perm()
+  fmt.Println(filePerm)
+}
+```
+
+## Conclusion
+
+In conclusion, file handling is a crucial aspect of programming in Golang and this article has provided a comprehensive guide on how to handle files in Golang. We covered various built-in functions for reading, writing, and manipulating files. From the simple `ioutil.WriteFile` function for writing to a file to the more advanced `os.OpenFile` and `bufio.NewWriter` functions for more fine-grained control, you now have the tools to handle files in Golang with ease. With this knowledge, you'll be able to handle files in Golang like a pro and create efficient, reliable, and high-performing applications.
