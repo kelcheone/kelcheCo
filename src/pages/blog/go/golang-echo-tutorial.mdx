@@ -19,6 +19,32 @@ import Nugget from "@components/Nugget.astro";
 import Link from "@components/Link.jsx";
 import Table from "@components/Table.jsx";
 
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Prerequisites](#prerequisites)
+- [Setting up the Project](#setting-up-the-project)
+  - [Installing Echo](#installing-echo)
+  - [Installing the PostgreSQL Driver](#installing-the-postgresql-driver)
+  - [Installing the Echo Middleware](#installing-the-echo-middleware)
+- [Creating the Database](#creating-the-database)
+  - [Creating the Users Table](#creating-the-users-table)
+  - [Creating the Measurements Table](#creating-the-measurements-table)
+- [Creating the API](#creating-the-api)
+  - [Creating the User and Measurement Models](#creating-the-user-and-measurement-models)
+  - [Dotenv for the database creatdetials](#dotenv-for-the-database-creatdetials)
+  - [Connecting to the Database](#connecting-to-the-database)
+- [CRUD Operations](#crud-operations)
+  - [Creating the User Repository](#creating-the-user-repository)
+  - [Creating the User Handler](#creating-the-user-handler)
+  - [Creating the Measurements Handler](#creating-the-measurements-handler)
+  - [Creating the Measurements Route](#creating-the-measurements-route)
+  - [Update the User](#update-the-user)
+  - [Update the Measurement](#update-the-measurement)
+- [Echo Middleware](#echo-middleware)
+  - [CORs Middleware](#cors-middleware)
+- [Conclusion](#conclusion)
+
 ## Introduction
 
 Welcome to this tutorial on building a fitness API using the Echo framework in Go. In this tutorial, we will focus on learning the Echo framework and how to use it to build a RESTful API for tracking fitness information.
@@ -39,7 +65,11 @@ Before we get started, you will need to have the following installed on your mac
 - PostgreSQL 13 or higher
 - A text editor or IDE of your choice
 
-## Setting up the Project
+<Link url="https://github.com/kelcheone/fitness-api">
+  View the source code on GitHub
+</Link>
+
+## Setting up the Project <SectionLink client:load id="setting-up-the-project" />
 
 To get started, we will create a new directory for our project and initialize a new Go module. We will use the `go mod init` command to initialize a new Go module and the `go mod tidy` command to download and install the required dependencies.
 
@@ -49,7 +79,7 @@ cd fitness-api
 go mod init fitness-api
 ```
 
-### Installing Echo
+### Installing Echo <SectionLink client:load id="installing-echo" />
 
 Next, we will install the Echo framework using the `go get` command. We will use the `-u` flag to update the dependencies and the `-d` flag to download the dependencies without installing them.
 
@@ -57,7 +87,7 @@ Next, we will install the Echo framework using the `go get` command. We will use
 go get -u -d github.com/labstack/echo/v4
 ```
 
-### Installing the PostgreSQL Driver
+### Installing the PostgreSQL Driver <SectionLink client:load id="installing-the-postgresql-driver" />
 
 Next, we will install the PostgreSQL driver for Go.
 
@@ -65,7 +95,7 @@ Next, we will install the PostgreSQL driver for Go.
 go get -u -d github.com/lib/pq
 ```
 
-### Installing the Echo Middleware
+### Installing the Echo Middleware <SectionLink client:load id="installing-the-echo-middleware" />
 
 Next, we will install the Echo middleware for Go.
 
@@ -73,7 +103,7 @@ Next, we will install the Echo middleware for Go.
 go get -u -d github.com/labstack/echo/v4/middleware
 ```
 
-## Creating the Database
+## Creating the Database <SectionLink client:load id="creating-the-database" />
 
 Enter the PostgreSQL shell using the `psql` command. We will then create a new database called `fitness` using the `CREATE DATABASE` query. We will then connect to the `fitness` database using the `\c` command.
 
@@ -83,7 +113,7 @@ create database fitness;
 \c fitness
 ```
 
-### Creating the Users Table
+### Creating the Users Table <SectionLink client:load id="creating-the-users-table" />
 
 We will create a new table called `users` to store the user's information. We will use the `CREATE TABLE` command to create a new table. The `users` table will have a primary key called `id` that will be auto-incremented. We will also add a `name`, `email`, and `password` column to store the user's information. Finally, we will add a `created_at` and `updated_at` columns to store the date and time when the user was created and updated.
 
@@ -98,7 +128,7 @@ CREATE TABLE users (
 );
 ```
 
-### Creating the Measurements Table
+### Creating the Measurements Table <SectionLink client:load id="creating-the-measurements-table" />
 
 We will then create a new table called `measurements` to store the user's fitness measurements. We will use the `CREATE TABLE` command to create a new table. The `measurements` table will have a foreign key to the `users` table.
 
@@ -120,7 +150,7 @@ To check if the tables were created successfully, we will use the `\dt` command 
 \dt
 ```
 
-## Creating the API
+## Creating the API <SectionLink client:load id="creating-the-api" />
 
 Create a new file called `main.go` in the root directory of the project. We will then import the required packages and initialize the Echo framework.
 
@@ -211,7 +241,7 @@ go run main.go
 
 A lot is happening in the `main.go` file. Let's break it down. First, we are importing the `github.com/labstack/echo/v4` package. This is the Echo framework that we installed earlier. Next, we are importing the `handlers` package that we created earlier. We are then initializing the Echo framework using the `echo.New()` function. We are then registering the `Home` handler to the `/` endpoint using the `e.GET()` function. Finally, we are starting the Echo server using the `e.Start()` function.
 
-### Creating the User and Measurement Models
+### Creating the User and Measurement Models <SectionLink client:load id="creating-the-user-and-measurement-models" />
 
 Create a new directory called `models` in the cmd directory. We will then create a new file called `user.go` inside the `models` directory.
 
@@ -246,7 +276,7 @@ type Measurements struct {
 
 These structs will be used to map the database tables to Go structs. Think of them as Golang representations of the database tables.
 
-### Dotenv for the database creatdetials
+### Dotenv for the database creatdetials <SectionLink client:load id="dotenv-for-the-database-creatdetials" />
 
 Install the `github.com/joho/godotenv` package using the `go get` command.
 
@@ -265,7 +295,7 @@ DB_PASSWORD=postgres
 DB_NAME=fitness
 ```
 
-### Connecting to the database
+### Connecting to the database <SectionLink client:load id="connecting-to-the-database" />
 
 Create a new folder called `storage` in the cmd directory. We will then create a new file called `db.go` inside the `storage` directory.
 
@@ -337,9 +367,9 @@ func main() {
 
 On running the `go run .` command, we will get the `Successfully connected to database` message on the terminal.
 
-## CRUD Operations
+## CRUD Operations <SectionLink client:load id="crud-operations" />
 
-### Creating the User Repository
+### Creating the User Repository <SectionLink client:load id="creating-the-user-repository" />
 
 Create a new directory called `repositories` in the cmd directory. We will then create a new file called `userDb.go` inside the `repositories` directory.
 
@@ -367,7 +397,7 @@ func CreateUser(user models.User) (models.User, error) {
 
 In this function, we are using the `storage.GetDB()` function to get the database connection. We are then using the `db.QueryRow()` function to execute the SQL query. The `db.QueryRow()` function takes two parameters. The first parameter is the SQL query. The second parameter is the query parameters. The `db.QueryRow()` function returns a `sql.Row` object. We are then using the `sql.Row.Scan()` function to scan the returned row and assign the value to the `user.Id` field.
 
-### Creating the User Handler
+### Creating the User Handler <SectionLink client:load id="creating-the-user-handler" />
 
 Create a new file called `handleUsers.go` inside the `handlers` directory. We will then define a new function called `CreateUser` that will create a new user in the database.
 
@@ -441,7 +471,7 @@ If the user is created successfully, you will get the following response.
 }
 ```
 
-### Creating the Measurements Repository
+### Creating the Measurements Repository <SectionLink client:load id="creating-the-measurements-repository" />
 
 Create a new file called `measurementsDb.go` inside the `repositories` directory. We will then define a new function called `CreateMeasurement` that will create a new measurement in the database.
 
@@ -466,7 +496,7 @@ func CreateMeasurement(measurement models.Measurements) (models.Measurements, er
 }
 ```
 
-### Creating the Measurements Handler
+### Creating the Measurements Handler <SectionLink client:load id="creating-the-measurements-handler" />
 
 Create a new file called `handleMeasurements.go` inside the `handlers` directory. We will then define a new function called `CreateMeasurement` that will create a new measurement in the database.
 
@@ -492,7 +522,7 @@ func CreateMeasurement(c echo.Context) error {
 }
 ```
 
-### Creating the Measurements Route
+### Creating the Measurements Route <SectionLink client:load id="creating-the-measurements-route" />
 
 In the `main.go` file, we will call the `CreateMeasurement()` function.
 
@@ -536,7 +566,7 @@ If the measurement is created successfully, you will get the following response.
 }
 ```
 
-### Update the User
+### Update the User <SectionLink client:load id="update-the-user" />
 
 To update the user create a new function called `UpdateUser` in the `usersDb.go` file.
 
@@ -610,7 +640,7 @@ We have covered the basic CRUD operations for the user. You can try to implement
 
 </Nugget>
 
-### Update the Measurement
+### Update the Measurement <SectionLink client:load id="update-the-measurement" />
 
 To update the measurement create a new function called `UpdateMeasurement` in the `measurementsDb.go` file.
 
@@ -676,7 +706,7 @@ Choose a measurement you'd like to update and send a PUT request to the `http://
 
 You can continue with the other CRUD operations for the measurement.
 
-## Echo Middleware
+## Echo Middleware <SectionLink client:load id="echo-middleware" />
 
 Let's now explore the concept of middleware in Echo. Middleware is a piece of code that runs between the request and the response. It is used to perform some actions before the request is handled by the handler. For example, we can use middleware to log the request details, authenticate the user, and validate the request body.
 
@@ -742,7 +772,7 @@ func main(){
 
 The `Use()` function takes a list of middleware functions as arguments. You can add as many middleware functions as you want.
 
-## CORs Middleware
+### CORs Middleware <SectionLink client:load id="cors-middleware" />
 
 Let's now add a middleware that will allow us to make requests from the front end. We will use the CORs middleware from Echo.
 
@@ -766,8 +796,13 @@ e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 ...
 ```
 
-## Conclusion
+## Conclusion <SectionLink client:load id="conclusion" />
 
 In this tutorial, we have covered the basics of the Echo framework. We have created a simple API that allows us to create, read, update, and delete users and measurements. We have also covered the concept of middleware in the Echo framework.
 
 Echo is a great framework for building APIs. It is lightweight and easy to use. You can use it to build your next API or your microservice. Tune in for the next tutorial where we will cover the basics of Docker and how to containerize our API.
+
+## Resources <SectionLink client:load id="resources" />
+
+- <Link url="https://echo.labstack.com/">Echo Documentation</Link>
+- <Link url="https://github.com/kelcheone/fitness-api">Github Repository</Link>
