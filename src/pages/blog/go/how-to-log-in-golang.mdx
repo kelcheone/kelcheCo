@@ -1,0 +1,361 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: How to Log in Golang
+description: Master logging in Golang with this guide. Covers setup, levels, custom output, contextual logging, handling & best practices.
+date: 01 February 2023
+image: /images/golang-logging.svg
+imageDescription:
+keywords:
+  - golang logging
+tags:
+  - golang
+---
+
+import SectionLink from "@components/SectionLink.jsx";
+import Nugget from "@components/Nugget.astro";
+import Link from "@components/Link.jsx";
+import Table from "@components/Table.jsx";
+
+## Introduction <SectionLink client:load  id="introduction" />
+
+Logging is a critical aspect of software development, providing valuable insights into the state of your application. In Golang, logging is used to record important events and errors that occur during the execution of your program. This article will provide guidelines for effective logging in Golang. We will cover topics such as setting up a logger, logging levels, customizing log output, contextual logging, handling errors, and best practices. Whether you are a Golang veteran or a beginner, this article will help you improve your logging skills. Let's get started!
+
+## Setting up a Logger <SectionLink client:load  id="setting-up-a-logger" />
+
+Setting up a logger is straightforward. The first step is to import the `log` package. Which is part of Golang's standard library. The `log` package provides a simple and flexible logging solution that can be easily modeled to fit your needs.
+
+```go
+...
+import "log"
+...
+```
+
+To set up a new logger, you can use the `logger.New` function, which returns a new logger value. You can specify the io.Writer to which the logger will write to, such as os.Stdout, a file, or a custom writer.
+
+```go title="main.go"
+package main
+
+import (
+    "log"
+    "os"
+)
+
+func main() {
+    logger := log.New(os.Stdout, "INFO: ", 0)
+    logger.Println("Logger created  and writing to os.Stdout")
+}
+```
+
+The `log.New` function takes three arguments:
+
+- `io.Writer` - The io.Writer to which the logger will write to.
+- `prefix` - A string that will be prepended to each log message.
+- `flag` - A set of flags that control the formatting of the log message.
+
+In this case, we set the flags to 0, which means that there will be no formatting. The `prefix` argument is optional and can be used to add a prefix to each log message. In this case, we added the prefix `INFO: ` to each log message.
+
+The `log.New` function returns a new logger value. The logger value has a set of methods that can be used to log messages. The most commonly used methods are `Println` and `Printf`. The `Println` method logs a message with a new line appended to the end. The `Printf` method logs a message with a format specifier.
+
+The output of the above program will be:
+
+```bash
+INFO: Logger created and writing to os.Stdout
+```
+
+You can use third party logging packages such as <Link url="https://github.com/sirupsen/logrus">logrus</Link> or <Link url="https://github.com/uber-go/zap">zap</Link>, which provide
+additional features and customizations, such as structured logging and custom log formats.
+
+## Logging Levels <SectionLink client:load  id="logging-levels" />
+
+Logging levels are a way of categorizing log messages based on their severity. The `log` package provides a set of predefined logging levels. The most commonly used levels are :
+
+1. Pannic - Used to log a message that indicates a critical error that will cause the program to exit. This method will call `panic()` after logging the message.
+2. Fatal - Used to log a message that indicates a critical error that will cause the program to exit. This method will call `os.Exit(1)` after logging the message.
+3. Error - Used to log a message that indicates an error. This method will not exit the program.
+4. Warning - Used to log a message that indicates a warning. This method will not exit the program.
+
+```go title="main.go"
+package main
+
+import (
+    "log"
+)
+
+func main() {
+    log.Panicln("Panic message")
+    log.Fatalln("Fatal message")
+    log.Println("Info message")
+    log.Println("Warning message")
+}
+```
+
+As you can see the `log` package does not provide a method for logging debug, trace, warning, or info messages. But you can easily create your methods for logging these messages using the `log.Print` method.
+
+To get more control over the logging levels, you can use the packages mentioned in the previous section.
+
+## Customizing Log Output <SectionLink client:load  id="customizing-log-output" />
+
+Customizing allows you to take control of the format and content for log messages, making it easier to read and understand the log messages. Golang provides several ways to customize the log output, including adding timestamps and
+customizing the log format.
+
+### Adding Timestamps <SectionLink client:load  id="adding-timestamps" />
+
+The `log` package provides a set of flags that can be used to customize the log output. The `log.Ldate` flag can be used to add the date to the log message. The `log.Ltime` flag can be used to add the time to the log message. The `log.Lmicroseconds` flag can be used to add the microseconds to the log message.
+
+```go title="main.go"
+package main
+
+import (
+    "log"
+    "os"
+)
+
+func main() {
+    logger := log.New(os.Stdout, "INFO: ", log.Ldate|log.Ltime|log.Lmicroseconds)
+    logger.Println("Logger created  and writing to os.Stdout")
+}
+```
+
+The output of the above program will be:
+
+```bash
+INFO: 2023/02/01 16:17:39.002435 Logger created and writing to os.Stdout
+```
+
+You can also use the `log.LstdFlags` flag, which is a combination of the `log.Ldate`, `log.Ltime`, and `log.Lmicroseconds` flags.
+
+### Customizing the Log Format <SectionLink client:load  id="customizing-the-log-format" />
+
+The `log` package provides a set of flags that can be used to customize the log output. The `log.Lshortfile` flag can be used to add the file name and line number to the log message. The `log.Llongfile` flag can be used to add the full file path and line number to the log message.
+
+```go title="main.go"
+package main
+
+import (
+    "log"
+    "os"
+)
+
+func main() {
+    logger := log.New(os.Stdout, "INFO: ", log.Lshortfile)
+    logger.Println("Logger created  and writing to os.Stdout")
+}
+```
+
+The output of the above program will be:
+
+```bash
+INFO: main.go:8: Logger created and writing to os.Stdout
+```
+
+Instead of using `Log.New` you can also use the `SetFlags` method to set the flags for the logger.
+
+```go title="main.go"
+package main
+
+import (
+    "log"
+    "os"
+)
+
+func main() {
+    logger := log.New(os.Stdout, "INFO: ", 0)
+    logger.SetFlags(log.Lshortfile)
+    logger.Println("Logger created  and writing to os.Stdout")
+}
+```
+
+## Contextual Logging <SectionLink client:load  id="contextual-logging" />
+
+Contextual logging is a way of adding additional information to a log message. This information can be used to identify the source of the log message, or to provide additional context for the log message. Contextual logging is useful when you are debugging a complex system, and you want to know the source of a log message. It is also used in http servers to log the request id for each request.
+
+Let's create a custom logger middleware that adds the request id to each log message.
+
+```go title="main.go"
+package main
+
+import (
+    "log"
+    "net/http"
+)
+
+
+func loggerMiddleware(next http.Handler) http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        log.Printf("Request id: %s", "request-id")
+        next.ServeHTTP(w, r)
+    })
+}
+
+func main() {
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        log.Println("Hello World")
+    })
+
+    http.ListenAndServe(":8080", loggerMiddleware(http.DefaultServeMux))
+}
+```
+
+On each request, the `loggerMiddleware` will log the request id to the console.
+
+On another terminal, run the following command to make a request to the server:
+
+```bash
+curl http://localhost:8080
+```
+
+The output of the above program will be:
+
+```bash
+2023/02/01 16:59:13 Request id: request-id
+2023/02/01 16:59:13 Hello World
+```
+
+## Handling Logs <SectionLink client:load  id="handling-logs" />
+
+Handling logs is an important aspect of logging as it involves capturing, storing, and analyzing log data. There are several options for handling logs in Golang, including:
+
+    ### 1. Writing Logs to a File <SectionLink client:load  id="writing-logs-to-a-file" />
+
+    To write logs to a file, you can use the `os.OpenFile` method to open a file for writing. You can then use the `log.New` method to create a new logger that writes to the file.
+
+    ```go title="main.go"
+    package main
+
+    import (
+        "log"
+        "os"
+    )
+
+    func main() {
+        file, err := os.OpenFile("app.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
+        if err != nil {
+            log.Fatalln("Failed to open log file:", err)
+        }
+        defer file.Close()
+
+        logger := log.New(file, "INFO: ", log.LstdFlags)
+        logger.Println("Logger created  and writing to log.txt")
+    }
+    ```
+
+    ### 2. Writing Logs to a Remote Server <SectionLink client:load  id="writing-logs-to-a-remote-server" />
+
+    To write logs to a remote server, you can use the `net.Dial` method to connect to the remote server. You can then use the `log.New` method to create a new logger that writes to the connection.
+
+    ```go title="main.go"
+    package main
+
+    import (
+        "log"
+        "net"
+    )
+
+    func main() {
+        conn, err := net.Dial("tcp", "localhost:8080")
+        if err != nil {
+            log.Fatalln("Failed to connect to remote server:", err)
+        }
+        defer conn.Close()
+
+        logger := log.New(conn, "INFO: ", log.LstdFlags)
+        logger.Println("Logger created  and writing to remote server")
+
+    }
+    ```
+
+    The remote server can be implemented as follows:
+
+    ```go title="server.go"
+    package main
+
+    import (
+        "bufio"
+        "fmt"
+        "net"
+    )
+
+    func main() {
+        ln, err := net.Listen("tcp", ":8080")
+        if err != nil {
+            panic(err)
+        }
+        defer ln.Close()
+
+        for {
+            conn, err := ln.Accept()
+            if err != nil {
+                panic(err)
+            }
+            go handleConnection(conn)
+        }
+    }
+
+    func handleConnection(conn net.Conn) {
+        scanner := bufio.NewScanner(conn)
+        for scanner.Scan() {
+            fmt.Println(scanner.Text())
+        }
+        defer conn.Close()
+    }
+    ```
+
+    Every time the client connects to the remote server, the server will print the log message to the console.
+
+    ### 3. Using a Logging Agent <SectionLink client:load  id="using-a-logging-agent" />
+
+    A logging agent is a service that collects logs from multiple sources and stores them in a central location. A logging agent can be used to collect logs from multiple servers and applications. It can also be used to analyze logs and generate alerts.
+
+    `syslog` is a standard for logging messages. It is supported by most operating systems. `syslog` is a client-server protocol, where the client sends log messages to the server. The server then stores the log messages in a central location. The server can also be configured to send alerts when certain log messages are received.
+
+    ```go title="main.go"
+    package main
+
+    import (
+        "log"
+        "log/syslog"
+    )
+
+    func main() {
+        logger, err := syslog.Dial("tcp", "localhost:514", syslog.LOG_INFO, "myapp")
+        if err != nil {
+            log.Fatalln("Failed to connect to syslog server:", err)
+        }
+        defer logger.Close()
+
+        logger.Info("Logger created  and writing to syslog server")
+    }
+    ```
+
+    You can also use other logging agents such as `fluentd` and `logstash`.
+
+The choice of log handling method depends on the requirements of your application. If you are writing a simple application, you can use the `log` package to write logs to the console. If you are writing a complex application, you can use a logging agent to collect logs from multiple sources.
+
+## Logging Best Practices <SectionLink client:load  id="logging-best-practices" />
+
+When logging you must follow some best practices to ensure that your logs are effective, efficient, and easy to manage. Here are some best practices to keep in mind:
+
+1.  Be specific
+
+    Make sure that your log messages are specific. Avoid vague log messages such as "error occurred" or "something went wrong". Instead, use specific log messages such as "failed to connect to database" or "failed to parse request body". Be sure to include information such as timestamps, log level, and any contextual information that can help you identify the source of the error.
+
+2.  Centralize logs
+
+    Centralizing logs makes it easier to manage logs. It also makes it easier to analyze logs and generate alerts. You can use a logging agent to centralize logs from multiple sources.
+
+3.  Use structured logging
+
+    Structured logging involves logging messages as key-value pairs. This makes it easier to analyze logs and generate alerts. You can use a logging agent to analyze logs and generate alerts.
+
+4.  Analyze your logs regularly
+
+    It will be of no use if you are logging messages but not analyzing them. You should analyze your logs regularly to identify errors and improve your application. Some analytics tools such as Grafaana can be used to analyze logs.
+
+5.  Don't Log Too Much
+
+    Logging too much data can make it difficult to analyze logs. You should only log the data that is relevant to your application. You should also avoid logging sensitive data.
+
+## Conclusion <SectionLink client:load  id="conclusion" />
+
+To conclude, logging is an important aspect of application development. Golang provides a simple and effective logging package that can be used to log messages to the console. You can also use other logging packages such as `logrus` and `zap` to log messages to the console. We have covered just the basics of setting up a logger, logging levels, customizing log output, contextual logging, handling logs, and best practice. However, by no means have we covered everything. There is a lot more to logging than what we have covered here. The best way to learn is to practice. So, go ahead and start logging!

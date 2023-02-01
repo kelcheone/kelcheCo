@@ -10,8 +10,6 @@ keywords:
   -
 tags:
   - golang
-
-draft: true
 ---
 
 import SectionLink from "@components/SectionLink.jsx";
@@ -105,6 +103,13 @@ func main(){
     time.Sleep(10 * time.Second)
     fmt.Println("Done waiting.")
 }
+```
+
+```bash title="Output"
+Waiting for goroutine to finish...
+Sleeping for 5 seconds...
+Done sleeping.
+Done waiting.
 ```
 
 ## Conclusion
