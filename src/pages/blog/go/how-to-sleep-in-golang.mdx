@@ -1,0 +1,112 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: How to Sleep in Golang
+description: To sleep in Golang, use the time.Sleep() function. This function will pause the execution of the current thread for the specified duration.
+date: 01 February 2023
+image: /images/golang-sleep.svg
+imageDescription:
+keywords:
+  -
+tags:
+  - golang
+
+draft: true
+---
+
+import SectionLink from "@components/SectionLink.jsx";
+import Nugget from "@components/Nugget.astro";
+import Link from "@components/Link.jsx";
+import Table from "@components/Table.jsx";
+
+Pausing the execution of a program is a common task in programming. Be it to wait for a network connection to complete or to wait for a user to press a key, among many other things. Golang is no exception to these tasks. In this article, we will learn how to sleep in Golang.
+
+## Sleeping in Golang
+
+**To sleep in Golang, the time.Sleep() function is used. This function takes a time duration as an argument and will pause the execution of the current thread for the specified duration.**
+
+### Importing the time Package
+
+To use the time.Sleep() function, the time package must be imported.
+
+```go title="main.go"
+...
+import "time"
+...
+```
+
+### using time.Sleep()
+
+The `time.Sleep()` function takes a time duration as an argument. The time duration can be specified in seconds, milliseconds, microseconds, or nanoseconds. The time duration is specified using the `time.Duration` type. The `time.Duration` type is an alias for the `int64` type. The `time.Duration` type is used to represent a time duration in nanoseconds.
+
+```go title="main.go"
+...
+time.Sleep(1 * time.Second)
+...
+```
+
+Here we are pausing the execution of the current thread for 1 second. The `time.Second` constant is a `time.Duration` type that represents 1 second in nanoseconds. The `time.Second` constant is defined as `1e9` nanoseconds.
+
+### Example
+
+```go title="main.go"
+package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func main(){
+    fmt.Println("Sleeping for 1 second...")
+    time.Sleep(1 * time.Second)
+    fmt.Println("Done sleeping.")
+}
+```
+
+## Sleep in a Loop
+
+```go title="main.go"
+package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func main(){
+    for i := 0; i < 5; i++ {
+        fmt.Println("Sleeping for 1 second...")
+        time.Sleep(1 * time.Second)
+    }
+    fmt.Println("Done sleeping.")
+}
+```
+
+## Sleep for Goroutines
+
+Pausing a goroutine is a common task given that goroutines are used to run concurrent tasks, it is often necessary to pause one goroutine while the others run. To pause a goroutine, the time.Sleep() function is also used.
+
+```go title="main.go"
+package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func main(){
+    go func(){
+        fmt.Println("Sleeping for 5 seconds...")
+        time.Sleep(5 * time.Second)
+        fmt.Println("Done sleeping.")
+    }()
+    fmt.Println("Waiting for goroutine to finish...")
+    time.Sleep(10 * time.Second)
+    fmt.Println("Done waiting.")
+}
+```
+
+## Conclusion
+
+In this article, we learned how to sleep in Golang. We demonstrated how to sleep using the `time` package and the `time.Sleep()` function. We also learned how to sleep in a loop and how to sleep for goroutines.
