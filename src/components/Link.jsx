@@ -15,7 +15,7 @@ const Link = ({ url, children }) => {
       {/*  add space to the end*/}
       <span className="sr-only">
         {/* Ensure a space here */}
-        <span aria-hidden="true"> _ </span>
+        <span aria-hidden="true"> {` - `} </span>
       </span>
     </a>
   );

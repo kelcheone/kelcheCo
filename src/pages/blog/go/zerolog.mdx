@@ -1,0 +1,425 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: ZeroLog Tutorial - Logging in Go
+description: Learn how to use Zerolog, a fast, zero-allocation JSON logging library for Go, to add efficient logging to your Go applications. Discover its key features and benefits in this comprehensive tutorial.
+date: 03 February 2023
+image: /images/golang-zerolog.svg
+imageDescription:
+keywords:
+  - golang zerolog
+  - golang logs
+  - golang logging
+tags:
+  - golang
+---
+
+import Link from "@components/Link.jsx";
+import SectionLink from "@components/SectionLink.jsx";
+
+## Introduction
+
+ZeroLog is a popular logging library for Go that provides a simple and efficient way to log structured data in Go applications. It is a fork of the popular <Link url="https://github.com/sirupsen/logrus">Logrus</Link> library, which is a structured logger for Go. As a structured logger, ZeroLog logs data in formats such as JSON. This makes it easy to parse and analyze logs. It also makes it easy to integrate with other tools, such as log aggregators. With its zero-allocation design, it minimizes the overhead of logging and helps to keep your application running fast and smoothly. In this tutorial, we'll take a look at how to use ZeroLog as a logging library for your Go applications.
+
+## Installing ZeroLog <SectionLink id="installing-zerolog" />
+
+ZeroLog is a Go module, so you can install it using the `go get` command:
+
+```bash
+go get github.com/rs/zerolog
+```
+
+Run `go mod tidy` to update your `go.mod` file.
+
+## Getting Started <SectionLink id="getting-started" />
+
+To use ZeroLog, you need to import the `github.com/rs/zerolog` package:
+
+```go
+...
+import "github.com/rs/zerolog"
+```
+
+ZeroLog provides a `Logger` type that you can use to log messages. You can create a new `Logger` instance using the `New` function:
+
+```go
+...
+logger := zerolog.New(os.Stdout)
+```
+
+The `New` function takes an `io.Writer` as an argument. This is the destination where the log messages will be written. In this example, we're using `os.Stdout`, which is the standard output stream. You can also use a file or any other `io.Writer` implementation.
+
+Example:
+
+```go title="main.go"
+package main
+
+import (
+    "os"
+
+    "github.com/rs/zerolog"
+)
+
+func main() {
+    logger := zerolog.New(os.Stdout)
+    logger.Info().Msg("Hello World!")
+}
+```
+
+Run the example:
+
+```bash
+go run main.go
+```
+
+The output should look like this:
+
+```bash title="output"
+{"level":"info","message":"Hello World!"}
+```
+
+In the example above, we're using the `Info` method to log an `info` level message. The `Info` method returns a `zerolog.Event` type. You can use this type to add additional information to the log message. We then use the `Msg` method to log the message. The `Msg` method takes a string as an argument. This is the message that will be logged.
+
+## Logging Levels <SectionLink id="logging-levels" />
+
+Logging levels are used to indicate the severity of a log message. ZeroLog provides the following logging levels:
+
+- `trace` - Used for logging detailed information about the execution of a program. This is the lowest level of logging with a value of -1.
+- `debug` - Used for logging information that is useful for debugging. This has a value of 0.
+- `info` - Used for logging information that is useful for tracking the progress of a program. This has a value of 1.
+- `warn` - Used for logging information that indicates a potential problem. This has a value of 2.
+- `error` - Used for logging information that indicates an error. This has a value of 3.
+- `fatal` - Used for logging information that indicates a fatal error. It also terminates the program with `os.Exit(1)`. This has a value of 4.
+- `panic` - Used for critical logging information indicating panic. It also panics with `panic()`. This has a value of 5.
+
+The `Logger` type provides methods for logging messages at each of these levels. For example, the `Info` method logs an `info` level message. The `Debug` method logs a `debug` level message. The `Error` method logs an `error` level message. The `Fatal` method logs a `fatal` level message and terminates the program. The `Panic` method logs a `panic` level message and panics.
+
+Example:
+
+```go title="main.go"
+package main
+
+import (
+    "os"
+
+    "github.com/rs/zerolog"
+)
+
+func main() {
+    logger := zerolog.New(os.Stdout)
+    logger.Info().Msg("Hello World!")
+    logger.Debug().Msg("Hello World!")
+    logger.Error().Msg("Hello World!")
+    logger.Fatal().Msg("Hello World!")
+    logger.Panic().Msg("Hello World!")
+}
+```
+
+The output should look like this:
+
+```bash title="output"
+{"level":"info","message":"Hello World!"}
+{"level":"debug","message":"Hello World!"}
+{"level":"error","message":"Hello World!"}
+{"level":"fatal","message":"Hello World!"}
+exit status 1
+```
+
+As you can see, the `Fatal` method logs a `fatal` level message and terminates the program. The `Panic` method logs a `panic` level message and panics.
+
+You can also set the global logging level using the `SetGlobalLevel` function:
+
+```go title="main.go"
+package main
+
+import (
+    "os"
+
+    "github.com/rs/zerolog"
+)
+
+func main() {
+    zerolog.SetGlobalLevel(zerolog.ErrorLevel)
+    logger := zerolog.New(os.Stdout)
+    logger.Info().Msg("This is an info message")
+    logger.Debug().Msg("This is a debug message")
+    logger.Error().Msg("This is an error message")
+    logger.warn().Msg("This is a warn message")
+}
+```
+
+The output should look like this:
+
+```bash title="output"
+{"level":"error","message":"This is an error message"}
+```
+
+When you set the global logging level to `ErrorLevel`, only logging messages with a level of `error` or higher will be logged. In this example, only the `error` level message is logged.
+
+## Logging Fields <SectionLink id="logging-fields" />
+
+You can add additional information to a log message using fields. Fields are key-value pairs that provide additional information about the log message. You can add fields to a log message using the `Str`, `Int`, `Float`, `Bool`, `Err`, `Timestamp`, `Interface`, `Object`, `RawJSON`, `RawMessage`, `Msgf`, `Strs`, `Ints`, `Floats`, `Bools`, `Errs`, `Timestamps`, `Interfaces`, `Objects`, `RawJSONs`, and `RawMessages` methods.
+
+The `Str` method adds a string field to the log message:
+
+```go title="main.go"
+package main
+
+import (
+    "os"
+
+    "github.com/rs/zerolog"
+)
+
+func main() {
+    logger := zerolog.New(os.Stdout)
+    logger.Info().Str("name", "John Doe").Msg("")
+}
+```
+
+The output should look like this:
+
+```bash title="output"
+{"level":"info","name":"John Doe"}
+```
+
+The same applies to the rest of the methods.
+
+## Logging Errors <SectionLink id="logging-errors" />
+
+Logging errors is a common use case. ZeroLog provides the `Err` method to log errors. The `Err` method takes an `error` type as an argument. It logs the error message. The logged message can have additional fields added to it, such as the error stack trace using the `Stack` method.
+
+Example:
+
+```go title="main.go"
+package main
+
+import (
+    "errors"
+    "os"
+
+    "github.com/rs/zerolog"
+)
+
+func main() {
+    err := errors.New("Something went wrong")
+
+    logger := zerolog.New(os.Stdout)
+    logger.Error().Err(err).Msg("")
+}
+```
+
+The output should look like this:
+
+```bash title="output"
+{"level":"error","error":"Something went wrong"}
+```
+
+## Adding Contextual Information to Log Messages <SectionLink id="adding-contextual-information-to-log-messages" />
+
+You can add contextual information to log messages using the `With` method. The `With` method returns a `zerolog.Context` type. You can use this type to add fields to the log message. The `With` method takes a key-value pair as an argument. The key is a string and the value is an `interface{}` type. The `interface{}` type can be any type. The `With` method can be called multiple times to add multiple fields to the log message.
+
+Example:
+
+```go title="main.go"
+package main
+
+import (
+    "os"
+
+    "github.com/rs/zerolog"
+    "github.com/rs/zerolog/log"
+)
+
+func main() {
+    log.Logger = zerolog.New(os.Stdout).With().Timestamp().Logger()
+
+    log.Info().Msg("Hello World!")
+}
+```
+
+The output should look like this:
+
+```bash title="output"
+{"level":"info","time":"2023-02-03T13:04:23+03:00","message":"Hello World!"}
+```
+
+The `With` method adds a `time` field to the log message. The `time` field contains the current time.
+
+You can also add the line number and file name to the log message using the `Caller` method:
+
+```go title="main.go"
+package main
+
+import (
+    "os"
+
+    "github.com/rs/zerolog"
+    "github.com/rs/zerolog/log"
+)
+
+func main() {
+    log.Logger = zerolog.New(os.Stdout).With().Timestamp().Caller().Logger()
+
+    log.Info().Msg("Hello World!")
+}
+```
+
+The output should look like this:
+
+```bash title="output"
+{"level":"info","time":"2023-02-03T13:04:23+03:00",
+"caller":"Blog/Go/zerolog/ctxLine.go:13","message":"Hello World!"}
+```
+
+The `Caller` method adds a `caller` field to the log message. The `caller` field contains the file name and line number.
+
+## Logging to a File <SectionLink id="logging-to-a-file" />
+
+You can log to a file using the `File` method. The `File` method is implemented by the `zerolog.Logger` type. This method takes a pointer to an `os.File` type as an argument. The `File` method returns a `zerolog.Logger` type.
+
+Example:
+
+```go title="main.go"
+package main
+
+import (
+    "os"
+
+    "github.com/rs/zerolog"
+)
+
+func main() {
+    file, err := os.OpenFile("file.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+    if err != nil {
+        panic(err)
+    }
+
+    defer file.Close()
+
+    logger := zerolog.New(file).With().Timestamp().Logger()
+    logger.Info().Msg("I am logging to a file")
+}
+```
+
+## Logging to File with Rotation <SectionLink id="logging-to-file-with-rotation" />
+
+Sometimes you may want to rotate the log file at a certain size. Though the `zerolog` package does not provide a method to rotate the log file, you can use the `lumberjack` package to rotate the log file. The `lumberjack` package provides a rolling logger. The rolling logger rotates the log file at a certain size or at a certain time. The `lumberjack` package is a third-party package. You can install it using the `go get` command:
+
+```bash title="command"
+go get gopkg.in/natefinch/lumberjack.v2
+```
+
+Example:
+
+```go title="main.go"
+package main
+
+import (
+    "gopkg.in/natefinch/lumberjack.v2"
+    "github.com/rs/zerolog"
+)
+
+func main() {
+    lumberjackLogger := &lumberjack.Logger{
+        Filename: "./file.log",
+        MaxSize: 1,
+        MaxBackups: 3,
+	    MaxAge:     28,
+	    Compress:   true,
+    }
+
+    logger := zerolog.New(lumberjackLogger).With().Timestamp().Logger()
+    loop := 0
+    for {
+        logger.Info().Msg("I am logging to a file with rotation")
+        if loop == 1000000 {
+            break
+        }
+        loop++
+    }
+}
+```
+
+In the above example, the log file is rotated at a size of 1 MB. The `MaxBackups` field specifies the number of old log files to retain. The `MaxAge` field specifies the maximum number of days to retain old log files. The `Compress` field specifies whether the rotated log files should be compressed using gzip.
+
+## Logging to a Remote Server <SectionLink id="logging-to-a-remote-server" />
+
+Sometimes you may have a centralized logging server. You can log to the server using the `Output` method. The `Output` method is implemented by the `zerolog.Logger` type. This method takes a `io.Writer` type as an argument. The `Output` method returns a `zerolog.Logger` type. The `io.Writer` type can be a `net.Conn` type, a `net.UDPConn` type, or a `net.UnixConn` type.
+
+Example:
+
+```go title="main.go"
+package main
+
+import (
+    "net"
+    "os"
+
+    "github.com/rs/zerolog"
+)
+
+func main() {
+    con, err := net.Dial("tcp", "localhost:8080")
+    if err != nil {
+        panic(err)
+    }
+
+    defer con.Close()
+
+    logger := zerolog.New(con).With().Timestamp().Logger()
+
+    logger.Info().Msg("I am logging to a remote server")
+
+    os.Exit(0)
+}
+```
+
+The server code is as follows:
+
+```go title="server.go"
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "net"
+)
+
+func main() {
+    ln, err := net.Listen("tcp", ":8080")
+    if err != nil {
+        panic(err)
+    }
+
+    defer ln.Close()
+
+    for {
+        con, err := ln.Accept()
+        if err != nil {
+            panic(err)
+        }
+
+        go handleConnection(con)
+    }
+}
+
+func handleConnection(con net.Conn) {
+    defer con.Close()
+
+    scanner := bufio.NewScanner(con)
+    for scanner.Scan() {
+        fmt.Println(scanner.Text())
+    }
+}
+```
+
+From the server output, you can see that the log message is received by the server:
+
+```bash title="output"
+{"level":"info","time":"2023-02-03T13:04:23+03:00","message":"I am logging to a remote server"}
+```
+
+## Conclusion <SectionLink id="conclusion" />
+
+To Conclude, Zerolog is a powerful and versatile logging library that provides a wide range of features and benefits for Go developers. Its zero-allocation logging format, efficient JSON encoding, and customizable logging options make it an excellent choice for applications that generate a large volume of logs. By combining Zerolog with tools like Lumberjack, you can create a robust and scalable logging solution that meets the needs of even the most demanding applications. Whether you're building a new project or looking to improve an existing one, Zerolog is an excellent choice for your logging needs. So go ahead and give it a try!
