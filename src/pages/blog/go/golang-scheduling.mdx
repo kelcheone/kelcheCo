@@ -21,7 +21,7 @@ import { Image } from "@astrojs/image/components";
 
 ## Introduction <SectionLink client:load id="introduction" />
 
-What makes Go, a great language to work with is the concept of concurrency. Concurrency in its most basic definition is the ability to run multiple tasks at the same time. This is a very powerful concept, but it comes with a lot of challenges. Thank god for the Go team, they have made it very easy to work with concurrency in Go. In this article, we take a look under the hood of the Go runtime and see how the scheduler works.
+What makes Go a great language to work with is its concept of concurrency. Concurrency, in its simplest definition, refers to the capability of running multiple tasks simultaneously. This is a highly powerful concept, but it presents numerous challenges. Fortunately, the Go team has made it easy to handle concurrency in Go. In this article, we will delve into the Go runtime and uncover how the scheduler operates
 
 ### Some Prehumble <SectionLink client:load id="some-prehumble" />
 
@@ -215,7 +215,7 @@ The modern Go scheduler uses a technique called **work stealing**. Work stealing
 
 Before a processor starts stealing work, it will first check its run queue. If the run queue is not empty, it will pull a goroutine from the run queue and execute it. If the run queue is empty, it will then check the global run queue. It only checks the run queue 1/61 of the time. This is done to avoid the overhead of checking the run queue all the time. There is a tick that counts the number of times we have checked the local run queue, once it reaches 61 or a multiple of 61, we check the global run queue. This is important to avoid the starvation of goroutines in the global run queue.
 
-The tick was set to 61 because it is not too small to cause checking of the global run queue too often and not too big to cause starvation of goroutines in the global run queue. Another reason is that 61 is a prime number and prime numbers are great for hashing. If 64 is used, it will cause a lot of collisions. These collisions would interfere with the go runtime patterns and result in unfairness.
+It is set to 61 so that it is not too low to result in excessive checking of the global run queue, nor too high to result in starvation of goroutines in the queue. Another reason is that 61 is a prime number and prime numbers are beneficial for hashing purposes. If 64 is used, it will cause a lot of collisions. These collisions would interfere with the go runtime patterns and result in unfairness.
 
 <img
   src="/images/scheduler/idle-thread.svg"
@@ -239,7 +239,10 @@ As you can see in the above diagram, processor 2 is idle. It will check its run 
   <p class="text-center text-xs dark:text-gray-300">stealing from global</p>
 </div>
 
-As you can see in the above diagram, processor 2 will steal only 2 goroutines from the global run queue. This is because to get a fair chance, each processor should only steal the equivalent of the number of goroutines available by the number of processors. In this case, we have 3 processors, and 6 goroutines in the global run queue. This means that each processor should steal 2 goroutines.
+The diagram shows that processor 2 steals 2 goroutines from the global run queue,
+ensuring fairness by only stealing the equivalent number of goroutines available
+divided by the number of processors. With 3 processors and 6 goroutines in the global
+run queue, each processor takes 2 goroutines.
 
 ### Network Poller <SectionLink client:load id="network-poller" />
 
@@ -260,7 +263,7 @@ If there is a runnable goroutine in the network poller (ready), the processor wi
 
 ### Cases where the global run queue, local run queue, and network poller are empty <SectionLink client:load id="cases-where-the-global-run-queue-local-run-queue-and-network-poller-are-empty" />
 
-There are cases where the global run queue and local run queue are empty and the network poller is also empty or has blocked goroutines. In this case, the processor will then have to steal work from another processor. The processor randomly picks a processor to steal work from (including itself). When it finds a processor with runnable goroutines, it will steal half of the goroutines from the other processor and add them to its run queue.
+If both the global run queue and local run queue are empty and the network poller is blocked, the processor randomly steals work from another processor, including itself. If a processor with runnable goroutines is found, half of the goroutines are taken and added to the stealing processor's run queue.
 
 <img
   src="/images/scheduler/local-global-network-empty.svg"
