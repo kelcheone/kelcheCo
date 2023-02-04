@@ -1,19 +1,281 @@
 ---
 layout: "@layouts/ArticleLayout.astro"
 author: Kevin Kelche
-title: Go Mod - A Comprehensive Guide
-description: Go Mod is the official dependency management tool for Go. In this article, we take a deep dive into Go Mod and learn how to use it.
-date: 03 February 2023
-image: /images/...
+title: A Complete Guide to Go Modules
+description: Learn everything you need to know about Go Modules in this complete guide. Discover how to set up, use, and troubleshoot Go Modules to manage dependencies in your Go projects with ease.
+date: 04 February 2023
+image: /images/golang-modules.svg
 imageDescription:
 keywords:
   -
 tags:
   - golang
-
-draft: true
 ---
+
+import Nugget from "@components/Nugget.astro";
+import SectionLink from "@components/SectionLink.jsx";
+import Link from "@components/Link.jsx";
 
 ## Introduction
 
-Go mod is something that we are all introduced to when learning Go but we all use it as a black box. In this article, we will take a deep dive into Go mod and learn how to use it.
+Working with modules is a crucial aspect of any programming language, including Go. Go has built-in support for managing modules and dependencies and since the introduction of Go modules in Go 1.11, they have become the standard way of handling dependencies in Go.
+
+Go modules offer several advantages over older dependency management techniques, such as GOPATH and Vendoring. Unlike Vendoring, Go modules provide a simple and straightforward method for declaring, managing, and updating dependencies without the need for committing them to source control. Unlike GOPATH, which manages dependencies globally, Go modules enable project-level dependency management, making it easier to handle multiple projects with varying dependencies.
+
+### Why Go modules?
+
+Go modules provide a centralized repository for managing project dependencies, enabling easier sharing of code and collaboration with others. They also offer versioning and Semantic Import Versioning (SIV), which helps to prevent breaking changes in dependencies.
+
+### Package vs Module
+
+Before we dive into the details of Go modules, we must understand the distinction between a package and a module. **A package is a collection of Go source files in the same directory that define functions, types, and variables, declared using the package keyword**. **A module, on the other hand, is a collection of related Go packages that are versioned as a single unit**. A module can contain one or more packages and the `go.mod` file is used to declare the module.
+
+In this article, we will cover the basics of Go modules and how to use them in your projects.
+
+<Nugget>
+  <strong class="text-lg font-bold dark:text-white text-black">
+    {" "}
+    Prerequisites{" "}
+  </strong>
+  <p>
+    {" "}
+    This article assumes that you have Go version 1.14 or higher installed on your
+    machine. If you don't have Go installed on your machine, you can download it
+    from <Link href="https://go.dev/dl/">here</Link>
+  </p>
+</Nugget>
+
+## Setting up and using Go modules
+
+### Initializing a module
+
+Create a new directory and navigate to it.
+
+```bash
+mkdir go-modules
+cd go-modules
+```
+
+To initialize a new module, run the `go mod init` command. This command will create a new `go.mod` file in the current directory. You have to specify the name of the module as an argument to the `go mod init` command. The name of the module should be the name of the module as it will appear in the import statements.
+
+```bash
+go mod init github.com/kevinkelche/go-modules
+```
+
+If you open the `go.mod` file, you will see the following content.
+
+```bash
+cat go.mod
+```
+
+```bash title="go.mod"
+module github.com/kevinkelche/go-modules
+
+go 1.19
+
+```
+
+The `module` directive specifies the name of the module. The `go` directive specifies the version of the Go language used to build the module. `go.mod` file does not track built-in packages such as `fmt` or `net/http`. It only tracks the third-party packages that you import into your project.
+
+For instance:
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func main() {
+  fmt.Println("Go is awesome!")
+}
+```
+
+```bash
+go run main.go
+```
+
+```bash
+Go is awesome!
+```
+
+If you `cat` the `go.mod` file, you will see that it is still empty.
+
+```bash
+cat go.mod
+```
+
+```bash title="go.mod"
+module github.com/kevinkelche/go-modules
+
+go 1.19
+
+```
+
+### Adding dependencies
+
+To add a dependency to your project, you have to import it into your code. For instance, let's import the `github.com/labstack/echo/v4` package in our code.
+
+```go title="main.go"
+package main
+
+import "github.com/labstack/echo/v4"
+
+
+func main() {
+  e := echo.New()
+  e.GET("/", func(c echo.Context) error {
+    return c.String(200, "I am a server!")
+  })
+  e.Logger.Fatal(e.Start(":1323"))
+}
+```
+
+So as for your program to run you must first install the `github.com/labstack/echo/v4` package. To do that, run the `go get` command.
+
+```bash
+go get github.com/labstack/echo/v4
+```
+
+```bash
+
+```
+
+If you `cat` the `go.mod` file, you will see that it has been updated with the `github.com/labstack/echo/v4` package.
+
+```bash title="go.mod"
+module github.com/kevinkelche/go-modules
+
+go 1.19
+
+require github.com/labstack/echo/v4 v4.10.0
+
+require (
+	github.com/labstack/gommon v0.4.0 // indirect
+	github.com/mattn/go-colorable v0.1.13 // indirect
+	github.com/mattn/go-isatty v0.0.16 // indirect
+	github.com/valyala/bytebufferpool v1.0.0 // indirect
+	github.com/valyala/fasttemplate v1.2.2 // indirect
+	golang.org/x/crypto v0.2.0 // indirect
+	golang.org/x/net v0.4.0 // indirect
+	golang.org/x/sys v0.3.0 // indirect
+	golang.org/x/text v0.5.0 // indirect
+)
+```
+
+From running this command, Go will download the `echo` package and all of its dependencies and add them to the `go.mod` file. In the `go.mod` file, you can see two sections, `require` and `require( )`. The `require` section contains the direct dependencies of the module. The `require( )` section contains the indirect dependencies of the module. Indirect dependencies are the dependencies of the direct dependencies.
+
+### go.sum file
+
+If you check your directory, you will see that a new file `go.sum` has been created. This file is the checksum database for the Go module. It records the expected cryptographic checksums of the content of specific module versions, including both direct and indirect dependencies.
+
+The purpose of the `go.sum` file is to ensure that the content of the module is the same as the content of the module when it was first downloaded. This is important because the content of the module can change over time. When a Go module is built or tested, Go will compare the cryptographic checksums of the module's content with the cryptographic checksums recorded in the `go.sum` file. If the cryptographic checksums do not match, it means that the packages have been tampered with, and Go will prevent the build or test from running. `go.sum` behaves like a lock file in other languages.
+
+## Go Mod Commands
+
+We have seen a few commands that we can use to work with Go modules. In this section, we will cover the rest of the commands that we can use to work with Go modules.
+
+### go mod tidy
+
+**The `go mod tidy` command is used to update the `go.mod` file and the `go.sum` file. It adds any missing dependencies and removes any unused dependencies. It is a best practice to run this command after adding or removing a dependency.**
+
+It also updates the versions of dependencies that are already in the go.mod file to the latest version that is compatible with the current code.
+
+```bash
+go mod tidy
+```
+
+### go mod vendor
+
+**The `go mod vendor` command is used to copy all the dependencies of the module into a subdirectory named `vendor` in your project directory. This allows you to build and run your projects without internet access.**
+
+```bash
+go mod vendor
+```
+
+```bash
+ls vendor
+```
+
+```bash
+github.com  golang.org  gopkg.in
+```
+
+### go mod download
+
+**The `go mod download` command is used to download the dependencies of the module into the module cache. The downloaded dependencies are stored in the `~/go/pkg/mod` directory.**
+
+The `go mod download` command is typically used as part of the go build process. When you run the `go build` command, Go will first run the `go mod download` command to download the dependencies that are not already in the module cache.
+Running the `go mod download` beforehand can ensure that the dependencies are already available, and prevent builds from failing due to network issues.
+
+```bash
+go mod download
+```
+
+```bash
+ls ~/go/pkg/mod/github.com | grep labstack
+```
+
+```bash
+labstack
+```
+
+### go mod verify
+
+**The `go mod verify` command verifies the dependencies of the module. It checks that the cryptographic checksums (hashes) of the downloaded dependencies match the cryptographic checksums recorded in the `go.sum` file. It ensures the integrity and authenticity of the downloaded dependencies.**
+
+If the hashes match the `go mod verify` command will output `all modules verified`. If the hashes do not match, the `go mod verify` will output an error indicating that the verification has failed. In this case, the packages should not be used and should be re-downloaded.
+
+```bash
+go mod verify
+```
+
+```bash
+all modules verified
+```
+
+### go mod graph
+
+**The `go mod graph` command is used to print the module requirement graph in the format `module@version requirement@version`. It is useful for debugging and understanding the dependencies of the module.**
+
+Each module is identified by its module path and version and the output includes information on the required and direct dependencies of each module, including indirect dependencies.
+
+```bash
+go mod graph
+```
+
+```bash
+github.com/kevinkelche/go-modules github.com/labstack/echo/v4@v4.9.0
+github.com/kevinkelche/go-modules github.com/labstack/gommon@v0.4.0
+github.com/kevinkelche/go-modules github.com/mattn/go-colorable@v0.1.13
+github.com/kevinkelche/go-modules github.com/mattn/go-isatty@v0.0.16
+github.com/kevinkelche/go-modules github.com/valyala/bytebufferpool@v1.0.0
+github.com/kevinkelche/go-modules github.com/valyala/fasttemplate@v1.2.2
+github.com/kevinkelche/go-modules golang.org/x/crypto@v0.2.0
+github.com/kevinkelche/go-modules golang.org/x/net@v0.4.0
+github.com/kevinkelche/go-modules golang.org/x/sys@v0.3.0
+github.com/kevinkelche/go-modules golang.org/x/text@v0.5.0
+github.com/labstack/echo/v4@v4.9.0 github.com/golang-jwt/jwt@v3.2.2+incompatible
+github.com/labstack/echo/v4@v4.9.0 github.com/labstack/gommon@v0.3.1
+github.com/labstack/echo/v4@v4.9.0 github.com/stretchr/testify@v1.7.0
+```
+
+### go mod why
+
+**The `go mod why` command is used to print why a specific module is included as a dependency. This information is important in understanding why a specific module is a dependency and what part of the code is using it.**
+
+The `-m` flag is used to specify the module that we want to know why it is a dependency. The output will include the module path.
+
+```bash
+go mod why -m github.com/labstack/echo/v4
+```
+
+```bash
+# github.com/labstack/echo/v4
+github.com/kevinkelche/go-modules
+github.com/labstack/echo/v4
+```
+
+## Conclusion
+
+In this tutorial, we have learned how to use Go modules as a dependency management tool. We have seen how to create a new module, add dependencies, and how to work with the `go.mod` and `go.sum` files. We have also seen a few commands that we can use to work with Go modules.
+
+That's it for this tutorial. I hope you found this tutorial useful.
