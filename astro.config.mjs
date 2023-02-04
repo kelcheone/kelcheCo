@@ -7,7 +7,7 @@ import {
 } from "./integrations/astro-code-snippets";
 import AutoImport from "astro-auto-import";
 import { remarkReadingTime } from "./remark-reading-time.mjs";
-
+import { theme } from "./syntax-highlight-theme";
 // https://astro.build/config
 
 // https://astro.build/config
@@ -40,6 +40,9 @@ export default defineConfig({
     astroCodeSnippets(),
     mdx({
       remarkPlugins: [remarkReadingTime],
+      extendMarkdownConfig: true,
+      syntaxHighlight: "shiki",
+      shikiConfig: { theme: "dracula" },
     }),
     react(),
     lit(),
