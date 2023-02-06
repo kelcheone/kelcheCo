@@ -1,0 +1,113 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: Golang make vs new
+description: Understand the differences between make() and new() in Golang and learn when to use each function for efficient and effective memory allocation and data structure creation.
+date: 06 February 2023
+image: /images/golang-make-vs-new.svg
+imageDescription:
+keywords:
+  -
+tags:
+  - golang
+---
+
+In Golang, both `make()` and `new()` are used to allocate memory for certain data types. However, they serve different purposes and are used in different situations.
+
+## make()
+
+The `make` function is used to create slices, maps, and channels. It initializes the data structure to its zero value and then allocates memory for the specified data type.
+
+The syntax for `make` is:
+
+```go
+...
+make(type, size)
+...
+```
+
+The `type` parameter indicates the data type of the structure and `size` determines the number of elements to allocate. An additional `capacity` parameter can also be specified, which specifies the memory to be allocated for the data type. When a `capacity` is specified, it can be termed a `buffered type`.
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    // make a slice of 5 integers
+    slice := make([]int, 5)
+    fmt.Println(slice)
+
+    // make a map of 5 integers
+    m := make(map[int]int, 5)
+    fmt.Println(m)
+
+    // make a channel of 5 integers
+    c := make(chan int, 5)
+
+    for i := 0; i < 5; i++ {
+        c <- i
+    }
+
+    close(c)
+
+    for v := range c {
+        fmt.Println(v)
+    }
+
+}
+```
+
+## new()
+
+The `new` function is used to create pointer values for any data type. It allocates zero-valued memory for the specified data type and returns a pointer to that memory.
+
+The syntax for `new` is:
+
+```go
+...
+new(type)
+...
+```
+
+This is useful when you want to create a pointer to a data type, but don't want to initialize it with a value.
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    // create a pointer to an integer
+    i := new(int)
+    fmt.Println(i)
+
+    // create a pointer to a string
+    s := new(string)
+    fmt.Println(s)
+
+    // create a pointer to a slice
+    sl := new([]int)
+    fmt.Println(sl)
+
+    // create a pointer to a map
+    m := new(map[int]int)
+    fmt.Println(m)
+
+    // create a pointer to a channel
+    c := new(chan int)
+    fmt.Println(c)
+}
+```
+
+## Make vs New
+
+One key difference between `make` and `new` functions is memory allocation. `make` allocates memory for the data structure, while `new` allocates zero-valued memory for the data type.
+
+Another difference is handling zero values. The `make` function initializes the data structure to its zero value, which is useful for slices, maps, and channels, as they have specific zero values. On the other hand, the `new` function, only allocates zero-valued memory, without initializing it.
+
+Another difference comes in terms of limitations and usage. The `make` function can only be used to create slices, maps, and channels. The `new` function can be used to create pointers to any data type. Though `make` is limited in use cases, it is optimized for specific data types, while `new` is more generic.
+
+## Conclusion
+
+In this article, we covered the `make` and `new` functions in Golang. We saw how they are used to allocate memory for different data types, and the differences between them. Hope you found this helpful article
