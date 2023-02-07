@@ -161,7 +161,7 @@ require (
 )
 ```
 
-From running this command, Go will download the `echo` package and all of its dependencies and add them to the `go.mod` file. In the `go.mod` file, you can see two sections, `require` and `require( )`. The `require` section contains the direct dependencies of the module. The `require( )` section contains the indirect dependencies of the module. Indirect dependencies are the dependencies of the direct dependencies.
+From running this command, Go will download the `echo` package and all of its dependencies and add them to the `go.mod` file. In the `go.mod` file, you can see two sections, first `require` and the second `require` with the `// indirect` comment. The first `require` section contains the direct dependencies of the module. The second `require` section contains the indirect dependencies of the module. Indirect dependencies are the dependencies of the direct dependencies.
 
 ### go.sum file
 
