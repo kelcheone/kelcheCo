@@ -1,0 +1,184 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: Comprehensive Guide to Golang Embed
+description: Example description
+date: 08 February 2023
+image: /images/golang-embed.svg
+imageDescription:
+keywords:
+  - golang embed
+tags:
+  - golang
+---
+
+import SectionLink from "@components/SectionLink.jsx";
+
+## Introduction
+
+Golang `embed` is a feature that allows you to embed files directly into your binary. This is useful for a variety of reasons, but the most common use case is to embed static assets into your binary. These static files could be HTML, images, or any other file type. This makes it easy to distribute your application as a single binary without having to worry about missing files.
+
+## Why use `embed`?
+
+There are several benefits of using `embed` over other methods of distributing static assets. The main benefit is that your application becomes self-contained, eliminating the need for a separate resource file, thus making deployment and distribution easier with just one binary. Another advantage is improved performance as there is no need for disk I/O, leading to a significant performance boost.
+
+## How to use `embed`
+
+Create a file called `hello.txt` and add some text to it.
+
+```text title="hello.txt"
+lorem ipsum dolor sit amet
+ipsum lorem dolor sit amet
+```
+
+Next, we need to create our `main.go` file. This is where we will embed our file.
+
+```go title="main.go"
+package main
+
+import (
+    _ "embed"
+    "fmt"
+)
+
+//go:embed hello.txt
+var hello string
+
+func main() {
+    fmt.Println(hello)
+}
+```
+
+This will print the contents of our `hello.txt` file to the console.
+
+When the compiler encounters the `go:embed` directive, it will embed the file into the resulting binary.
+
+## Embedding a Directory
+
+Create a new directory called `static` and add a file called `index.html` to it. This will be the file we embed into our binary.
+
+```html title="static/index.html"
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>I was Embeded</h1>
+  </body>
+</html>
+```
+
+Next, create a `main.go` file that will serve our `index.html` file.
+
+```go title="main.go"
+package main
+
+import (
+    _ "embed"
+    "fmt"
+    "log"
+    "net/http"
+)
+
+//go:embed static/index.html
+var indexHTML string
+
+func main() {
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request){
+        fmt.Fprintf(w, indexHTML)
+    })
+
+    log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+```
+
+In this example, we embedded our `index.html` file into the binary. We then used the `indexHTML` variable to serve the file. The `indexHTML` variable is a string that contains the contents of our `index.html` file, so we used `fmt.Fprintf` to write the contents to the response.
+
+## Embedding Multiple Files
+
+Add more files to the `static` directory. In this example, we will add a `robots.txt` file.
+
+```text title="static/robots.txt"
+User-agent: *
+Disallow: /
+```
+
+Now we need to update our `main.go` file to embed the new file.
+
+```go title="main.go"
+package main
+
+import (
+    _ "embed"
+    "fmt"
+    "log"
+    "net/http"
+)
+
+//go:embed static/index.html
+var indexHTML string
+
+//go:embed static/robots.txt
+var robotsTXT string
+
+func main() {
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request){
+        fmt.Fprintf(w, indexHTML)
+    })
+
+    http.HandleFunc("/robots.txt", func(w http.ResponseWriter, r *http.Request){
+        fmt.Fprintf(w, robotsTXT)
+    })
+
+    log.Fatal(http.ListenAndServe(":8080", nil))
+}
+```
+
+Instead of declaring several `go:embed` directives we can use a single directive to embed multiple files.
+
+```go title="main.go"
+package main
+
+import (
+    "embed"
+    "fmt"
+    "log"
+    "net/http"
+)
+
+//go:embed static/*
+var staticFiles embed.FS
+
+func main() {
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request){
+        indexHTML, err := staticFiles.ReadFile("static/index.html")
+        if err != nil {
+            log.Fatal(err)
+        }
+        fmt.Fprintf(w, string(indexHTML))
+    })
+
+    http.HandleFunc("/robots.txt", func(w http.ResponseWriter, r *http.Request){
+        robotsTXT, err := staticFiles.ReadFile("static/robots.txt")
+        if err != nil {
+            log.Fatal(err)
+        }
+        fmt.Fprintf(w, string(robotsTXT))
+    })
+
+    log.Fatal(http.ListenAndServe(":8080", nil))
+}
+```
+
+In this example, we use the `embed.FS` type to embed all files in the `static` directory. The ReadFile method accesses individual files by taking the filepath as an argument and returns a byte slice of the file contents. This is called embedding the file system and is useful when you have many files to embed.
+
+Remember to remove `_` from the `embed` import as we are using the `embed.FS` type.
+
+## Conclusion
+
+In this article, we learned how to use the `embed` package to embed files directly into our binary. We also learned how to embed a directory and multiple files. This is a powerful feature that can be used to distribute static assets with your application.

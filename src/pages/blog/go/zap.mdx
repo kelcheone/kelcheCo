@@ -12,6 +12,8 @@ tags:
   - golang
 ---
 
+import SectionLink from "@components/SectionLink.jsx";
+
 ## Introduction
 
 Zap is a high-performance library for Go that offers a fast and efficient way to log messages in Go applications. It is a structured logger, which means that it logs messages in a format, such as JSON, which can be easily parsed by other tools. With its fast performance, it allows simple logging without impacting the performance of your application.
@@ -20,7 +22,7 @@ Zap has two main components: the core library and the sugared logger. The core l
 
 In this article, we will explore logging with zap, starting from the basics and moving on to more advanced topics. We will take a hands-on approach, providing step-by-step instructions, and real-world examples to help you get started with zap. Let's get started!
 
-## Getting Started
+## Getting Started <SectionLink id="getting-started" />
 
 To use Zap, you need to install the package into your project. You can do this by running the following command:
 
@@ -56,7 +58,7 @@ defer logger.Sync()
 
 This code snippet instantiates a new logger and checks for any errors. If any errors are found, the program will log the error and exit. The `defer` keyword ensures that the logger is synced when the program exits. With this code in place, you can now start logging messages.
 
-## Logging Basics
+## Logging Basics <SectionLink id="logging-basics" />
 
 With the setup complete, you can now start logging messages. Logging in zap is straightforward to use. The example below shows how to log a message with the `Info` level:
 
@@ -66,7 +68,7 @@ logger.Info("Go can be fun!")
 
 The `Info` method takes a string as an argument, which is the message to be logged. The message will be logged with the `Info` level, which is the default level in `zap.NewProduction()`.
 
-### Adding Fields
+### Adding Fields to Log Messages <SectionLink id="adding-fields-to-log-messages" />
 
 ```go {2}
 logger.Info("Go can be fun!", zap.String("level", "info"))
@@ -89,7 +91,7 @@ logger.Info("Go can be fun!", zap.String("level", "info"), zap.Int("count", 1), 
 {"level":"info","ts":1675760781.7614264,"caller":"zap-logging/init.go:21","msg":"Go can be fun!","level":"info","count":1,"is_active":true,"price":10.99}
 ```
 
-## Logging Levels
+## Logging Levels <SectionLink id="logging-levels" />
 
 Just like other logging libraries, zap supports different logging levels. The logging levels are used to indicate the severity of the log message. The logging levels are:
 
@@ -140,7 +142,7 @@ Just like other logging libraries, zap supports different logging levels. The lo
 
 The logging levels are ordered from least to most severe. The `Debug` level is the least severe, and the `Fatal` level is the most severe. The `Fatal` level is the highest, and it will exit the program after logging the message.
 
-### Setting the Logging Level
+### Setting the Logging Level <SectionLink id="setting-the-logging-level" />
 
 By default, the logging level is set to `Info`. This means that only messages with the `Info` level and above will be logged. You can change the logging level by using the `SetLevel` method. The `SetLevel` method is a member of the `AtomicLevel` type and can be accessed using the `Level` field of the logger instance.
 
@@ -187,7 +189,7 @@ func main() {
 
 In this example, we declare a new `AtomicLevel` instance and set the logging level to `ErrorLevel`. We then create a new logger instance and pass the configuration to it. The `Info` method will not be logged, but the `Error` method will be logged.
 
-## Customizing the Log Format
+## Customizing the Log Format <SectionLink id="customizing-the-log-format" />
 
 The `zap.NewProductionEncoderConfig` function returns a `zapcore.EncoderConfig` instance. This instance is used to configure the log format. The `zapcore.EncoderConfig` type has the following fields:
 
@@ -236,7 +238,7 @@ func main() {
 
 ```
 
-## Logging to a File
+## Logging to a File <SectionLink id="logging-to-a-file" />
 
 Logging to a file is very similar to logging to the console. The only difference is that you need to create a file and pass it to the logger. The example below shows how to log to a file:
 
@@ -275,7 +277,7 @@ func main() {
 
 As you can see instead of passing the `os.Stdout` to the `zapcore.Lock` function, we pass the file instance. The `zapcore.Lock` function is used to lock the file so that only one goroutine can write to the file at a time.
 
-## Logging to a File and the Console
+## Logging to a File and the Console <SectionLink id="logging-to-a-file-and-the-console" />
 
 You can log to both a file and the console at the same time. To log to both file and the console, we use the `zapcore.NewTee` function. This function takes a list of `zapcore.Core` instances as arguments. The `zapcore.NewTee` function returns a new `zapcore.Core` instance. We then pass this instance to the `zap.New` function.
 
@@ -320,7 +322,7 @@ func main() {
 }
 ```
 
-## Defining Configurations with JSON
+## Defining Configurations with JSON <SectionLink id="defining-configurations-with-json" />
 
 Zap allows you to define configurations in different formats such as JSON or YAML. This is passed to a `zap.Config` instance.
 
@@ -367,7 +369,7 @@ In the example above, we define a JSON string that contains the configuration fo
 
 Using these alternative formats of passing configurations to the logger, allows you to create your configuration files and pass them to the logger.
 
-## Using the Suggered Logger
+## Using the Suggered Logger <SectionLink id="using-the-suggered-logger" />
 
 The suggered logger is a wrapper around the `*zap.Logger` instance. It provides a simpler API for logging. The suggered logger is created by calling the `zap.Suggered` function. This can be used in applications where performance is not a concern though it is faster than its other structured logging counterparts.
 
@@ -396,6 +398,6 @@ func main() {
 
 Suggered logging is more convenient than zapcore logging, It is great when you want to quickly add logging to your application.
 
-## Conclusion
+## Conclusion <SectionLink id="conclusion" />
 
 In this article, we covered the basics of logging with Zap, including creating a logger, logging to a file/console, defining configurations with JSON, and using the sugared logger. With this hands-on guide, you now have a solid understanding of how to use Zap logging in your Go projects. Whether you opt for default configurations or customize, Zap is an excellent choice for efficient logging in Go applications.
