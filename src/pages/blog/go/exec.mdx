@@ -1,0 +1,218 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: The Ultimate Guide to Golang exec Package
+description: Discover the power of Golang's exec package to run shell commands and interact with their input/output. Learn through examples and code snippets to master executing commands in Go. Get started now!
+date: 11 February 2023
+image: /images/golang-exec.svg
+imageDescription:
+keywords:
+  - golang exec
+tags:
+  - golang
+---
+
+## Introduction
+
+The `exec` package in Go is a powerful interface that enables you to execute shell commands from within your Go program. This tool is very useful for building command-line tools and automating tasks on both local machines and remote servers. In this article, we'll explore the usage of the `exec` package in Go programs.
+
+## Creating a Command
+
+The `exec` package offers a `Command` function that takes a command to be executed. To create a command, call the Command function and provide the name of the command and any desired arguments.
+
+```go
+cmd := exec.Command("ls", "-la")
+```
+
+It returns a `Cmd` type struct that represents the command.
+
+This will create a command that executes the `ls` command with the `-la` argument. Alternatively, you can create a command by calling the `CommandContext` function and passing in a `context.Context` object, as well as the name of the command and any desired arguments.
+
+```go
+ctx := context.Background()
+cmd := exec.CommandContext(ctx, "ls", "-la")
+```
+
+The `CommandContext` function is useful if you want to cancel the command before it finishes executing. We will explore this in more detail later in this article.
+
+## Executing a Command
+
+Once you have created a command, you can execute it by calling the `Run` method on the `Cmd` type. This function will execute the command and wait for it to finish. If the execution is successful, the `Run` method will return `nil`. In case of a failure, the `Run` method will return an error object.
+
+```go
+cmd := exec.Command("ls", "-la")
+err := cmd.Run()
+if err != nil {
+  log.Fatal(err)
+}
+```
+
+The `Cmd` type also provides the `Start` function, which executes the command but does not wait for it to complete.
+
+```go
+cmd := exec.Command("ls", "-la")
+if err := cmd.Start(); err != nil {
+  log.Fatal(err)
+}
+```
+
+## Controlling the Output
+
+### Output function
+
+The `Cmd` type provides another function, `Output`, which executes the command and returns its output as a `[]byte` object.
+
+```go
+cmd := exec.Command("ls", "-la")
+output, err := cmd.Output()
+if err != nil {
+  log.Fatal(err)
+}
+fmt.Println(string(output))
+```
+
+This will print the output of the `ls` command to the console.
+
+### Stder and Stdout
+
+The `Cmd` type includes `Stdout` and `Stderr` fields, which are `io.Writer` objects that allow you to control the output of the command. By setting these fields to `os.Stdout` and `os.Stderr`, respectively, you can print the output of the command to the console.
+
+```go
+cmd := exec.Command("ls", "-la")
+cmd.Stdout = os.Stdout
+cmd.Stderr = os.Stderr
+if err := cmd.Run(); err != nil {
+  log.Fatal(err)
+}
+```
+
+The `io.Writer` can also be a file object, `bytes.Buffer` object, or any other object that implements the `io.Writer` interface.
+
+### CombinedOutput function
+
+`CombinedOutput` function is also provided by the `Cmd` type and will execute the command and return the combined output of the command as a `[]byte` object.
+
+```go
+cmd := exec.Command("ls", "-la")
+output, err := cmd.CombinedOutput()
+if err != nil {
+  log.Fatal(err)
+}
+fmt.Println(string(output))
+```
+
+The difference between `CombinedOutput` and `Output` is that `CombinedOutput` will return the output of both `Stdout` and `Stderr`.
+
+## Piping Output from One Command to Another
+
+Piping the output of one process to another is a very common task when working with the command line. The `exec` package simplifies this task. You can pipe the output of one command to another by setting the `Stdout` field of the first command to the `Stdin` field of the second command.
+
+```go
+cmd1 := exec.Command("ls", "-la")
+cmd2 := exec.Command("grep", "main.go")
+cmd2.Stdin, _ = cmd1.StdoutPipe()
+cmd2.Stdout = os.Stdout
+cmd1.Start()
+cmd2.Start()
+cmd1.Wait()
+cmd2.Wait()
+```
+
+The `StdoutPipe` function is provided by the `Cmd` type and will return an `io.ReadCloser` object that can be used to read the output of the command.
+`StderrPipe` function also returns an `io.ReadCloser` object that can be used to read the error output of the command.
+
+## Piping Input to a command
+
+`StdinPipe` allows sending input to a process from another process. It returns a pipe (`io.WriteCloser`) that will be connected to the command's standard input when the command starts.
+
+```go
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os/exec"
+)
+
+func main() {
+	wcCmd := exec.Command("wc")
+
+	// Open a pipe to the process's standard input
+	stdin, err := wcCmd.StdinPipe()
+	if err != nil {
+		fmt.Printf("Error opening stdin pipe: %v\n", err)
+		return
+	}
+
+	// Open a pipe to the process's standard output
+	stdout, err := wcCmd.StdoutPipe()
+	if err != nil {
+		fmt.Printf("Error opening stdout pipe: %v\n", err)
+		return
+	}
+
+	// Start the wc command
+	if err := wcCmd.Start(); err != nil {
+		fmt.Printf("Error starting wc command: %v\n", err)
+		return
+	}
+
+	// Write some text to the process's standard input
+	text := "Hello, World!\n"
+	if _, err := stdin.Write([]byte(text)); err != nil {
+		fmt.Printf("Error writing to stdin: %v\n", err)
+		return
+	}
+
+	// Close the pipe to signal the end of the input
+	if err := stdin.Close(); err != nil {
+		fmt.Printf("Error closing stdin: %v\n", err)
+		return
+	}
+
+	// Read the process's standard output
+	scanner := bufio.NewScanner(stdout)
+	for scanner.Scan() {
+		fmt.Println(scanner.Text())
+	}
+	if err := scanner.Err(); err != nil {
+		fmt.Printf("Error reading from stdout: %v\n", err)
+		return
+	}
+
+	// Wait for the process to finish
+	if err := wcCmd.Wait(); err != nil {
+		fmt.Printf("Error waiting for wc command: %v\n", err)
+		return
+	}
+}
+```
+
+In this example, we are using the `wc` command to count the number of words in a string. This will return the number of words, the number of lines, and the number of bytes in the string.
+
+```bash title="Output"
+1 2 14
+```
+
+## Cancelling a Command
+
+To cancel a command, `CommandContext` function can be used. As mentioned earlier, this function takes a `context.Context` object as the first argument. The `context.Context` object can be used to cancel the command.
+
+```go
+ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+defer cancel()
+cmd := exec.CommandContext(ctx, "sleep", "5")
+if err := cmd.Run(); err != nil {
+  log.Fatal(err)
+}
+```
+
+This will cancel the command after 1 second.
+
+```bash title="Output"
+Error:  signal: killed
+```
+
+## Conclusion
+
+In this article, we discussed the `exec` package and how it can be used to execute shell commands from within a Go program. We covered creating a command, executing the command, controlling its output, and piping the output of one command to another. I hope you found this article helpful.
