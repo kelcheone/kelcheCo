@@ -825,14 +825,7 @@
   resolved "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.2.tgz"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
 
-"@types/sharp@0.31.0":
-  version "0.31.0"
-  resolved "https://registry.npmjs.org/@types/sharp/-/sharp-0.31.0.tgz"
-  integrity sha512-nwivOU101fYInCwdDcH/0/Ru6yIRXOpORx25ynEOc6/IakuCmjOAGpaO5VfUl4QkDtUC6hj+Z2eCQvgXOioknw==
-  dependencies:
-    "@types/node" "*"
-
-"@types/sharp@^0.31.1":
+"@types/sharp@0.31.1", "@types/sharp@^0.31.1":
   version "0.31.1"
   resolved "https://registry.npmjs.org/@types/sharp/-/sharp-0.31.1.tgz"
   integrity sha512-5nWwamN9ZFHXaYEincMSuza8nNfOof8nmO+mcI+Agx1uMUk4/pQnNIcix+9rLPXzKrm1pS34+6WRDbDV0Jn7ag==
@@ -985,20 +978,20 @@ astro-auto-import@^0.2.0:
     "@types/node" "^18.0.0"
     acorn "^8.8.0"
 
-astro-compress@^1.1.24:
-  version "1.1.24"
-  resolved "https://registry.npmjs.org/astro-compress/-/astro-compress-1.1.24.tgz"
-  integrity sha512-S7yzhmYdHxMPn8N3E7XJFKhTuHFrwLovPyhMJAuReVmhISvR0cxubGxaYnSJZrE67vFePj5Y8Gkd82GJIjFS2A==
+astro-compress@^1.1.28:
+  version "1.1.33"
+  resolved "https://registry.yarnpkg.com/astro-compress/-/astro-compress-1.1.33.tgz#90918ee39e64b03e4aa8748ec9c6512586839c11"
+  integrity sha512-i9LuEzQAeYPs9Vn+FbN9bdPDa/g2PYddT1GOkoUacFpAZCl9qIYFFvacULjeZIMMKhrRkPZ5f9lZVC3RJP7Qpg==
   dependencies:
     "@types/csso" "5.0.0"
     "@types/html-minifier-terser" "7.0.0"
-    "@types/sharp" "0.31.0"
+    "@types/sharp" "0.31.1"
     csso "5.0.5"
-    files-pipeline "0.0.2"
+    files-pipeline "0.0.3"
     html-minifier-terser "7.1.0"
-    sharp "0.31.2"
+    sharp "0.31.3"
     svgo "3.0.2"
-    terser "5.16.1"
+    terser "5.16.3"
 
 astro@^1.1.1:
   version "1.9.2"
@@ -1989,10 +1982,10 @@ fetch-blob@^3.1.2, fetch-blob@^3.1.4:
     node-domexception "^1.0.0"
     web-streams-polyfill "^3.0.3"
 
-files-pipeline@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.npmjs.org/files-pipeline/-/files-pipeline-0.0.2.tgz"
-  integrity sha512-e5BHeSXczwD+6PEy+CLhoYd9NSZkn6gK+QyGwgzdufO4qq0KWKMbVE53lwyw/gKYSbKMe2AgUvVp5N4VrA3OTw==
+files-pipeline@0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/files-pipeline/-/files-pipeline-0.0.3.tgz#d11c53ecfce951a9ed46a8c27d6e83137a740954"
+  integrity sha512-dtHt96Rs0qsNBnIlPuHUP8vd5xPRGbMYgywMfA2Qy83QPz8feoWsoXSuxxLsWYv4vag+vAhNZ4YOHL0pdyGKFA==
   dependencies:
     deepmerge-ts "4.2.2"
     fast-glob "3.2.12"
@@ -4140,21 +4133,7 @@ serialize-error@^7.0.1:
   dependencies:
     type-fest "^0.13.1"
 
-sharp@0.31.2:
-  version "0.31.2"
-  resolved "https://registry.npmjs.org/sharp/-/sharp-0.31.2.tgz"
-  integrity sha512-DUdNVEXgS5A97cTagSLIIp8dUZ/lZtk78iNVZgHdHbx1qnQR7JAHY0BnXnwwH39Iw+VKhO08CTYhIg0p98vQ5Q==
-  dependencies:
-    color "^4.2.3"
-    detect-libc "^2.0.1"
-    node-addon-api "^5.0.0"
-    prebuild-install "^7.1.1"
-    semver "^7.3.8"
-    simple-get "^4.0.1"
-    tar-fs "^2.1.1"
-    tunnel-agent "^0.6.0"
-
-sharp@^0.31.3:
+sharp@0.31.3, sharp@^0.31.3:
   version "0.31.3"
   resolved "https://registry.npmjs.org/sharp/-/sharp-0.31.3.tgz"
   integrity sha512-XcR4+FCLBFKw1bdB+GEhnUNXNXvnt0tDo4WsBsraKymuo/IAuPuCBVAL2wIkUw2r/dwFW5Q5+g66Kwl2dgDFVg==
@@ -4469,7 +4448,17 @@ tar-stream@^2.1.4:
     inherits "^2.0.3"
     readable-stream "^3.1.1"
 
-terser@5.16.1, terser@^5.15.1:
+terser@5.16.3:
+  version "5.16.3"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-5.16.3.tgz#3266017a9b682edfe019b8ecddd2abaae7b39c6b"
+  integrity sha512-v8wWLaS/xt3nE9dgKEWhNUFP6q4kngO5B8eYFUuebsu7Dw/UNAnpUod6UHo04jSSkv8TzKHjZDSd7EXdDQAl8Q==
+  dependencies:
+    "@jridgewell/source-map" "^0.3.2"
+    acorn "^8.5.0"
+    commander "^2.20.0"
+    source-map-support "~0.5.20"
+
+terser@^5.15.1:
   version "5.16.1"
   resolved "https://registry.npmjs.org/terser/-/terser-5.16.1.tgz"
   integrity sha512-xvQfyfA1ayT0qdK47zskQgRZeWLoOQ8JQ6mIgRGVNwZKdQMU+5FkCBjmv4QjcrTzyZquRw2FVtlJSRUmMKQslw==
