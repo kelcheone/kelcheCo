@@ -40,13 +40,20 @@ const date = new Date(content.date);
   {
     image ? (
       <Fragment>
-        <Image
+        {/*<Image
           class="w-10/12 mx-auto aspect-auto rounded-md"
           src={image}
           width={1200}
           alt={imageDescription ?? title}
           aspectRatio="16:9"
           format="avif"
+        />
+        */}
+        <img
+          class="w-10/12 mx-auto aspect-auto rounded-md"
+          src={image}
+          width={1200}
+          alt={imageDescription ?? title}
         />
       </Fragment>
     ) : null
@@ -69,13 +76,19 @@ const date = new Date(content.date);
   <!-- Author -->
   <div class="flex flex-wrap justify-evenly mb-9 mt-2">
     <div class="flex items-center mb-4">
-      <Image
+      <!-- <Image
         width={48}
         class="w-12 h-12 rounded-full mr-4"
         src="/images/pfp.jpg"
         alt="Kevin Kelche"
         aspectRatio="1:1"
         format={"avif"}
+      /> -->
+      <img
+        width={48}
+        class="w-12 h-12 rounded-full mr-4"
+        src="/images/pfp.jpg"
+        alt="Kevin Kelche"
       />
       <div class="text-sm">
         <p class="text-gray-900 dark:text-white leading-none">{author}</p>

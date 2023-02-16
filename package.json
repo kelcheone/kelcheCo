@@ -26,7 +26,7 @@
   "dependencies": {
     "@astrojs/mdx": "^0.15.0",
     "@astrojs/lit": "^1.1.0",
-    "@astrojs/image": "^0.13.0",
+    "@astrojs/image": "^0.12.1",
     "@astrojs/partytown": "^1.0.3",
     "@astrojs/react": "^1.2.2",
     "@types/react": "^18.0.21",
