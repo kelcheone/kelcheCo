@@ -25,19 +25,18 @@
   resolved "https://registry.yarnpkg.com/@astrojs/compiler/-/compiler-0.31.4.tgz#fa5aaeb3e6f3640f6f7625849b724a4d28d662e4"
   integrity sha512-6bBFeDTtPOn4jZaiD3p0f05MEGQL9pw2Zbfj546oFETNmjJFWO3nzHz6/m+P53calknCvyVzZ5YhoBLIvzn5iw==
 
-"@astrojs/image@^0.12.1":
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/@astrojs/image/-/image-0.12.1.tgz#e16e06b0fd7cea56f0039b21da460cf9c0590075"
-  integrity sha512-7pBUPCw7/FPwfEntx+mGjhdwpaWXNHwRVcTK71rpf+c2yb8iIesRS9r26U7lGozTzXUROh1y1ftA82ziuqYF6Q==
+"@astrojs/image@^0.13.0":
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/@astrojs/image/-/image-0.13.1.tgz#12fba0a6da0d0a7920cc2bde749044f5f2539aa3"
+  integrity sha512-H+3I0i8KU+oTc3HsVncE8VGEQkEJEXXi79EnK7nRBf6WS8pWAjVaGBKXkk7jZQv8rM/Qc+Bnvl+lGLQCF1ziOA==
   dependencies:
     "@altano/tiny-async-pool" "^1.0.2"
     http-cache-semantics "^4.1.0"
     image-size "^1.0.2"
     kleur "^4.1.5"
-    magic-string "^0.25.9"
+    magic-string "^0.27.0"
     mime "^3.0.0"
     slash "^4.0.0"
-    web-streams-polyfill "^3.2.1"
 
 "@astrojs/language-server@^0.28.3":
   version "0.28.3"
@@ -57,12 +56,13 @@
     vscode-languageserver-types "^3.17.1"
     vscode-uri "^3.0.3"
 
-"@astrojs/lit@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/@astrojs/lit/-/lit-1.0.1.tgz"
-  integrity sha512-9KPhXzWr8ZQxQ690kiHJV4XgxOf9hjQY+wnfyrajgI3ZqapBtEecoce6jQLFzvi2QC5Rp92v9ntqIFn8qKcILA==
+"@astrojs/lit@^1.1.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@astrojs/lit/-/lit-1.2.0.tgz#db7507fe562edfef460dab6cd2185868bdf421b3"
+  integrity sha512-YbtoThiNg0O6C/k//BcEn2Z18B9jGHSHspuz8dzdlt+YN3+NpvaCFWRrIUmA/QkX+shURSHd3tAElmbcYD2kkQ==
   dependencies:
     "@lit-labs/ssr" "^2.2.0"
+    parse5 "^7.1.2"
 
 "@astrojs/markdown-remark@^1.2.0":
   version "1.2.0"
@@ -151,12 +151,12 @@
     uvu "^0.5.0"
     vfile-message "^3.0.0"
 
-"@astrojs/partytown@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/@astrojs/partytown/-/partytown-1.0.2.tgz"
-  integrity sha512-+pUjLxdp0SYqUO+X+FjFN95KxK7w4Rs5gIMQ7scKUWd2073D3/5hTlij9qNmX5Bk/tFHUfTivKIZ5p233Lpa9Q==
+"@astrojs/partytown@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@astrojs/partytown/-/partytown-1.0.3.tgz#87747ed4e9d262a73898ce65628234c2542321c5"
+  integrity sha512-u2/pG9owRipICz/PksLUUqUat98sm0/YODvv3/IKKJ0JCwF7+0olbMvyyvoj7kJooIXh0XowcOjEs5vhCYFo5g==
   dependencies:
-    "@builder.io/partytown" "^0.7.1"
+    "@builder.io/partytown" "^0.7.4"
     mrmime "^1.0.0"
 
 "@astrojs/prism@^1.0.0":
@@ -431,10 +431,10 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@builder.io/partytown@^0.7.1":
-  version "0.7.3"
-  resolved "https://registry.npmjs.org/@builder.io/partytown/-/partytown-0.7.3.tgz"
-  integrity sha512-hA6WYBFD/exyrEvs0JSvQIILfH0/Jlr5amqE3lt1nPehCus+eQm4ob3LBMRkSaFDWz9clHSLtsGwG52dUjGy3g==
+"@builder.io/partytown@^0.7.4":
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/@builder.io/partytown/-/partytown-0.7.5.tgz#f501e3db37a5ac659f21ba0c2e61b278e58b64b9"
+  integrity sha512-Zbr2Eo0AQ4yzmQr/36/h+6LKjmdVBB3Q5cGzO6rtlIKB/IOpbQVUZW+XAnhpJmJr9sIF97OZjgbhG9k7Sjn4yw==
 
 "@emmetio/abbreviation@^2.2.3":
   version "2.2.3"
@@ -852,14 +852,7 @@
   resolved "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.2.tgz"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
 
-"@types/sharp@0.31.0":
-  version "0.31.0"
-  resolved "https://registry.npmjs.org/@types/sharp/-/sharp-0.31.0.tgz"
-  integrity sha512-nwivOU101fYInCwdDcH/0/Ru6yIRXOpORx25ynEOc6/IakuCmjOAGpaO5VfUl4QkDtUC6hj+Z2eCQvgXOioknw==
-  dependencies:
-    "@types/node" "*"
-
-"@types/sharp@^0.31.1":
+"@types/sharp@0.31.1", "@types/sharp@^0.31.1":
   version "0.31.1"
   resolved "https://registry.npmjs.org/@types/sharp/-/sharp-0.31.1.tgz"
   integrity sha512-5nWwamN9ZFHXaYEincMSuza8nNfOof8nmO+mcI+Agx1uMUk4/pQnNIcix+9rLPXzKrm1pS34+6WRDbDV0Jn7ag==
@@ -1012,20 +1005,20 @@ astro-auto-import@^0.2.0:
     "@types/node" "^18.0.0"
     acorn "^8.8.0"
 
-astro-compress@^1.1.24:
-  version "1.1.24"
-  resolved "https://registry.npmjs.org/astro-compress/-/astro-compress-1.1.24.tgz"
-  integrity sha512-S7yzhmYdHxMPn8N3E7XJFKhTuHFrwLovPyhMJAuReVmhISvR0cxubGxaYnSJZrE67vFePj5Y8Gkd82GJIjFS2A==
+astro-compress@^1.1.28:
+  version "1.1.33"
+  resolved "https://registry.yarnpkg.com/astro-compress/-/astro-compress-1.1.33.tgz#90918ee39e64b03e4aa8748ec9c6512586839c11"
+  integrity sha512-i9LuEzQAeYPs9Vn+FbN9bdPDa/g2PYddT1GOkoUacFpAZCl9qIYFFvacULjeZIMMKhrRkPZ5f9lZVC3RJP7Qpg==
   dependencies:
     "@types/csso" "5.0.0"
     "@types/html-minifier-terser" "7.0.0"
-    "@types/sharp" "0.31.0"
+    "@types/sharp" "0.31.1"
     csso "5.0.5"
-    files-pipeline "0.0.2"
+    files-pipeline "0.0.3"
     html-minifier-terser "7.1.0"
-    sharp "0.31.2"
+    sharp "0.31.3"
     svgo "3.0.2"
-    terser "5.16.1"
+    terser "5.16.3"
 
 astro@^1.1.1:
   version "1.9.2"
@@ -2016,10 +2009,10 @@ fetch-blob@^3.1.2, fetch-blob@^3.1.4:
     node-domexception "^1.0.0"
     web-streams-polyfill "^3.0.3"
 
-files-pipeline@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.npmjs.org/files-pipeline/-/files-pipeline-0.0.2.tgz"
-  integrity sha512-e5BHeSXczwD+6PEy+CLhoYd9NSZkn6gK+QyGwgzdufO4qq0KWKMbVE53lwyw/gKYSbKMe2AgUvVp5N4VrA3OTw==
+files-pipeline@0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/files-pipeline/-/files-pipeline-0.0.3.tgz#d11c53ecfce951a9ed46a8c27d6e83137a740954"
+  integrity sha512-dtHt96Rs0qsNBnIlPuHUP8vd5xPRGbMYgywMfA2Qy83QPz8feoWsoXSuxxLsWYv4vag+vAhNZ4YOHL0pdyGKFA==
   dependencies:
     deepmerge-ts "4.2.2"
     fast-glob "3.2.12"
@@ -2713,13 +2706,6 @@ lru-cache@^6.0.0:
   integrity sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
   dependencies:
     yallist "^4.0.0"
-
-magic-string@^0.25.9:
-  version "0.25.9"
-  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.25.9.tgz#de7f9faf91ef8a1c91d02c2e5314c8277dbcdd1c"
-  integrity sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==
-  dependencies:
-    sourcemap-codec "^1.4.8"
 
 magic-string@^0.27.0:
   version "0.27.0"
@@ -3609,7 +3595,7 @@ parse5@^6.0.0:
   resolved "https://registry.npmjs.org/parse5/-/parse5-6.0.1.tgz"
   integrity sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==
 
-parse5@^7.0.0, parse5@^7.1.1:
+parse5@^7.0.0, parse5@^7.1.1, parse5@^7.1.2:
   version "7.1.2"
   resolved "https://registry.npmjs.org/parse5/-/parse5-7.1.2.tgz"
   integrity sha512-Czj1WaSVpaoj0wbhMzLmWD69anp2WH7FXMB9n1Sy8/ZFF9jolSQVMu1Ij5WIyGmcBmhk7EOndpO4mIpihVqAXw==
@@ -4174,21 +4160,7 @@ serialize-error@^7.0.1:
   dependencies:
     type-fest "^0.13.1"
 
-sharp@0.31.2:
-  version "0.31.2"
-  resolved "https://registry.npmjs.org/sharp/-/sharp-0.31.2.tgz"
-  integrity sha512-DUdNVEXgS5A97cTagSLIIp8dUZ/lZtk78iNVZgHdHbx1qnQR7JAHY0BnXnwwH39Iw+VKhO08CTYhIg0p98vQ5Q==
-  dependencies:
-    color "^4.2.3"
-    detect-libc "^2.0.1"
-    node-addon-api "^5.0.0"
-    prebuild-install "^7.1.1"
-    semver "^7.3.8"
-    simple-get "^4.0.1"
-    tar-fs "^2.1.1"
-    tunnel-agent "^0.6.0"
-
-sharp@^0.31.3:
+sharp@0.31.3, sharp@^0.31.3:
   version "0.31.3"
   resolved "https://registry.npmjs.org/sharp/-/sharp-0.31.3.tgz"
   integrity sha512-XcR4+FCLBFKw1bdB+GEhnUNXNXvnt0tDo4WsBsraKymuo/IAuPuCBVAL2wIkUw2r/dwFW5Q5+g66Kwl2dgDFVg==
@@ -4300,11 +4272,6 @@ source-map@^0.7.0, source-map@^0.7.3:
   version "0.7.4"
   resolved "https://registry.npmjs.org/source-map/-/source-map-0.7.4.tgz"
   integrity sha512-l3BikUxvPOcn5E74dZiq5BGsTb5yEwhaTSzccU6t4sDOH8NWJCstKO5QT2CvtFoK6F0saL7p9xHAqHOlCPJygA==
-
-sourcemap-codec@^1.4.8:
-  version "1.4.8"
-  resolved "https://registry.yarnpkg.com/sourcemap-codec/-/sourcemap-codec-1.4.8.tgz#ea804bd94857402e6992d05a38ef1ae35a9ab4c4"
-  integrity sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==
 
 space-separated-tokens@^2.0.0:
   version "2.0.2"
@@ -4508,7 +4475,17 @@ tar-stream@^2.1.4:
     inherits "^2.0.3"
     readable-stream "^3.1.1"
 
-terser@5.16.1, terser@^5.15.1:
+terser@5.16.3:
+  version "5.16.3"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-5.16.3.tgz#3266017a9b682edfe019b8ecddd2abaae7b39c6b"
+  integrity sha512-v8wWLaS/xt3nE9dgKEWhNUFP6q4kngO5B8eYFUuebsu7Dw/UNAnpUod6UHo04jSSkv8TzKHjZDSd7EXdDQAl8Q==
+  dependencies:
+    "@jridgewell/source-map" "^0.3.2"
+    acorn "^8.5.0"
+    commander "^2.20.0"
+    source-map-support "~0.5.20"
+
+terser@^5.15.1:
   version "5.16.1"
   resolved "https://registry.npmjs.org/terser/-/terser-5.16.1.tgz"
   integrity sha512-xvQfyfA1ayT0qdK47zskQgRZeWLoOQ8JQ6mIgRGVNwZKdQMU+5FkCBjmv4QjcrTzyZquRw2FVtlJSRUmMKQslw==
@@ -4855,7 +4832,7 @@ web-namespaces@^2.0.0:
   resolved "https://registry.npmjs.org/web-namespaces/-/web-namespaces-2.0.1.tgz"
   integrity sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==
 
-web-streams-polyfill@^3.0.3, web-streams-polyfill@^3.2.1:
+web-streams-polyfill@^3.0.3:
   version "3.2.1"
   resolved "https://registry.npmjs.org/web-streams-polyfill/-/web-streams-polyfill-3.2.1.tgz"
   integrity sha512-e0MO3wdXWKrLbL0DgGnUV7WHVuw9OUvL4hjgnPkIeEvESk74gAITi5G606JtZPp39cd8HA9VQzCIvA49LpPN5Q==
