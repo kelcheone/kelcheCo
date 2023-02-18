@@ -14,7 +14,7 @@ tags:
 
 ## What is a Rune?
 
-**A rune is a built-in data type in Golang that represents a single Unicode character and is an alias for the `int32` type.** Unicode is a character encoding standard that allows for the representation of all characters in all languages unlike ASCII which only supports English characters. The `int32` type is a 32-bit integer that can represent all Unicode characters. Unlike strings which are a sequence of bytes, runes are a sequence of characters. Since strings in Go are of UTF-8 encoding a string can hold Unicode characters by representing them as a sequence of 4 bytes.
+**A rune is a built-in data type in Golang that represents a single Unicode character and is an alias for the `int32` type.** Unicode is a character encoding standard that allows for the representation of all characters in all languages, unlike ASCII which only supports English characters. The `int32` type is a 32-bit integer representing all Unicode characters. Unlike strings which are a sequence of bytes, runes are a sequence of characters. Since strings in Go are of UTF-8 encoding a string can hold Unicode characters by representing them as a sequence of 4 bytes.
 
 ## Rune Defenition and Initialization
 
@@ -36,7 +36,7 @@ fmt.Printf("Value of c is %v and type is %T\n", c, c)
 
 By printing the value and type of each rune, we can see the `int32` representation of each character and the `int32` type.
 
-A rune can also be initialized with a Unicode code point. A Unicode code point is a number that represents a character in the Unicode standard. To initialize a rune with a Unicode code point, we can use the `rune()` function.
+A rune can also be initialized with a Unicode code point. A Unicode code point is a number that represents a character in the Unicode standard. We can use the `rune()` function to initialize a rune with a Unicode code point.
 
 ```go
 d := rune(0x1F9EF)
