@@ -1,0 +1,67 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: Golang Runes
+description: Learn how to work with Golang runes! Discover manipulation, common operations, and advanced techniques in this comprehensive guide.
+date: 18 February 2023
+image: /images/golang-runes.svg
+imageDescription:
+keywords:
+  -
+tags:
+  - golang
+---
+
+## What is a Rune?
+
+**A rune is a built-in data type in Golang that represents a single Unicode character and is an alias for the `int32` type.** Unicode is a character encoding standard that allows for the representation of all characters in all languages unlike ASCII which only supports English characters. The `int32` type is a 32-bit integer that can represent all Unicode characters. Unlike strings which are a sequence of bytes, runes are a sequence of characters. Since strings in Go are of UTF-8 encoding a string can hold Unicode characters by representing them as a sequence of 4 bytes.
+
+## Rune Defenition and Initialization
+
+A rune is defined by enclosing a character in single quotes. By enclosing in a single quote, a rune literal is created.
+
+```go
+a := 'a'
+var b rune = 'b'
+c := '🧯'
+```
+
+In this example, we have created three rune variables. The first two are initialized with a single character. The third is initialized with a Unicode character (emoji).
+
+```go
+fmt.Printf("Value of a is %v and type is %T\n", a, a)
+fmt.Printf("Value of b is %v and type is %T\n", b, b)
+fmt.Printf("Value of c is %v and type is %T\n", c, c)
+```
+
+By printing the value and type of each rune, we can see the `int32` representation of each character and the `int32` type.
+
+A rune can also be initialized with a Unicode code point. A Unicode code point is a number that represents a character in the Unicode standard. To initialize a rune with a Unicode code point, we can use the `rune()` function.
+
+```go
+d := rune(0x1F9EF)
+fmt.Printf("Value of d is %v and type is %T\n", d, d)
+```
+
+Another way is using the `\u` escape sequence.
+
+```go
+e := '\u1F9EF'
+fmt.Printf("Value of e is %v and type is %T\n", e, e)
+```
+
+## Rune to String Conversion and Vice Versa
+
+A rune can be converted to a string using the `string()` function.
+
+```go
+f := string('a')
+fmt.Println(f)
+```
+
+A string can be converted to a rune using the `[]rune()` function, which returns a slice of runes.
+
+```go
+wr := "Runes are cool!"
+fmt.Println([]rune(wr))
+```
