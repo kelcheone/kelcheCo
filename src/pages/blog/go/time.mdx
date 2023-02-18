@@ -1,0 +1,219 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: Handling Time in Golang
+description: Learn how to work with time in Golang! Discover manipulation, common operations, and advanced techniques in this comprehensive guide.
+date: 18 February 2023
+image: /images/golang-runes.svg
+imageDescription:
+keywords:
+  -
+tags:
+  - golang
+---
+
+import Link from "@components/Link.jsx";
+
+## Introduction
+
+In this article, we will learn how to work with time in Golang. We will cover the basics of time, how to manipulate time, and how to perform common operations with time. We will also cover advanced techniques for working with time in Golang.
+
+## Time in Golang
+
+To use time in Golang, we must import the `time` package.
+
+```go
+import "time"
+```
+
+This package provides several functionalities to handle time in Go.
+
+## Get current time.
+
+**To get the current time in go we use the `Now` function from the `time` package.**
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "time"
+)
+
+func main() {
+  currentTime := time.Now()
+  fmt.Println(currentTime.String())
+}
+```
+
+This will display the current time. The `Now` returns a `Time` type which comes with other methods such as `String` to help us convert the time to string format.
+
+### Get time parts from time
+
+The `Time` type allows us to get the time parts such as year, month, day, hour, minute, second, nanosecond, and location from the time.
+
+```go
+currentTime := time.Now()
+fmt.Println(currentTime.Year())
+fmt.Println(currentTime.Month())
+fmt.Println(currentTime.Day())
+fmt.Println(currentTime.Hour())
+fmt.Println(currentTime.Minute())
+fmt.Println(currentTime.Second())
+fmt.Println(currentTime.Nanosecond())
+fmt.Println(currentTime.Location())
+```
+
+## Formatting Time
+
+**To format time into a desired form, the `Time` type provides a method called `Format` that takes the layout of the desired format and returns the time in that format.**
+
+`Time` type is returned by the `Now` function so we can format the current time.
+
+```go
+...
+currentTime := time.Now()
+formatTime := currentTime.Format("01/02/06 03:04PM")
+fmt.Println(formatTime)
+```
+
+This will return the current Time in the provided format in this case:
+
+```bash title="output"
+02/18/23 05:53PM
+```
+
+Some other date formats are provided via constants such as `UnixDate`, `RubyDate`, and `ANSIC`, among others. You can also create your custom format but must follow the rules of the <Link url="https://pkg.go.dev/time#pkg-constants"> time </Link> package.
+
+```go
+...
+currentTime := time.Now()
+fmt.Println(currentTime.Format(time.DateOnly))
+```
+
+## Parsing Time Values
+
+**To parse time values `Parse` function from the `time` package is used. This function takes a format and the string time value to be formatted and returns the formatted time.**
+
+```go title="main.go"
+package main
+
+import (
+  "fmt"
+  "time"
+)
+
+func main() {
+  stringTime := "2020-04-21 23:12"
+  parsedTime, _ := time.Parse("2006-01-02 15:04", stringTime)
+  fmt.Println(parsedTime)
+}
+```
+
+This returns :
+
+```bash title="output
+2020-04-21 23:12:00 +0000 UTC
+```
+
+## Creating dates
+
+**To create a date we use the `Date` function from the `time` package. This function takes the year, month, day, hour, minute, second, nanosecond, and location and returns a `Time` type.**
+
+```go
+newDate := time.Date(2023, 01, 21, 13, 33, 0, 0, time.UTC)
+fmt.Println(newDate)
+```
+
+## Duration
+
+**The `Duration` type is used to represent a period. It is also used to represent the difference between two `Time` types.**
+
+```go
+duration := time.Duration(24 * time.Hour)
+fmt.Println(duration)
+```
+
+The `Duration` type provides several methods such as `Hours`, `Minutes`, `Seconds`, `Nanoseconds`, and `String`, among other methods.
+
+## Time Manipulation
+
+### Adding time
+
+**To add time to a `Time` type we use the `Add` function from the `Time` type. This function takes a `Duration` type and returns a new `Time` type.**
+
+```go
+currentTime := time.Now()
+newTime := currentTime.Add(24 * time.Hour)
+fmt.Println(newTime)
+```
+
+This will add 24 hours to the current time and return the new time.
+
+### Subtracting time
+
+**The `Time` function also provides a `Sub` function that takes a `Time` type and returns a `Duration` type.**
+
+```go
+currentTime := time.Now()
+newTime := currentTime.Add(24 * time.Hour)
+diff := newTime.Sub(currentTime)
+fmt.Println(diff)
+```
+
+## Comparing time values
+
+**Time values can be compared using the `Before`, `After`, and `Equal` functions from the `Time` type that take a `Time` type and return a boolean value.**
+
+```go
+currentTime := time.Now()
+
+compTime := currentTime.Add(30 * time.Minute)
+fmt.Println(compTime.Before(currentTime))
+fmt.Println(compTime.After(currentTime))
+fmt.Println(compTime.Equal(currentTime))
+```
+
+This will return:
+
+```bash title="Output"
+false
+true
+false
+```
+
+## Timezones
+
+**To get the current timezone we use the `Local` function from the `time` package.**
+
+```go
+currentTime := time.Now()
+fmt.Println(currentTime.Local())
+```
+
+## Get time from Unix timestamp
+
+Unix timestamp is the number of seconds that have elapsed since January 1, 1970 (midnight UTC/GMT). To get the current time from the Unix timestamp we use the `Unix` function from the `Time` type.
+
+```go
+currentTime := time.Now()
+unixTime := currentTime.Unix()
+fmt.Println(unixTime)
+```
+
+The resulting time will be in seconds, but you can use other methods such as `UnixNano`, `UnixMilli`, and `UnixMicro` to get the timestamp in a preferred unit.
+
+## Sleep
+
+The `Sleep` function from the `time` package is used to pause the execution of the program for a specified duration.
+
+```go
+time.Sleep(5 * time.Second)
+```
+
+This will pause the execution of the program for 5 seconds.<Link url="/blog/go/how-to-sleep-in-golang/">
+Read more about sleep in Golang</Link>
+
+## Conclusion
+
+In this article, we covered the most important functionalities of the time package in Golang. You can read more about time in Golang in the <Link url="https://pkg.go.dev/time"> time </Link> package documentation.
