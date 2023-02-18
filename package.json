@@ -24,7 +24,7 @@
     "theme-change": "^2.1.0"
   },
   "dependencies": {
-    "@astrojs/image": "^0.12.1",
+    "@astrojs/image": "^0.15.0",
     "@astrojs/lit": "^1.1.0",
     "@astrojs/mdx": "^0.14.0",
     "@astrojs/partytown": "^1.0.3",
