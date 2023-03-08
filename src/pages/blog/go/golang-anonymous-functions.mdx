@@ -2,7 +2,7 @@
 layout: "@layouts/ArticleLayout.astro"
 title: Golang anonymous functions
 author: Kevin Kelche
-description: In Golang, anonymous functions are functions that are not bound to an identifier. They are also known as lamda functions or function literals.
+description: In Golang, anonymous functions are functions that are not bound to an identifier. They are also known as lambda functions or function literals.
 date: 18 January 2023
 image: /images/golang-anonymous-functions.svg
 imageDescription: Golang Anonymous Functions
@@ -17,7 +17,7 @@ import SectionLink from "@components/SectionLink.jsx";
 
 ## What is an anonymous function in Golang? <SectionLink client:load id="what-is-an-anonymous-function-in-golang" />
 
-In Golang, anonymous functions are functions that are not bound to an identifier. They are also known as lamda functions or function literals. Anonymous functions form the basis of [closures](#using-anonymous-functions-as-closures-in-golang) in Golang.
+In Golang, anonymous functions are functions that are not bound to an identifier. They are also known as lambda functions or function literals. Anonymous functions form the basis of [closures](#using-anonymous-functions-as-closures-in-golang) in Golang.
 
 ## Why use anonymous functions in Golang? <SectionLink client:load id="why-use-anonymous-functions-in-golang" />
 
@@ -35,14 +35,14 @@ In the following example, we pass an anonymous function as an argument to the `f
 ...
 
 func forEach(numbers []int, callback func(int)){
-    for _, number := range numbers{
-        callback(number)
+ for _, number := range numbers{
+ callback(number)
     }
 }
 
 func main(){
-    numbers := []int{1, 2, 3, 4, 5}
-    forEach(numbers, func(number int){
+ numbers := []int{1, 2, 3, 4, 5}
+ forEach(numbers, func(number int){
         fmt.Println(number)
     })
 }
@@ -69,13 +69,13 @@ In the following example, we return an anonymous function from the `makeGreeter`
 ```go title="main.go"
 ...
 func makeGreeter() func(string) string{
-    return func(name string) string{
-        return "Hello " + name
+ return func(name string) string{
+ return "Hello " + name
     }
 }
 
 func main(){
-    greeter := makeGreeter()
+ greeter := makeGreeter()
     fmt.Println(greeter("Kevin"))
 }
 ```
@@ -98,10 +98,10 @@ In the following example, we use an anonymous function as a closure.
 ...
 
 func main(){
-    number := 0
-    increment := func() int{
+ number := 0
+ increment := func() int{
         number++
-        return number
+ return number
     }
     fmt.Println(increment())
     fmt.Println(increment())
@@ -127,12 +127,12 @@ In the following example, we use an anonymous function as a goroutine.
 package main
 
 import (
-    "fmt"
-    "time"
+ "fmt"
+ "time"
 )
 
 func main(){
-    go func(){
+ go func(){
         fmt.Println("Hello from goroutine")
     }()
     time.Sleep(1 * time.Second)

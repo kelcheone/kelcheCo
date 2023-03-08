@@ -1,0 +1,99 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: A Guide to Closure Functions in Go
+description: "Learn about Golang closures: their syntax, scope, and lifetime of variables, creating higher-order functions, common use cases, and best practices."
+date: 06 March 2023
+image: /images/golang-closure.svg
+imageDescription:
+keywords:
+  -
+tags:
+  - golang
+---
+
+import Link from "@components/Link.jsx";
+
+## Introduction
+
+A clousre is a function that references variables from outside its body, even when the function is called outside its original scope. This phenomenon can also be said as a closure **closes over** its environment and can access variables from its enclosing scope.
+
+Before going into the details of closures, let's first understand the concept of scope and higher-order functions.
+
+## Scope
+
+In programming, scope refers to the visibility of variables, functions, and other objects. In Go, there are two types of scopes: **package scope** and **block scope**. A package scope is the default scope in Go and is the scope of a package in a way that variables are visible throughout the package. A block scope is the scope of a block of code such as a function or a loop. These variables are only visible within the block.
+
+## Higher-Order Functions
+
+Higher-order functions are functions that take other functions as arguments or return a function as a result. Since funcitons are first-class citizens in Go, they can be passed as arguments to other functions or returned as a result from other functions.
+
+In higher-order funcitons anonymous functions are often used. <Link url="/blog/go/golang-anonymous-functions">Anonymous functions</Link> are funcitons that are not bound to an identifier.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func myfunc(f func(int) int) {
+    fmt.Println(f(5))
+}
+
+func someFunc() func() int {
+    var sum int
+    return func() int {
+        sum++
+        return sum
+    }
+}
+
+func main() {
+    myfunc(func(x int) int {
+        return x * x
+    })
+
+    f := someFunc()
+    for i := 0; i < 10; i++ {
+      fmt.Println(f(i))
+    }
+}
+```
+
+In the above example, the function myfunc takes another function as an argument and calls it. The function myFunc2 returns a function that adds the argument to a variable sum and returns the sum. These are examples of higher-order functions.
+
+Let's embark on the journey of closures.
+
+## Closures
+
+Let's take a look at the example below:
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func someFunc() func() int {
+    var sum int
+    return func() int {
+        sum++
+        return sum
+    }
+}
+
+func main() {
+    f := someFunc()
+    fmt.Println(f())
+    fmt.Println(f())
+    fmt.Println(f())
+}
+```
+
+The function someFunc returns a function that adds the argument to a variable sum that is declared in the enclosing scope and returns the sum. The function someFunc is called and the returned function is assigned to the variable f. The variable f is then called three times. The output of the program is:
+
+```bash title="output"
+1
+2
+3
+```
+
+From the output

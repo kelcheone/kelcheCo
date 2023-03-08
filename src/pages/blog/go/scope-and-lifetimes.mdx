@@ -1,0 +1,239 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: Golang Scope and Lifetime of Variables
+description: Example description
+date: 08 March 2023
+image: /images/golang-scope.mdx
+imageDescription:
+keywords:
+  -
+tags:
+  - golang
+---
+
+import SectionLink from "@components/SectionLink.jsx";
+import Nugget from "@components/Nugget.astro";
+import Link from "@components/Link.jsx";
+import Table from "@components/Table.jsx";
+
+## Introduction
+
+A scope can be defined as where in a program a variable can be referenced. And Lifetime is for how long variables exist in the memory. Golang like other programming languages inhibits these attributes in its variables. In this article, we learn about scopes, lifetimes, and some memory allocation in Golang.
+
+## Scope
+
+In Golang there are three types of scopes: **Block scope**, **Package scope**, and **Global scope**.
+
+### Block scope
+
+Block-scoped variables are those variables that are declared within a given block, be it a function or conditionals like if statements, for loops, etc. These variables are only accessible within the given block and not outside of the block.
+
+Let's look at an example below.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func someFunc(){
+ i := 20
+
+    fmt.Printf("We have %d initialized.", i)
+}
+```
+
+In the above example, the `someFunc` function initializes variable `i` which can be accessed by the `Printf` function withing the same function. If we were to access the variable `i` outside the function it would result in a compile error.
+
+```go title="main.go" ins={11,12,13,14}
+package main
+
+import "fmt"
+
+func someFunc(){
+ i := 20
+
+    fmt.Printf("We have %d initialized.", i)
+}
+
+func main() {
+ someFunc()
+    fmt.Printf("Trying to print %v .", i)
+}
+```
+
+If you try to run this program it will exit with an error that `./main.go:13:40: undefined: i`
+
+We'll discuss later how we can access the value of `i` from the main function.
+
+### Package scope
+
+Package-scoped variables are variables that are accessible in every part of the package. These variables are usually declared out of any blocks.
+
+Let's look at examples of package-scoped variables.
+
+```go title="main.go" {5}
+package main
+
+import "fmt"
+var(
+ i = 100
+)
+
+func someFunc(){
+    i+=200
+    fmt.Println(i)
+}
+
+func main(){
+ someFunc()
+    fmt.Println(i)
+}
+```
+
+In this example, we declared a variable `i` and initialized it with the value of 100. The variable can be accessed by both the main function and the `someFunc` function. As you can see from the result is that when the `someFunc` increments the value, the value is incremented all accross the package.
+
+```bash title="output"
+go run main.go
+300
+300
+```
+
+Here is an example of another file in the same package accessing the variable `i`.
+
+```go title="anotherFile.go"
+package main
+
+import "fmt"
+
+func otherFunc(){
+    fmt.Printf("I am accessing %v from anotherFile.go\n", i)
+}
+```
+
+```go title="main.go" ins={4}
+func main(){
+ someFunc()
+    fmt.Println(i)
+ otherFunc()
+}
+```
+
+From running this program you can see that you can access the variable `i` from within the package.
+
+<Nugget>
+  <strong class="font-blod dark:text-white text-black text-2xl">
+    {" "}
+    Note <br />{" "}
+  </strong>
+  Functions names are also variables, if declared outside of the block they are by
+  default package scoped variables.{" "}
+</Nugget>
+
+### Global scope
+
+Globally scoped variables are package variables that can span their reach out of the package. These functions can be termed **exported variables**. To export a variable in Golang you have to capitalize it. These variables can be accessed from any package that imports that package.
+
+Let's see an example of this.
+
+Create a new directory called the store and create a new function called mystore.go then open and add this code.
+
+```bash title="Terminal"
+mkdir store && cd store && touch mystore.go && code .
+```
+
+```go title="store/mystore.go"
+package store
+
+import "fmt"
+const (
+ SomeVar = 30
+)
+
+func DataIsBeautiful() {
+    fmt.Print("Data is beautifull.\n")
+}
+```
+
+Remember to run `go mod init` in your file to create a module.
+
+```bash title="Terminal"
+cd ..
+go mod init scope-tut
+```
+
+In your root folder add a `main.go` file and import it from the store package.
+
+```go title="main.go"
+package main
+
+import (
+ "fmt"
+ "scope-tut/store"
+)
+
+func main(){
+    fmt.Printf("We are accessing someVar with value %v.\n", store.SomeVar)
+    store.DataIsBeautiful()
+}
+```
+
+By running this program you'll see that we are able to access the variables from the package `store` from the `main` package. If `SomeVar` or `DataIsBeautiful` were declared in lowercase it would have resulted in compile time errors.
+
+## Lifetimes
+
+As mentioned earlier a Lifetime is the time a variable exists in the memory. In Golang, the lifetime of a variable is determined by the scope of the variable. The lifetime of a variable is the same as the scope of the variable, meaning that if a variable is declared in a block, it will be destroyed when the block is exited. This is because a stack frame is created for each block and the variables are stored in the stack frame. When the block is exited, the stack frame is destroyed and the variables are destroyed with it.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func someFunc(){
+ i := 10
+    fmt.Printf("We have %d initialized.", i)
+}
+...
+```
+
+<img
+  src="/images/scope/main-stack-frame.svg"
+  alt="main-stack-frame"
+  width="100%"
+  lazy="loading"
+/>
+<p class="text-center text-xs dark:text-gray-300">On run funciton and exit</p>
+
+As you can see from the image a stack frame was assigned to `someFunc` function. When the function is exited the stack frame is destroyed and the variable `i` is destroyed with it.
+
+When dealing with package-scoped variables the lifetime is the same as the lifetime of the program. This is because the variables are stored in the heap and are not destroyed when the function is exited. This is the same as when a function returns a pointer to a variable within that function.
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func someFunc() *int{
+ i := 10
+ return &i
+}
+
+func main(){
+ j := someFunc()
+    fmt.Println(*j)
+}
+```
+
+In the above example, the variable `i` is stored in the stack frame of the function `someFunc`. When the function is exited the stack frame is destroyed and the variable `i` is destroyed with it. However, since the function returns a pointer to the variable `i` it will escape the stack frame and be stored in the heap until the program is exited.
+
+<img
+  src="/images/scope/heap-memory-allocation.png"
+  alt="heap-memory-allocation"
+  width="100%"
+  lazy="loading"
+/>
+<p class="text-center text-xs dark:text-gray-300">heap memory allocation</p>
+
+## Conclusion
+
+To sum up, in this tutorial, we explored the variable scope in Golang. We learned that a variable's scope is limited to the block in which it is declared, and its lifespan is equal to its scope. Additionally, package-scoped variables are accessible from any function within the package, whereas globally-scoped variables can be accessed by any package that imports the corresponding package.
