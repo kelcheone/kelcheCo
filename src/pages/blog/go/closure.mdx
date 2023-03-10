@@ -16,84 +16,193 @@ import Link from "@components/Link.jsx";
 
 ## Introduction
 
-A clousre is a function that references variables from outside its body, even when the function is called outside its original scope. This phenomenon can also be said as a closure **closes over** its environment and can access variables from its enclosing scope.
+A closure is when a function inside another function has access to the variables declared in the outer function. This can be reframed as a function "closes over" the variables in its outer scope. Closures are a powerful feature of Go, and they are used in many common Go patterns. In this article, we'll explore the syntax of closures, how they work, and how to use them.
 
-Before going into the details of closures, let's first understand the concept of scope and higher-order functions.
+## Prehumble
 
-## Scope
+Before we dive into closures, we need to understand the concept of scope and the lifetime of variables. In Go, variables are declared in a block, and they are only accessible within that block; these variables are termed **block-scoped variables**. A block-scoped variable has a lifetime that is limited to the block in which it is declared. There are other types of variables in Go, such as **package scoped variables** and **global variables**, but we won't be covering those in this article. To go in-depth check out this <Link url="/blog/go/scope-and-lifetimes/">article</Link> on scope and lifetimes in Go.
 
-In programming, scope refers to the visibility of variables, functions, and other objects. In Go, there are two types of scopes: **package scope** and **block scope**. A package scope is the default scope in Go and is the scope of a package in a way that variables are visible throughout the package. A block scope is the scope of a block of code such as a function or a loop. These variables are only visible within the block.
+A variable can have a longer lifetime than the block which is declared when a pointer to that variable is returned from the block or when a function utilizing the variable is returned; this is called a **closure**.
 
-## Higher-Order Functions
+Closures use the concept of <Link url="/blog/go/golang-anonymous-functions/">anonymous functions</Link> and nested functions.
 
-Higher-order functions are functions that take other functions as arguments or return a function as a result. Since funcitons are first-class citizens in Go, they can be passed as arguments to other functions or returned as a result from other functions.
+## Syntax
 
-In higher-order funcitons anonymous functions are often used. <Link url="/blog/go/golang-anonymous-functions">Anonymous functions</Link> are funcitons that are not bound to an identifier.
+The syntax for closure is as follows:
+
+```go
+func outer() func() {
+ x := 0
+ return func() {
+    x++
+    fmt.Println(x)
+  }
+}
+```
+
+The outer function returns a closure. The returned closure has access to the variable `x` declared in the outer function.
+
+Let's look at a more concrete example:
 
 ```go title="main.go"
 package main
 
 import "fmt"
 
-func myfunc(f func(int) int) {
-    fmt.Println(f(5))
-}
-
-func someFunc() func() int {
-    var sum int
-    return func() int {
-        sum++
-        return sum
-    }
+func fibonacci() func() int {
+ x, y := 0, 1
+ return func() int {
+ x, y = y, x+y
+ return x
+  }
 }
 
 func main() {
-    myfunc(func(x int) int {
-        return x * x
-    })
-
-    f := someFunc()
-    for i := 0; i < 10; i++ {
-      fmt.Println(f(i))
+ f := fibonacci()
+ for i :=f(); i < 1000; i = f() {
+        fmt.Println(i)
     }
 }
 ```
 
-In the above example, the function myfunc takes another function as an argument and calls it. The function myFunc2 returns a function that adds the argument to a variable sum and returns the sum. These are examples of higher-order functions.
+In this example, the function `fibonacci` returns a closure. The closure calculates the next number in the Fibonacci sequence and has access to the variables `x` and `y` declared in the outer function `fibonacci`. The closure is returned and assigned to the variable `f`. The closure is called in a `for` loop, and the result is printed to the console. As long as the `f` closure exists, the variables `x` and `y` will exist. That is why the loop continues incrementing the Fibonacci sequence. If this didn't happen, the variables `x` and `y` would be garbage collected and the loop would return a `1` for every iteration.
 
-Let's embark on the journey of closures.
-
-## Closures
-
-Let's take a look at the example below:
+It's important to note that the variables in a closure are pointers to the variables in the outer scope and not copies of the variables. This means that if the variable in the outer scope is changed, the variable in the closure will also be changed. Here is an example of this:
 
 ```go title="main.go"
 package main
 
 import "fmt"
 
-func someFunc() func() int {
-    var sum int
-    return func() int {
-        sum++
-        return sum
-    }
-}
-
 func main() {
-    f := someFunc()
-    fmt.Println(f())
-    fmt.Println(f())
-    fmt.Println(f())
+ s := make([]func(), 4)
+ for i := 0; i < 4; i++ {
+        s[i] = func() {
+            fmt.Printf("%d @ %p\n", i, &i)
+        }
+    }
+ for _, f := range s {
+ f()
+    }
 }
 ```
 
-The function someFunc returns a function that adds the argument to a variable sum that is declared in the enclosing scope and returns the sum. The function someFunc is called and the returned function is assigned to the variable f. The variable f is then called three times. The output of the program is:
+By running this program you get the following output:
 
 ```bash title="output"
-1
-2
-3
+4 @ 0xc0000b4000
+4 @ 0xc0000b4000
+4 @ 0xc0000b4000
+4 @ 0xc0000b4000
 ```
 
-From the output
+From this output you can see that the value of `i` is always `4` and the address of `i` is always the same. As mentioned before, the variables in the closure are pointers to the variables in the outer scope. In the first iteration the value is `0`, the second increments it to `1`, and so on, and when the loop is finished the final value is `4`. Since we are not calling the closure in the loop, we will always get the final value of `i` which is `4, and the address of `i` will always be the same.
+
+To fix this we can use the variable `j` in the loop to create a new variable for each iteration. This will copy the value of `i` in each iteration and will have a different address. Here is the fixed code:
+
+```go title="main.go" ins={8}
+package main
+
+import "fmt"
+
+func main() {
+ s := make([]func(), 4)
+ for i := 0; i < 4; i++ {
+ j := i
+        s[i] = func() {
+            fmt.Printf("%d @ %p\n", j, &j)
+        }
+    }
+ for _, f := range s {
+ f()
+    }
+}
+```
+
+Now when we run the program we get the following output:
+
+```bash title="output"
+0 @ 0xc0000b4000
+1 @ 0xc0000b4008
+2 @ 0xc0000b4010
+3 @ 0xc0000b4018
+```
+
+By doing this `i` gets a new address and value for each iteration of the loop. This is referred to as **closure capturing**.
+
+## Common Use Cases
+
+Many common patterns in Go use closures. Here are a few examples:
+
+### Event Handlers
+
+An event handler is a function called when an event occurs. Here is an example of an event handler:
+
+```go title="main.go"
+package main
+
+import (
+ "fmt"
+ "net/http"
+)
+
+func middleware(next http.Handler) http.Handler {
+ return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        fmt.Println("Before")
+        next.ServeHTTP(w, r)
+        fmt.Println("After")
+    })
+}
+
+func main() {
+    http.Handle("/", middleware(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        fmt.Println("Hello World")
+    })))
+    http.ListenAndServe(":8080", nil)
+}
+```
+
+In this example, we have a function `middleware` that takes an `http.Handler` and returns an `http.Handler`. The returned `http.Handler` is a closure that prints "Before" before calling the `next` `http.Handler` and prints "After" after calling the `next` `http.Handler`. The `http.Handler` is then passed to the `http.Handle` function and the server is started. This is a common pattern in Go for creating event handlers.
+
+### Callbacks
+
+Closures are often used as callbacks in Golang. A callback is a function passed as an argument to another function and is called when that function has completed its task. Here is an example of a callback:
+
+```go title="main.go"
+package main
+
+import "fmt"
+
+func filter(slice []int, predicate func(int) bool) []int {
+ var result []int
+ for _, v := range slice {
+ if predicate(v) {
+ result = append(result, v)
+        }
+    }
+ return result
+}
+
+func main() {
+ slice := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+ even := filter(slice, func(n int) bool {
+ return n%2 == 0
+    })
+    fmt.Println(even)
+}
+```
+
+In this example, we define a `filter` function that takes a slice of integers and a `predicate` function as arguments. The `predicate` function is a closure that takes an integer and returns a boolean indicating whether the integer satisfies some condition. The `filter` function uses the `predicate` function to filter out elements from the slice that don't meet the condition. We then call the `filter` function with a slice of numbers and an anonymous function that checks if a number is even and print the resulting slice.
+
+These are but a few examples of how closures are used in Go. There are many more examples of closures in Go, and you will see them in many of the Go standard library packages.
+
+## Conclusion
+
+In this article, we learned about closures in Go. We learned what closure is, how to create a closure, and how to use closures. We also learned about some common use cases for closures in Go.
+
+## Further Reading
+
+- <Link url="https://www.youtube.com/watch?v=US3TGA-Dpqo">
+    {" "}
+    Go Class: 09 Closures{" "}
+  </Link>
