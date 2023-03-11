@@ -1,0 +1,249 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: "Golang YAML"
+description: Learn Golang YAML
+date: 11 March 2023
+image: /images/golang-yaml.svg
+imageDescription:
+keywords:
+  -
+tags:
+  - golang
+---
+
+import Link from "@components/Link.jsx";
+
+## Introduction
+
+If you have ever worked with any CI/CD pipelines such as Travis CI, Circle CI, or GitHub Actions, you have seen YAML files. YAML short for **YAML Ain't Markup Language** is a human-readable data-serialization language. It is used for configuration files and in applications where data is being stored or transmitted as an alternative to other formats. YAML is used in DevOps-related projects such as Kubernetes, Docker, GitHub Actions, and more.
+
+YAML has several advantages over conventional data serialization formats such as JSON or XML. YAML's format is easy to read for both machines and humans which is why it is preferred in configuration files that need frequent editing. YAML also supports a diverse range of data types including key-value pairs, lists, and nested data structures. This makes a great choice for storing complex data that needs to be accessed and processed.
+
+## YAML Syntax
+
+YAML uses indentation and whitespaces to denote the structure of the data and uses a colon to denote key-value pairs. The following is an example of a YAML file:
+
+```yaml
+name: Kevin Kelche
+age: 21
+hobbies:
+  - Programming
+  - Reading
+  - Writing
+```
+
+In this example, the `name` and `age` are key-value pairs, and the `hobbies` is a list with three items denoted with a hyphen.
+
+## YAML in Golang
+
+There are various packages that can be used to process YAML in Golang. The most popular package is <Link url="https://github.com/go-yaml/yaml">go-yaml/yaml</Link>. This package is a fork of libyaml, a C library for parsing and emitting YAML.
+
+To install the package, run the following command:
+
+```bash
+go get gopkg.in/yaml.v3
+```
+
+To use the package, import it into your project:
+
+```go
+import "gopkg.in/yaml.v3"
+```
+
+## Basic YAML in Golang
+
+### Creating a YAML File in Golang
+
+A YAML file is created by declaring a struct and then marshaling it into a YAML file. The following is an example of a YAML file created in Golang:
+
+```go title="main.go"
+package main
+
+import (
+ "fmt"
+ "gopkg.in/yaml.v3"
+ "os"
+ "io"
+)
+
+type Person struct {
+    Name   string `yaml:"name"`
+    Age    int `yaml:"age"`
+    Hobbies []string `yaml:"hobbies"`
+}
+
+func main() {
+ Person := Person{
+        Name:   "Kevin Kelche",
+        Age:    21,
+        Hobbies: []string{"Programming", "Reading", "Writing"},
+    }
+
+ yamlFile, err := yaml.Marshal(&Person)
+ if err != nil {
+ panic(err)
+    }
+
+    fmt.Println(string(yamlFile))
+
+ f, err := os.Create("person.yaml")
+ if err != nil {
+ panic(err)
+    }
+ defer f.Close()
+
+ _, err = io.WriteString(f, string(yamlFile))
+ if err != nil {
+ panic(err)
+    }
+}
+```
+
+In this example, a struct is created with the name `Person`. The struct has three fields: `Name`, `Age`, and `Hobbies`. The `yaml` tag is used to specify the key name in the YAML file. `yaml.Marshal` is then used to marshal the struct into a YAML format and then written to a file.
+
+### Parsing YAML files in Golang
+
+To parse a YAML file, the `yaml.Unmarshal` function is used. The following is an example of parsing a YAML file:
+
+Create a YAML file called `blog.yaml`:
+
+```yaml title="blog.yaml"
+contributors:
+  - Kevin Kelche
+  - John Doe
+title: "Golang YAML"
+date: 11 March 2023
+tags:
+  - golang
+  - yaml
+draft: true
+```
+
+Create a Golang file called `main.go`:
+
+```go title="main.go"
+package main
+
+import (
+ "fmt"
+ "gopkg.in/yaml.v3"
+ "os"
+)
+
+type Blog struct {
+    Contributors []string `yaml:"contributors"`
+    Title        string `yaml:"title"`
+    Date         string `yaml:"date"`
+    Tags         []string `yaml:"tags"`
+    Draft        bool `yaml:"draft"`
+}
+
+func main() {
+ var blog Blog
+
+ yamlFile, err := os.ReadFile("blog.yaml")
+ if err != nil {
+ panic(err)
+    }
+
+ err = yaml.Unmarshal(yamlFile, &blog)
+ if err != nil {
+ panic(err)
+    }
+
+    fmt.Printf("Contributors: %v \n %v \n", blog.Contributors[0], blog.Contributors[1])
+    fmt.Printf("Title: %v \n", blog.Title)
+    fmt.Printf("Date: %v \n", blog.Date)
+    fmt.Printf("Tags: %v \n %v \n", blog.Tags[0], blog.Tags[1])
+    fmt.Printf("Draft: %v \n", blog.Draft)
+}
+```
+
+In this example, the struct `Blog` is created with the same fields as the YAML file. The `yaml.Unmarshal` function is then used to unmarshal the YAML file into the struct.
+
+Structs are not the only golang data structure that can be used to parse YAML files. Maps can also be used to parse YAML files. The following is an example of parsing a YAML file into a map:
+
+```go title="main.go"
+package main
+
+import (
+ "fmt"
+ "gopkg.in/yaml.v3"
+ "os"
+)
+
+func main() {
+ var blog map[string]interface{}
+
+ yamlFile, err := os.ReadFile("blog.yaml")
+ if err != nil {
+ panic(err)
+    }
+
+ err = yaml.Unmarshal(yamlFile, &blog)
+ if err != nil {
+ panic(err)
+    }
+
+    fmt.Printf("Contributors: %v \n %v \n", blog["contributors"].([]interface{})[0], blog["contributors"].([]interface{})[1])
+    fmt.Printf("Title: %v \n", blog["title"])
+    fmt.Printf("Date: %v \n", blog["date"])
+    fmt.Printf("Tags: %v \n %v \n", blog["tags"].([]interface{})[0], blog["tags"].([]interface{})[1])
+    fmt.Printf("Draft: %v \n", blog["draft"])
+}
+```
+
+## Advanced YAML in Golang
+
+### YAML Anchors and Aliases
+
+YAML provides a way to reuse parts of a YAML file by using anchors and aliases. Anchors create a reference to a part of a YAML file, and aliases reference the anchor. The following is an example of using anchors and aliases:
+
+```yaml title"config.yaml"
+language: &language
+  name: Golang
+  version: 1.20
+
+compiler:
+  name: Go Compiler
+  language: *language
+
+runtime:
+  name: Go Runtime
+  language: *language
+```
+
+In this example, the `language` key is an anchor. The `compiler` and `runtime` keys are aliases. The `compiler` and `runtime` keys reference the `language` key
+
+To get the value of the `language` key, the following code can be used:
+
+```go title="main.go"
+package main
+
+import (
+ "fmt"
+ "gopkg.in/yaml.v3"
+ "os"
+)
+
+func main() {
+ var config map[string]interface{}
+
+ yamlFile, err := os.ReadFile("config.yaml")
+ if err != nil {
+ panic(err)
+    }
+
+ err = yaml.Unmarshal(yamlFile, &config)
+ if err != nil {
+ panic(err)
+    }
+
+    fmt.Printf("Language: %v \n", config["language"])
+}
+```
+
+## Conclusion
+
+In this article, we learned how to use YAML in Golang. We learned how to create a YAML file and parse a YAML file. We also learned how to use YAML anchors and aliases. Tune in for a future tutorial on building a CI/CD platform like Jenkins using Golang. Where we will be using learned in this article.
