@@ -1,0 +1,348 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: A Guide to TOML in Golang
+description: Learn about working with TOML in GoLang with BurntSushi/toml and pelletier/go-toml. Explore decoding errors, advantages, and differences between the two.
+date: 13 March 2023
+image: /images/golang-toml.svg
+imageDescription:
+keywords:
+  -
+tags:
+  - golang
+---
+
+import SectionLink from "@components/SectionLink.jsx";
+import Nugget from "@components/Nugget.astro";
+import Link from "@components/Link.jsx";
+
+## Introduction
+
+TOML short for **Tom's Obvious, Minimal Language** is a configuration file format that is easy to read due to its minimal syntax. It is a popular alternative to YAML, INI and JSON for configuration files and data exchange formats.
+
+## TOML syntax
+
+TOML syntax consists of key-value pairs, tables and arrays. Tables are used to group related data. `[]` is used to define a table and can be netsted within other tables to create a hierachy of data. Key-value pairs are used to define the data within a table. `=` is used to assign a value to a key. Finally, arrays. Arrays are used to store multiple values of the same type. `[]` is used to define an array and `,` is used to separate values.
+
+```toml title="example.toml"
+# A table
+[server]
+# Define a key-value pair
+host = "localhost"
+port = 8080
+running = true
+
+# A nested table
+[server.development]
+host = "localhost"
+port = 8080
+running = true
+
+# An array
+[server.development.hosts]
+hosts = ["localhost", "123.23.4.0", ["192.11.23.45", "172.34.00.78"]]
+
+
+
+```
+
+In the above example, we have defined a table called `server` with a nested table called `development`. We have also defined an array called `hosts` within the `development` table. The `hosts` array contains three values. The first two are strings and the last one is an array of strings.
+
+## TOML in Go
+
+To use TOML in Go, there are two major packages that you can use. The first is `github.com/BurntSushi/toml` and the second is `github.com/pelletier/go-toml`. Both serve the same purpose but have different APIs the former has an easier to implement APIs while the later is good for sophisticated usecases. In this article we will explore Both packages and see how they can be used in Go.
+
+## pelletier/go-toml
+
+This package has the same behaviour as the stdlib `encoding/json` package. It has a `Marshal` and `Unmarshal` function that can be used to convert Go data structures to and from TOML. It also has better support for arrays, nested tables and human readable error messages.
+
+### Marshal
+
+The `Marshal` function takes a Go data structure and converts it to TOML. It returns a byte slice and an error. The error is returned if the data structure cannot be converted to TOML.
+
+```go title="main.go"
+package main
+
+import (
+ "github.com/pelletier/go-toml"
+ "io/ioutil"
+)
+
+type Config struct {
+    Database struct {
+        Server   string `toml:"server"`
+        Port     int `toml:"port"`
+        Username string `toml:"username"`
+        Password string `toml:"password"`
+    }
+}
+
+func main() {
+ // A Config struct with some data
+ config := Config{
+        Database: struct {
+            Server   string
+            Port     int
+            Username string
+            Password string
+        }{
+            Server:   "localhost",
+            Port:     3306,
+            Username: "user123",
+            Password: "secret",
+        },
+    }
+
+ // Encode the Config struct to TOML format
+ data, err := toml.Marshal(config)
+ if err != nil {
+ panic(err)
+    }
+
+ // Write the encoded data to a file
+ err = ioutil.WriteFile("config.toml", data, 0644)
+ if err != nil {
+ panic(err)
+    }
+}
+```
+
+In this example, we have a `Config` struct that contains a nested struct called `Database`. We have defined some data for the `Database` struct and then encoded it to TOML format using the `Marshal` function. Finally, we write the encoded data to a file called `config.toml`.
+
+### Unmarshal
+
+`Unmarshal` is takes a byte slice and converts it to a Go data structure. In this case, the byte slice is a TOML file.
+
+```go title="main.go"
+package main
+
+import (
+ "github.com/pelletier/go-toml"
+ "io"
+ "os"
+)
+
+type Config struct {
+    Database struct {
+        Server   string `toml:"server"`
+        Port     int `toml:"port"`
+        Username string `toml:"username"`
+        Password string `toml:"password"`
+    }
+}
+
+func(){
+ file, err := os.Open("config.toml")
+ if err != nil {
+ panic(err)
+    }
+ defer file.Close()
+
+ var config Config
+
+ b, err := io.ReadAll(file)
+ if err != nil {
+ panic(err)
+    }
+
+ err = toml.Unmarshal(b, &config)
+ if err != nil {
+ panic(err)
+    }
+
+    fmt.Println(config.Database.Server)
+}
+```
+
+The file is opened and the data is read into a slice since the `Unmarshal` function function takes a byte slice and a pointer to a Go data structure.
+
+```go
+b, err := io.ReadAll(file)
+```
+
+The data is then decoded into the `Config` struct using the `Unmarshal` function.
+
+```go
+err = toml.Unmarshal(b, &config)
+```
+
+The output would be `localhost`.
+
+### Other functions
+
+The package also implements other functions that like `Marshal` and `Unmarshal`. These functions are `Encode` and `Decode`. The `Tree` is also used to convert to a Go data structure without having to define a struct.
+
+```go title="main.go"
+package main
+
+import (
+ "fmt"
+
+ "github.com/pelletier/go-toml"
+)
+
+// use toml.Tree to unmarshal
+func main() {
+ tree, err := toml.LoadFile("config.toml")
+ if err != nil {
+ panic(err)
+    }
+
+ // get value
+    fmt.Println(tree.Get("Database.Server"))
+}
+```
+
+This code will achieve the same result as the previous example.
+
+## BurntSushi/toml
+
+This package is far simpler and easier to use than the `pelletier/go-toml` package. It has inbuilt reflection and can perform both encoding and decoding.
+
+### Decoding TOML
+
+To convert TOML to Go, we use the `toml.Decode` function. This function takes a byte slice and a pointer to a Go data structure. The byte slice is the TOML data and the pointer is the Go data structure that the TOML data will be decoded into.
+
+```go title="main.go"
+package main
+
+import (
+ "fmt"
+
+ "github.com/BurntSushi/toml"
+)
+
+type Config struct {
+    Database struct {
+        Server   string `toml:"server"`
+        Port     int `toml:"port"`
+        Username string `toml:"username"`
+        Password string `toml:"password"`
+    }
+}
+
+func main() {
+ var config Config
+
+ _, err := toml.DecodeFile("config.toml", &config)
+ if err != nil {
+ panic(err)
+    }
+
+    fmt.Println(config.Database.Server)
+}
+```
+
+The `DecodeFile` function is used to read the TOML data from a file. The `Decode` function can be used to read the TOML data from a byte slice.
+
+### Encoding TOML
+
+To transform a Go data structure to TOML, we use `toml.NewEncoder` to create an encoder which takes an `io.Writer` as an argument. A byte slice is then written to the `io.Writer` using the `Encode` function.
+
+```go title="main.go"
+package main
+
+import (
+ "os"
+
+ "github.com/BurntSushi/toml"
+)
+
+type Config struct {
+    Postgres struct {
+        Server   string `toml:"server"`
+        Port     int `toml:"port"`
+        Username string `toml:"username"`
+        Password string `toml:"password"`
+    }
+}
+
+func main() {
+ var config Config
+ config.Postgres.Server = "localhost"
+ config.Postgres.Port = 5432
+ config.Postgres.Username = "postgres"
+ config.Postgres.Password = "postgres"
+
+ f, err := os.Create("postgre.toml")
+ if err != nil {
+ panic(err)
+    }
+ defer f.Close()
+
+ err = toml.NewEncoder(f).Encode(config)
+ if err != nil {
+ panic(err)
+    }
+}
+```
+
+### Using `TextMarshaler` and `TextUnmarshaler`
+
+These interfaces can be used to implement custom encoding and decoding. The `TextMarshaler` interface is used to implement custom encoding and the `TextUnmarshaler` interface is used to implement custom decoding.
+
+```go title="main.go"
+
+package main
+
+import (
+ "os"
+ "time"
+
+ "github.com/BurntSushi/toml"
+)
+
+type Song struct {
+    Name     string
+    Duration duration
+}
+
+type duration time.Duration
+
+func (d duration) MarshalText() ([]byte, error) {
+ return []byte(time.Duration(d).String()), nil
+}
+
+func (d *duration) UnmarshalText(text []byte) error {
+ dur, err := time.ParseDuration(string(text))
+ if err != nil {
+ return err
+    }
+ *d = duration(dur)
+ return nil
+}
+
+func main() {
+ song := Song{
+        Name:     "The Sound of Silence",
+        Duration: duration(8 * time.Minute),
+    }
+
+ f, err := os.Create("song.toml")
+ if err != nil {
+ panic(err)
+    }
+ defer f.Close()
+
+ err = toml.NewEncoder(f).Encode(song)
+ if err != nil {
+ panic(err)
+    }
+
+ // decoding
+ var song2 Song
+ _, err = toml.DecodeFile("song.toml", &song2)
+ if err != nil {
+ panic(err)
+    }
+
+ println(song2.Name)
+ println(time.Duration(song2.Duration).String())
+}
+```
+
+In this example, we have created a custom type `duration` which is a wrapper around `time.Duration`. We have implemented the `TextMarshaler` and `TextUnmarshaler` interfaces to encode and decode the custom type. The `MarshalText` function is used to encode the custom type and the `UnmarshalText` function is used to decode the custom type.
+
+## Conclusion
+
+In this article, we have looked at how to use the `pelletier/go-toml` and `BurntSushi/toml` packages to encode and decode TOML data. We have also looked at how to implement custom encoding and decoding using the `TextMarshaler` and `TextUnmarshaler` interfaces.
