@@ -1,0 +1,258 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: Working with CSV in Golang
+description: Learn how to work with CSV files in Golang! Our comprehensive guide covers everything from reading and writing CSV data to best practices.
+date: 16 March 2023
+image: /images/golang-csv.svg
+imageDescription:
+keywords:
+  -
+tags:
+  - golang
+---
+
+import Link from "@components/Link.jsx";
+
+## Introduction
+
+Working with CSV (Comma Separated Values) files is a common task in programming, particularly when working with large datasets. CSV files are lightweight, and easy to work with and create, making them a popular choice for data exchange and storage. In this article, we'll look at how to work with CSV files in Golang.
+
+Golang comes with a built-in package for working with CSV files, `encoding/csv`. This package provides a `Reader` and `Writer` type that are used to read and write CSV files.
+Before we get started, let's create a simple CSV file to work with. Create a file called `data.csv` and add the following data:
+
+```csv title="data.csv"
+name,age,city,job,company,phone
+Kevin,30,New York,Manager,Folio Inc.,355-025-0525
+John,25,Los Angeles,Developer,Folio Inc.,555-230-2139
+Mary,28,Chicago,HR,Folio Inc.,331-359-8311
+Elizabeth,35,New York,Data Analyst,Apple Inc.,113-602-9009
+```
+
+## Reading CSV Files
+
+There are two ways to read a CSV file. The first is to read the entire file at once, or line by line. We'll look at both methods.
+
+### Read All
+
+To read a CSV file, we'll use the `Reader` type from the `encoding/csv` package. The `Reader` type has a `ReadAll` method that reads the entire CSV file and returns a nested slice of strings. Let's look at an example:
+
+```go title="main.go"
+package main
+
+import (
+ "encoding/csv"
+ "fmt"
+ "log"
+ "os"
+)
+
+func main() {
+ file, err := os.Open("data.csv")
+ if err != nil {
+        log.Fatal(err)
+    }
+ defer file.Close()
+
+ reader := csv.NewReader(file)
+ reader.FieldsPerRecord = -1
+
+ csvData, err := reader.ReadAll()
+ if err != nil {
+        log.Fatal(err)
+    }
+
+ for _, each := range csvData {
+        fmt.Println(each)
+    }
+}
+```
+
+The `FieldsPerRecord` field on the `Reader` type is used to specify the number of fields per record. If the number of fields per record is not known, we can set this field to `-1` to allow the `reader` to determine the number of fields per record.
+
+The `ReadAll` method reads all the rows in the CSV file and returns a nested slice of strings. If we were to access a single value, we could do so by using the row and column index:
+
+```go
+csvData[0][0] // Kevin
+```
+
+### Read Line by Line
+
+The `Read` method on the `Reader` type reads a single row from the CSV file and returns a slice of strings. Let's look at an example:
+
+```go title="main.go"
+package main
+
+import (
+ "encoding/csv"
+ "fmt"
+ "log"
+ "os"
+)
+
+func main() {
+ file, err := os.Open("data.csv")
+
+ if err != nil {
+        log.Fatal(err)
+    }
+ defer file.Close()
+
+ reader := csv.NewReader(file)
+ reader.FieldsPerRecord = -1
+
+ for {
+ record, err := reader.Read()
+
+ if err == io.EOF {
+ break
+        }
+
+ if err != nil {
+            log.Fatal(err)
+        }
+
+        fmt.Println(record)
+    }
+}
+```
+
+This example reads the CSV file line by line. The `Read` method returns an `io.EOF` error when it reaches the end of the file. We can use this error to break out of the loop.
+
+### Reading files with different delimiters
+
+Some CSV files use different delimiter characters, such as `;` or `|`. To read these files, we can use the `Comma` field on the `Reader` type to specify the delimiter character. First, let's create a new CSV file with a different delimiter:
+
+```csv title="data2.csv"
+name|age|city|job|company|phone
+Kevin|30|New York|Manager|Folio Inc.|355-025-0525
+John|25|Los Angeles|Developer|Folio Inc.|555-230-2139
+Mary|28|Chicago|HR|Folio Inc.|331-359-8311
+Elizabeth|35|New York|Data Analyst|Apple Inc.|113-602-9009
+```
+
+Now let's read the file using the `Comma` field:
+
+```go title="main.go"
+package main
+
+import (
+ "encoding/csv"
+ "fmt"
+ "log"
+ "os"
+)
+
+func main() {
+ file, err := os.Open("data2.csv")
+ if err != nil {
+        log.Fatal(err)
+    }
+ defer file.Close()
+
+ reader := csv.NewReader(file)
+ reader.FieldsPerRecord = -1
+
+ reader.Comma = '|'
+
+ csvData, err := reader.ReadAll()
+ if err != nil {
+        log.Fatal(err)
+    }
+
+ for _, each := range csvData {
+        fmt.Println(each)
+    }
+}
+```
+
+## Writing CSV Files
+
+A CSV file can be written to using the `Writer` type from the `encoding/csv` package. The `Writer` type has a `Write` method that accepts a slice of strings and writes it to the CSV file. Let's look at an example:
+
+```go title="main.go"
+package main
+
+import (
+ "encoding/csv"
+ "log"
+ "os"
+)
+
+func main() {
+ file, err := os.Create("data3.csv")
+ if err != nil {
+        log.Fatal(err)
+    }
+ defer file.Close()
+
+ writer := csv.NewWriter(file)
+ defer writer.Flush()
+
+ data := [][]string{
+        {"name", "age", "city", "job", "company", "phone"},
+        {"Kevin", "30", "New York", "Manager", "Folio Inc.", "355-025-0525"},
+        {"John", "25", "Los Angeles", "Developer", "Folio Inc.", "555-230-2139"},
+        {"Mary", "28", "Chicago", "HR", "Folio Inc.", "331-359-8311"},
+        {"Elizabeth", "35", "New York", "Data Analyst", "Apple Inc.", "113-602-9009"},
+    }
+
+ for _, value := range data {
+        writer.Write(value)
+    }
+}
+```
+
+The `Flush` method on the `Writer` type is used to flush any buffered data to the underlying writer. If we don't call the `Flush` method, the data will not be written to the CSV file.
+
+The `Writer` type like the `Reader` type has a `WriteAll` method that accepts a nested slice of strings and writes it to the CSV file. Let's look at an example:
+
+```go
+err := writer.WriteAll(data)
+if err != nil {
+    log.Fatal(err)
+}
+```
+
+## Append to CSV Files
+
+Appending is the same way as writing to a CSV file, except that we need to open the file in append mode.
+
+```go title="main.go"
+package main
+
+import (
+ "encoding/csv"
+ "fmt"
+ "log"
+ "os"
+)
+
+
+func main() {
+ file, err := os.OpenFile("data3.csv", os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+ if err != nil {
+        log.Fatal(err)
+    }
+ defer file.Close()
+
+ writer := csv.NewWriter(file)
+ defer writer.Flush()
+
+ data := [][]string{
+        {"Felix", "23", "Berlin", "Researcher", "PWC", "555-230-2139"},
+        {"Linda", "28", "Chicago", "Data Engineere", "KPMG", "331-359-8311"},
+    }
+
+ err = writer.WriteAll(data)
+ if err != nil {
+        log.Fatal(err)
+    }
+
+    fmt.Println("Data appended to csv file successfully.")
+}
+```
+
+## Conclusion
+
+In this article, we looked at how to read and write CSV files in Go. We also looked at how to append data to a CSV file. For more features of the `encoding/csv` package, check out the <Link url="https://pkg.go.dev/pkg/encoding/csv/">official documentation</Link>.
