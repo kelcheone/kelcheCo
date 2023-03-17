@@ -1,0 +1,180 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: Working with Emails in Golang
+description: Learn how to handle emails efficiently in Go! Discover techniques for sending, receiving, validating, and templating emails, and best practices.
+date: 17 March 2023
+image: /images/golang-emails.svg
+imageDescription:
+keywords:
+  -
+tags:
+  - golang
+
+draft: true
+---
+
+import Link from "@components/Link.jsx";
+
+## Introduction
+
+I'll not get you bored with the definition of an email. You probably know what it is. But I'll give you a quick overview of the email protocol and how it works. Then, I'll show you how to send emails with Go. I'll also show you how to receive emails, validate them, and how to use templates to send emails.
+
+## Email Protocol
+
+The email protocol is a simple text-based protocol that allows you to send and receive emails. It defines standards on how data is transmited over the internet. It involves two major protocos: Simple Mail Transfer Protocol (SMTP) for sending emails and Internet Message Access Protocol (IMAP) or Post Office Protocol (POP) for receiving emails.SMTP is responsible for routing emails from the sender's server to the recipient's server, while IMAP and POP enables the recipient to access their emails. Other protocols involved in this process are DNS and MIME (Multipurpose Internet Mail Extensions) used for domain name resolution and email formatting respectively.
+
+## Sending Emails
+
+Before we send emails, we need to set up an SMTP server. We'll use <Link url="https://mailtrap.io/">Mailtrap</Link> for this purpose. Mailtrap has a fake SMTP server that you can use to test sending emails. It's free and easy to set up. You can also use your own SMTP server if you have one.
+
+### Setting up Mailtrap
+
+To set up Mailtrap, you need to create an account. After creating an account, you'll be redirected to the dashboard. On the left tab, you'll see the "Email Testing" button on clicking it you'll find the SMTP settings. Copy the SMTP settings and save them in a dotenv file. We'll use them later.
+
+<img
+  src="/images/golang-emails/mailtrap-smtp-settings.png"
+  alt="Mailtrap SMTP Settings"
+  width="100%"
+  lazy="true"
+/>
+
+### Sending Emails with Go
+
+Now that we have our SMTP server set up, let's send emails with Go. We'll use the <Link url="https://golang.org/pkg/net/smtp/">net/smtp </Link> package to send emails. The net/smtp package provides a simple interface for sending emails. It's easy to use and it's the standard package for sending emails in Go.
+
+Let's create a new Go project. Create a new directory and name it "golang-emails". Then, create a new file and name it "main.go". Open the file and add the following code:
+
+```go title="main.go"
+package main
+
+import (
+	"net/smtp"
+	"os"
+
+	"github.com/joho/godotenv"
+)
+
+func main() {
+
+	from := "pinky@mail.com"
+	to := []string{
+		"frazer@mail.com",
+	}
+
+	message := []byte(`To: frazer@mail.com
+
+			From: pinky@mail.com
+
+			Subject: A Guide To SMTP
+
+			Content-Type: text/plain; charset="us-ascii"
+
+			This is a test email message.
+		`)
+
+	godotenv.Load()
+	username := os.Getenv("EMAIL_HOST_USER")
+	passwd := os.Getenv("EMAIL_HOST_PASSWORD")
+	host := os.Getenv("EMAIL_HOST")
+
+	auth := smtp.PlainAuth("", username, passwd, host)
+	smtpHost := host + ":" + os.Getenv("EMAIL_PORT")
+
+	if err := smtp.SendMail(smtpHost, auth, from, to, message); err != nil {
+		panic(err)
+	}
+
+}
+```
+
+In this code, we import the `net/smtp` package and the `godotenv` package will will be used to get the SMTP settings from the dotenv file.
+
+In the main function we define the sender, the recipient, and the message. After loading loading and getting the SMTP settings, we create an authentication object using the `smtp.PlainAuth` function. This function takes the identity of the sender, the username, the password, and the host as arguments. We then use the `smpt.SendMail` function to send the email by providing all the required arguments that were defined earlier.
+
+To run the code, run the following command in your terminal:
+
+```bash
+go run main.go
+```
+
+If you check your Mailtrap test inbox, you'll see the email that was sent.
+
+## Sending Emails with Attachments
+
+Sending emails with attachments is very similar to sending emails without attachments. The only difference is that we need to add the attachments to the message. Let's see how to do that.
+
+### Sending Emails with Attachments in Go
+
+To send emails with attachments, we need to add the attachments to the message. We'll use the <Link url="https://golang.org/pkg/mime/multipart/">mime/multipart</Link> package to do that. The mime/multipart package provides functions for creating and reading MIME multipart messages. It's used to send emails with attachments.
+
+Let's update our code to send emails with attachments. Open the "main.go" file and add the following code:
+
+```go title="main.go"
+package main
+
+import (
+    "bytes"
+    "fmt"
+    "io"
+    "io/ioutil"
+    "mime/multipart"
+    "net/smtp"
+    "os"
+
+    "github.com/joho/godotenv"
+)
+
+func main() {
+    from := "pinky@mail.com"
+	to := []string{
+		"frazer@mail.com",
+	}
+
+    message := &bytes.Buffer{}
+    writer := multipart.NewWriter(message)
+    writer.WriteField("To", to[0])
+    writer.WriteField("From", from)
+    writer.WriteField("Subject", "A Guide To SMTP")
+    writer.WriteField("Content-Type", "text/plain; charset=\"us-ascii\"")
+
+    body := []byte("This is a test email message.")
+    writer.WriteField("Content-Type", "text/plain; charset=\"us-ascii\"")
+    writer.CreatePart(body)
+
+    file, err := os.Open("attachment.txt")
+    if err != nil {
+        panic(err)
+    }
+    defer file.Close()
+
+    part, err := writer.CreateFormFile("attachment", file.Name())
+    if err != nil {
+        panic(err)
+    }
+
+    _, err = io.Copy(part, file)
+    if err != nil {
+        panic(err)
+    }
+
+    err = writer.Close()
+    if err != nil {
+        panic(err)
+    }
+
+    godotenv.Load()
+    username := os.Getenv("EMAIL_HOST_USER")
+    passwd := os.Getenv("EMAIL_HOST_PASSWORD")
+    host := os.Getenv("EMAIL_HOST")
+
+    auth := smtp.PlainAuth("", username, passwd, host)
+    smtpHost := host + ":" + os.Getenv("EMAIL_PORT")
+
+    if err := smtp.SendMail(smtpHost, auth, from, to, message.Bytes()); err != nil {
+        panic(err)
+    }
+}
+
+
+```
