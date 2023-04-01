@@ -2,9 +2,9 @@
 layout: "@layouts/ArticleLayout.astro"
 author: Kevin Kelche
 title: Golang Scope and Lifetime of Variables
-description: Learn about the scope and lifetime of variables in Go programming language. Understand memory management and best practices for effective variable usage
+description: Example description
 date: 08 March 2023
-image: /images/golang-scope.svg
+image: /images/golang-scope.mdx
 imageDescription:
 keywords:
   -
@@ -43,7 +43,7 @@ func someFunc(){
 }
 ```
 
-In the above example, the `someFunc` function initializes variable `i` which can be accessed by the `Printf` function withing the same function. If we were to access the variable `i` outside the function it would result in a compile error.
+In the above example, the `someFunc` function initializes variable `i` which can be accessed by the `Printf` function within the same function. If we were to access the variable `i` outside the function it would result in a compile error.
 
 ```go title="main.go" ins={11,12,13,14}
 package main
@@ -178,11 +178,11 @@ func main(){
 }
 ```
 
-By running this program you'll see that we are able to access the variables from the package `store` from the `main` package. If `SomeVar` or `DataIsBeautiful` were declared in lowercase it would have resulted in compile time errors.
+By running this program you'll see that we can access the variables from the package `store` from the `main` package. If `SomeVar` or `DataIsBeautiful` were declared in lowercase it would have resulted in compile time errors.
 
 ## Lifetimes
 
-As mentioned earlier a Lifetime is the time a variable exists in the memory. In Golang, the lifetime of a variable is determined by the scope of the variable. The lifetime of a variable is the same as the scope of the variable, meaning that if a variable is declared in a block, it will be destroyed when the block is exited. This is because a stack frame is created for each block and the variables are stored in the stack frame. When the block is exited, the stack frame is destroyed and the variables are destroyed with it.
+As mentioned earlier a Lifetime is when a variable exists in the memory. In Golang, the lifetime of a variable is determined by the scope of the variable. The lifetime of a variable is the same as the scope of the variable, meaning that if a variable is declared in a block, it will be destroyed when the block is exited. This is because a stack frame is created for each block and the variables are stored in the stack frame. When the block is exited, the stack frame is destroyed and the variables are destroyed with it.
 
 ```go title="main.go"
 package main
@@ -206,7 +206,7 @@ func someFunc(){
 
 As you can see from the image a stack frame was assigned to `someFunc` function. When the function is exited the stack frame is destroyed and the variable `i` is destroyed with it.
 
-When dealing with package-scoped variables the lifetime is the same as the lifetime of the program. This is because the variables are stored in the heap and are not destroyed when the function is exited. This is the same as when a function returns a pointer to a variable within that function.
+When dealing with package-scoped variables the lifetime is the same as the lifetime of the program. This is because the variables are stored in a heap and are not destroyed when the function is exited. This is the same as when a function returns a pointer to a variable within that function.
 
 ```go title="main.go"
 package main

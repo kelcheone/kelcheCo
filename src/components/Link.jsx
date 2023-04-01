@@ -5,7 +5,8 @@ import React from "react";
 const Link = ({ url, children }) => {
   return (
     <a
-      className="font-bold inline-block hover:underline"
+      // remove underline
+      className="inline-block text-blue-500 hover:text-blue-600 hover:underline no-underline"
       href={url}
       target="_blank"
       rel="noopener noreferrer"

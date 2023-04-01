@@ -1,0 +1,49 @@
+---
+layout: "@layouts/ArticleLayout.astro"
+author: Kevin Kelche
+title: Web Automation with Golang - Selenium
+description: A tutorial on how to use Selenium with Golang to automate web browsers.
+date: 20 March 2023
+image: /images/golang-sse.svg
+imageDescription:
+keywords:
+  -
+tags:
+  - golang
+draft: true
+---
+
+import Link from "@components/Link.jsx";
+import Nugget from "@components/Nugget.astro";
+
+## Introduction
+
+Selenium is a web automation framework that allows you to run automated tasks in a web browser. Selenium is the most popular web automation framework writen in Java. It is has bindings for many languages including Golang. In this tutorial we will be using the Golang bindings for Selenium to automate a web browser.
+
+<Nugget>
+  <p>
+    The Go Bindings for Selenium work flawlessly in Linux and Windows. You might
+    face some complexities when trying to run the bindings on MacOS.
+  </p>
+</Nugget>
+
+## Prerequisites
+
+To follow along with this tutorial you will need to have the following installed:
+
+- Golang (of course)
+- Web driver preferably ChromeDriver
+
+## Installing Selenium
+
+To install Selenium we will be using the `go get` command. This will download the Selenium package and all of its dependencies. We'll be using the `github.com/tebeka/selenium` package.
+
+```bash
+go get github.com/tebeka/selenium
+```
+
+## Installing ChromeDriver
+
+Get the latest version of ChromeDriver from the <Link url="https://chromedriver.chromium.org/downloads">ChromeDriver releases </Link> page. Extract the zip file and place the executable in your root folder of the project.
+
+## Writing the Code
