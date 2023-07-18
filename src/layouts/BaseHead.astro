@@ -38,29 +38,26 @@ const baseImageUrl = `https://www.kelche.co/${fImage}`;
 <link rel="canonical" href={url} />
 <meta name="generator" content={Astro.generator} />
 <meta name="image:src" content={baseImageUrl} />
-<!-- Robot.txt -->
-<meta name="robots" content="index,follow" />
-<meta name="Googlebot" content="index,follow" />
-<meta name="AdsBot-Google" content="index,follow" />
 
-<!-- FaceBook Meta data -->
+<!-- Open Graph Meta data -->
 <meta property="og:site_name" content={url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:type" content="website" />
 <meta property="og:url" content={url} />
-
 <meta property="og:image" content={baseImageUrl} />
-<meta property="og:image:width" content="300" />
-<meta property="og:image:height" content="300" />
+<meta property="og:image:width" content="1200" /> <!-- Adjust the width and height as needed -->
+<meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content={title} />
-<meta property="type" content="website" />
 <meta property="og:locale" content="en_US" />
 
 <!-- Twitter Meta data -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@kelcheone" />
 <meta name="twitter:creator" content="@kelcheone" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={baseImageUrl} />
 
 <meta name="apple-mobile-web-app-title" content={title} />
 <meta name="apple-touch-icon" content={baseSite + icon} />
