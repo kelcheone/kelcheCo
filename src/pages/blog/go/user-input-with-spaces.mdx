@@ -3,7 +3,7 @@ layout: "@layouts/ArticleLayout.astro"
 author: Kevin Kelche
 title: How to accept user input with spaces in Golang
 description: Learn how to accept user input with spaces in Golang. In this brief tutorial, we will use the bufio package to read user input from the command line.
-date: 18 March 2023
+date: 29 July 2023
 image: /images/golang-user-input.svg
 imageDescription:
 keywords:
@@ -22,29 +22,31 @@ When you are building a command line application in Golang, you'll often need to
 package main
 
 import (
- "bufio"
- "fmt"
- "os"
+	"fmt"
+	"log"
 )
 
 func main() {
- reader := bufio.NewReader(os.Stdin)
-    fmt.Print("Enter a title: ")
- title, _ := reader.ReadString('\n')
-    fmt.Println("You entered: ", title)
+	fmt.Println("Enter a title: ")
+	var title string
+	_, err := fmt.Scan(&title)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("You entered: ", title)
 }
+
 ```
 
 By running the above program, you'll see that only the first word is read. The rest of the input is ignored.
 
 ```bash title="Terminal"
-$ go run main.go
-Enter a Title:
-The lord of the Rings
-You entered: The
-$ ord of the Rings
-zsh: command not found: ord
-$
+❯ go run main.go
+Enter a title:
+Lord of the rings
+You entered:  Lord
+❯ of the rings
+zsh: command not found: of
 ```
 
 As you can see in the above example, the program only reads the first word. The rest of the input is ignored and even causes errors in the terminal.
