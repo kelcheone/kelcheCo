@@ -3,7 +3,7 @@ layout: "@layouts/ArticleLayout.astro"
 author: Kevin Kelche
 title: Golang Context (A Complete Guide)
 description: Learn everything you need to know about Golang context in this complete guide. From basics to advanced topics, we've got you covered!
-date: 25 January 2023
+date: 25 August 2023
 image: /images/golang-context.svg
 imageDescription: Golang Context
 keywords:
@@ -108,13 +108,13 @@ func main() {
 }
 ```
 
-The above program prints the following output:
-
 ```bash title="output"
-{John Doe 20}
+{
+      John Doe 20
+}
 ```
 
-In the above program, we are passing a `User` struct as a value in the context. We can also give primitive types like `string`, `int`, `bool`, etc. as values in the context. In the main function, we are accessing the value using the `context.Value` function and type asserting it to the `User` struct.
+In the above program, we are passing a as a value in the context. We can also give primitive types like `string`, `int`, `bool`, etc. as values in the context. In the main function, we are accessing the value using the `context.Value` function and type asserting it to the `User` struct.
 
 ## Cancellation with Context <SectionLink client:load id="cancellation-with-context" />
 
