@@ -29,6 +29,9 @@ import partytown from "@astrojs/partytown";
 import image from "@astrojs/image";
 
 // https://astro.build/config
+import preact from "@astrojs/preact";
+
+// https://astro.build/config
 export default defineConfig({
   integrations: [
     AutoImport({
@@ -36,7 +39,8 @@ export default defineConfig({
     }),
     tailwind(),
     sitemap(),
-    compress(),
+
+    // compress(),
     astroCodeSnippets(),
     mdx({
       remarkPlugins: [remarkReadingTime],
@@ -48,6 +52,7 @@ export default defineConfig({
       serviceEntryPoint: "@astrojs/image/sharp",
     }),
     // purgecss(),
+    preact(),
   ],
   site: "https://www.kelche.co",
   base: "/",

@@ -6,11 +6,16 @@ import ShareBtn from "@components/ShareBtn.astro";
 const { minutesRead } = Astro.props.frontmatter;
 import { Image } from "@astrojs/image/components";
 import Link from "@components/Link.jsx";
+import ArticleCard from "@components/ArticleCard.astro";
+import TableOfContents from "@components/TableOfContents.jsx";
+import Newsletter from "@components/Newsletter.astro";
+
 export interface Props {
   content: Frontmatter;
 }
 
 const { content } = Astro.props as Props;
+const { headings } = Astro.props;
 const {
   title,
   image,
@@ -31,16 +36,18 @@ const date = new Date(content.date);
   keywords={keywords}
   image={image}
 >
-  <h1
-    class="text-3xl md:text-5xl 2xl:text-6xl mb-[0.8em] font-extrabold mx-auto w-fit text-center"
-  >
-    {title}
-  </h1>
+  <div class="flex">
+    <div class="w/14">
+      <h1
+        class="text-3xl md:text-5xl 2xl:text-6xl mb-[0.8em] font-extrabold mx-auto w-fit text-center"
+      >
+        {title}
+      </h1>
 
-  {
-    image ? (
-      <Fragment>
-        {/*<Image
+      {
+        image ? (
+          <Fragment>
+            {/*<Image
           class="w-10/12 mx-auto aspect-auto rounded-md"
           src={image}
           width={1200}
@@ -49,95 +56,112 @@ const date = new Date(content.date);
           format="avif"
         />
         */}
-        <img
-          class="w-10/12 mx-auto aspect-auto rounded-md"
-          src={image}
-          width={1200}
-          alt={imageDescription ?? title}
-        />
-      </Fragment>
-    ) : null
-  }
-  <!-- image source credits -->
-  {
-    imageSource ? (
-      <p class="text-sm text-center dark:text-gray-100 text-gray-800 mb-4">
-        Image from
-        <a
-          href={imageUrl}
-          class="dark:text-blue-400 hover:underline text-blue-800 font-bold "
-        >
-          {imageSource}
-        </a>
-      </p>
-    ) : null
-  }
+            <img
+              class="w-10/12 mx-auto aspect-auto rounded-md"
+              src={image}
+              width={1200}
+              alt={imageDescription ?? title}
+            />
+          </Fragment>
+        ) : null
+      }
+      <!-- image source credits -->
+      {
+        imageSource ? (
+          <p class="text-sm text-center dark:text-gray-100 text-gray-800 mb-4">
+            Image from
+            <a
+              href={imageUrl}
+              class="dark:text-blue-400 hover:underline text-blue-800 font-bold "
+            >
+              {imageSource}
+            </a>
+          </p>
+        ) : null
+      }
 
-  <!-- Author -->
-  <div class="flex flex-wrap justify-evenly mb-9 mt-2">
-    <div class="flex items-center mb-4">
-      <!-- <Image
-        width={48}
-        class="w-12 h-12 rounded-full mr-4"
-        src="/images/pfp.jpg"
-        alt="Kevin Kelche"
-        aspectRatio="1:1"
-        format={"avif"}
-      /> -->
-      <img
-        width={48}
-        class="w-12 h-12 rounded-full mr-4"
-        src="/images/pfp.avif"
-        alt="Kevin Kelche"
-      />
-      <div class="text-sm">
-        <p class="text-gray-900 dark:text-white leading-none">{author}</p>
-        <p class="text-gray-600 dark:text-green-400">{minutesRead}</p>
+      <!-- Author -->
+      <div class="flex flex-wrap justify-evenly mb-9 mt-2">
+        <div class="flex items-center mb-4">
+          <img
+            width={48}
+            class="w-12 h-12 rounded-full mr-4 aspect-video"
+            src="/images/pfp.avif"
+            alt="Kevin Kelche"
+          />
+          <div class="text-sm">
+            <p class="text-gray-900 dark:text-white leading-none">{author}</p>
+            <p class="text-gray-600 dark:text-green-400">{minutesRead}</p>
+          </div>
+        </div>
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 inline"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <time datetime={date.toISOString()}
+            >{
+              date.toLocaleDateString("en-uk", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })
+            }</time
+          >
+        </div>
+        <div class="flex flex-wrap gap-2">
+          {tags.map((tag) => <TagButton tagName={tag} />)}
+        </div>
       </div>
-    </div>
-    <div>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6 inline"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        stroke-width="2"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-      </svg>
-      <time datetime={date.toISOString()}
-        >{
-          date.toLocaleDateString("en-uk", {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
-          })
-        }</time
-      >
-    </div>
-    <div class="flex flex-wrap gap-2">
-      {tags.map((tag) => <TagButton tagName={tag} />)}
-    </div>
-  </div>
 
-  <!-- Content -->
-  <div class="prose md:prose-lg 2xl:prose-xl px-4 mx-auto prose-pre:font-mono">
-    <slot />
-    <div class="mt-2">
-      <p>
-        Thank you for reading and happy coding!<br /> Have any questions? Feel free
-        to reach out to me on <Link
-          url="https://twitter.com/kelcheone"
-          client:load>Twitter</Link
-        >
-      </p>
+      <!-- Table of Contents -->
+      <div
+        class="block md:block lg:hidden align-middle mb-4 border border-gray-300/50 rounded-md pl-4"
+      >
+        <div>
+          <TableOfContents headings={headings} />
+        </div>
+      </div>
+
+      <!-- Content -->
+      <article
+        class="prose md:prose-lg 2xl:prose-xl px-4 mx-auto prose-pre:font-mono"
+      >
+        <slot />
+        <div class="mt-2">
+          <p>
+            Thank you for reading and happy coding!<br /> Have any questions? Feel
+            free to reach out to me on <Link
+              url="https://twitter.com/kelcheone"
+              client:load>Twitter</Link
+            >
+          </p>
+        </div>
+
+        <div class="mt-3">
+          <ShareBtn title={title} />
+        </div>
+        <div class="mt-3 block">
+          <Newsletter />
+        </div>
+      </article>
     </div>
-    <div class="mt-3">
-      <ShareBtn title={title} />
-    </div>
+    <aside
+      class="w-[38%] md:hidden lg:block hidden sticky top-0 overflow-y-auto max-h-screen px-2"
+    >
+      <TableOfContents headings={headings} />
+      <div class="mt-3 hidden lg:block">
+        <Newsletter />
+      </div>
+    </aside>
   </div>
 </BaseLayout>
