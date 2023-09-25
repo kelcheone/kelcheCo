@@ -22,7 +22,7 @@ const TableOfContents = ({ headings }) => {
 
   return (
     <>
-      <h2 className="text-xl font-bold">Table of Contents</h2>
+      <h2 className="text-lg font-bold">Table of Contents</h2>
       <ul className="pl-2">
         {headings.map((heading) => (
           <li
