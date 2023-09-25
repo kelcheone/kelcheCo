@@ -39,8 +39,7 @@ export default defineConfig({
     }),
     tailwind(),
     sitemap(),
-
-    // compress(),
+    compress(),
     astroCodeSnippets(),
     mdx({
       remarkPlugins: [remarkReadingTime],
