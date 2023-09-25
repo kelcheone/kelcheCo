@@ -11,9 +11,6 @@ import { remarkReadingTime } from "./remark-reading-time.mjs";
 // https://astro.build/config
 
 // https://astro.build/config
-import compress from "astro-compress";
-
-// https://astro.build/config
 import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
@@ -32,6 +29,8 @@ import image from "@astrojs/image";
 import preact from "@astrojs/preact";
 
 // https://astro.build/config
+
+// https://astro.build/config
 export default defineConfig({
   integrations: [
     AutoImport({
@@ -39,7 +38,6 @@ export default defineConfig({
     }),
     tailwind(),
     sitemap(),
-    compress(),
     astroCodeSnippets(),
     mdx({
       remarkPlugins: [remarkReadingTime],
