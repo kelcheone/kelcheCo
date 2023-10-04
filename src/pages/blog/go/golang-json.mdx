@@ -1,8 +1,8 @@
 ---
 layout: "@layouts/ArticleLayout.astro"
 author: Kevin Kelche
-title: "Working with JSON in Golang: A Beginner's Guide"
-description: Comprehensive guide on working with JSON in Golang. Learn encoding/decoding, encoding/json package, marshaling, error handling, custom data types & more.
+title: "Getting Started with JSON Parsing in Golang: A Comprehensive Guide"
+description: "Learn how to parse JSON in Golang. This article covers the basics of JSON encoding and decoding, as well as how to use the json package to parse JSON."
 date: 30 January 2023
 image: /images/golang-json.avif
 imageDescription:
@@ -19,20 +19,6 @@ import SectionLink from "@components/SectionLink.jsx";
 import Nugget from "@components/Nugget.astro";
 import Link from "@components/Link.jsx";
 import Table from "@components/Table.jsx";
-
-## Table of Contents
-
-- [Introduction](#introduction)
-- [`encoding/json` Package](#encodingjson-package)
-- [Encoding and Decoding JSON in Golang](#encoding-and-decoding-json-in-golang)
-  - [Encoding JSON](#encoding-json)
-  - [Decoding JSON](#decoding-json)
-  - [MarshalIndent Function](#marshalindent-function)
-  - [Unmarshal vs NewDecoder](#unmarshal-vs-newdecoder)
-  - [Working with JSON Tags](#working-with-json-tags)
-  - [Decoding From a File](#decoding-from-a-file)
-- [Handling JSON Errors in Golang](#handling-json-errors-in-golang)
-- [Conclusion](#conclusion)
 
 <Nugget>
   <Link url="https://github.com/kelcheone/go-blog-code-snippets/tree/main/json">

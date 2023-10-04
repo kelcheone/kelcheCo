@@ -21,24 +21,6 @@ import Table from "@components/Table.jsx";
 
 File handling is an essential part of any programming language, and Golang is no exception. In this article, we will explore the various built-in functions in Golang that allow you to efficiently and easily work with files. From reading and writing to manipulating and processing, we will cover everything you need to know to handle files in Golang like a pro. Whether you're a beginner or an experienced developer, this article will give you a comprehensive understanding of file handling in Golang. So let's get started!
 
-## Table of Contents
-
-- [How to Create a File in Golang](#how-to-create-a-file-in-golang)
-- [How to Check if a File Exists in Golang](#how-to-check-if-a-file-exists-in-golang)
-- [How to Write to a File in Golang](#how-to-write-to-a-file-in-golang)
-- [How to Append to a File in Golang](#how-to-append-to-a-file-in-golang)
-- [How to Read a File in Golang](#how-to-read-a-file-in-golang)
-- [How to Read a File Line by Line in Golang](#how-to-read-a-file-line-by-line-in-golang)
-- [How to Delete a File in Golang](#how-to-delete-a-file-in-golang)
-- [How to Rename a File in Golang](#how-to-rename-a-file-in-golang)
-- [How to Copy a File in Golang](#how-to-copy-a-file-in-golang)
-- [How to Check if a File is Empty in Golang](#how-to-check-if-a-file-is-empty-in-golang)
-- [How to Get the Size of a File in Golang](#how-to-get-the-size-of-a-file-in-golang)
-- [How to Check File Types in Golang](#how-to-check-file-types-in-golang)
-- [How to list Files in a Directory in Golang](#how-to-list-files-in-a-directory-in-golang)
-- [How to Check File Extensions in Golang](#how-to-check-file-extensions-in-golang)
-- [ How to Check File Permissions in Golang](#how-to-check-file-permissions-in-golang)
-
 ## How to Create a File in Golang <SectionLink client:load id="how-to-create-a-file-in-golang" />
 
 **To create a file in Golang, you can use the `os.Create()` function.** The function takes the file path as a parameter and returns a file object and an error object. If the file is successfully created, the file object will contain the file's metadata, and the error object will be nil. Otherwise, the error object will contain the error message.
