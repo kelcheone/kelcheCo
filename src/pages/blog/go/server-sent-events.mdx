@@ -65,7 +65,7 @@ func randomHandler(w http.ResponseWriter, r *http.Request) {
 
 In the code above, we are creating a simple HTTP server that serves the client files and handles the `/random` endpoint. This endpoint implements the `randomHandler` function which sends a random number to the client every 2 seconds.
 
-Unlike other HHTP handlers, the `randomHandler` function manipulates the response headers to set the `Content-Type` to `text/event-stream `. This tells the client that the server is sending a stream of events and thus the client should not close the connection after receiving the first event. `Cache-Control` and `Connection` headers are also set to prevent the client from caching the response and closing the connection. CORs headers are also set to allow the client to make requests to the server.
+Unlike other HTTP handlers, the `randomHandler` function manipulates the response headers to set the `Content-Type` to `text/event-stream `. This tells the client that the server is sending a stream of events and thus the client should not close the connection after receiving the first event. `Cache-Control` and `Connection` headers are also set to prevent the client from caching the response and closing the connection. CORs headers are also set to allow the client to make requests to the server.
 
 The `randomHandler` function also uses the `Flusher` interface to flush the response to the client after every event. This is necessary because the client will not receive any data until the response is flushed.
 
