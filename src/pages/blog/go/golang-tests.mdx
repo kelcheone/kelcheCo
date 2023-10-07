@@ -19,13 +19,13 @@ import Link from "@components/Link.jsx";
 
 ## Introduction
 
-Writing tests in Golang and in general is a great way to ensure that your code is working as expected. In this article, we explore how to write tests in Golang.
+Writing tests is one aspect of development that is as important as writing the core code. This step is important as it ensures that the code works as expected. Tests can be of two types: unit tests and integration tests. Unit tests are tests that test a single function or method. Integration tests are tests that test the interaction between multiple functions or methods. In this article, we'll explore how to write tests in Golang.
 
 ## How to write tests in Golang <SectionLink client:load id="how-to-write-tests-in-golang" />
 
-Golang has an inbuilt testing package that allows us to write tests. The testing package provides a framework for writing tests and running them. The testing package also provides a set of tools for writing tests.
+Golang has an inbuilt testing package that allows us to write tests. This package provides a framework for writing tests and running them. It also, provides a set of tools for writing tests.
 
-To write a test in Golang, we need to create a file with the suffix `_test.go`. This file will contain the tests for the code in the file that it is testing. The test file will contain a function that starts with the word `Test` followed by the name of the function that it is testing. The function will take a pointer to a `testing.T` type as its only argument. The `testing.T` type provides a set of methods that we can use to write our tests.
+To write a test in Golang, we need to create a file with the suffix `_test.go` based on the file we are testing. This file will contain the tests for the code in the file that it is testing. The test file will contain a function that starts with the word `Test` followed by the name of the function that it is testing. The function will take a pointer to a `testing.T` type as its only argument. The `testing.T` type provides a set of methods that we can use to write our tests.
 
 ```go title="main.go"
 package main

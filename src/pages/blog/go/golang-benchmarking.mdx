@@ -1,7 +1,7 @@
 ---
 layout: "@layouts/ArticleLayout.astro"
 author: Kevin Kelche
-title: Golang Benchmarking
+title: "Golang Benchmarking: The Complete Guide"
 description: Master the art of benchmarking in Golang with this complete guide. Learn how to measure and optimize performance for faster and more efficient code.
 date: 22 January 2023
 image: /images/golang-benchmarking.avif
@@ -19,7 +19,7 @@ import Link from "@components/Link.jsx";
 
 ## Introduction
 
-In Go, Benchmarking is a method of evaluating a program's performance by measuring how long it takes to execute and how much memory it consumes under various conditions. It can assist you in identifying areas of your code that can be optimized and comparing different implementations to determine which is the most effective. Benchmarking is an important tool for optimizing code for performance.
+In Go, Benchmarking is a method of evaluating a program's performance by measuring how long it takes to execute and how much memory it consumes under various conditions. It can assist you in identifying areas of your code that can be optimized and comparing different implementations to determine which is the most effective.
 
 <Nugget>
   <strong class="font-bold dark:text-white">Note:</strong>
@@ -29,7 +29,7 @@ In Go, Benchmarking is a method of evaluating a program's performance by measuri
 
 ## How to Write a Benchmark <SectionLink client:load id="how-to-write-a-benchmark" />
 
-Writing benchmarks involve using the <Link url="/blog/go/golang-tests/">testing </Link>{" "} package. To write a benchmark to a function, in a `fileName_test.go` file, declare a function with a `Benchmark` prefix. The function should take a pointer to a `testing.B` as its only argument. The `testing.B` has a `N` field that is the number of times the benchmark should be run. The function should run the code to be benchmarked `b.N` times.
+Writing benchmarks involve using the <Link url="/blog/go/golang-tests/">testing </Link>{" "} package. To write a benchmark to a function, in a `fileName_test.go` file just like any other test. Next, declare a function with a `Benchmark` prefix. The function takes a pointer to `testing.B` as its only argument. `testing.B` has a `N` field that is the number of times the benchmark should be run. The function should run the code to be benchmarked `b.N` times.
 
 By using the `testing.B`'s `N` field, the benchmark will run the code to be benchmarked `b.N` times. The benchmark will then report the average time it took to run the code to be benchmarked. The benchmark will also report the number of times the code to be benchmarked was run per second.
 
