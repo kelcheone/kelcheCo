@@ -6,7 +6,7 @@ const Link = ({ url, children }) => {
   return (
     <a
       // remove underline
-      className="inline-block text-blue-500 hover:text-blue-600 hover:underline no-underline"
+      className="inline-block text-blue-500 hover:text-blue-600 hover:underline no-underline cursor-pointer"
       href={url}
       target="_blank"
       rel="noopener noreferrer"
