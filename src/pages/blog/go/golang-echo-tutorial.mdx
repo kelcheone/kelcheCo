@@ -1,9 +1,9 @@
 ---
 layout: "@layouts/ArticleLayout.astro"
 author: Kevin Kelche
-title: "Golang Echo Tutorial : Build a REST API with Golang Echo and PostgreSQL"
+title: "Golang Echo Tutorial: REST API with PostgreSQL"
 description: In this tutorial, we will build a REST API with Golang Echo and PostgreSQL. We will use the Echo framework to build a REST API and the PostgreSQL database to store our data.
-date: 31 January 2023
+date: 25 October 2023
 image: /images/golang-echo-tutorial.avif
 imageDescription:
 keywords:
@@ -19,17 +19,11 @@ import Nugget from "@components/Nugget.astro";
 import Link from "@components/Link.jsx";
 import Table from "@components/Table.jsx";
 
-## Introduction
+Welcome to this tutorial on creating a fitness API using the Echo framework in Go. **Echo is a high-performance web framework designed for building RESTful APIs in the Go programming language. It is known for its speed and lightweight nature, making it an excellent choice for web development**. In this tutorial, we'll guide you through the process of using Echo to construct a RESTful API for storing and managing fitness-related information, such as weight, height, and body fat percentage, in a PostgreSQL database.
 
-Welcome to this tutorial on creating a fitness API using the Echo framework in Go. Here, we will dive into understanding the Echo framework and how to use it to build a RESTful API for tracking fitness information.
+Throughout this tutorial, we will cover essential concepts in using Echo, including routing, middleware, and handling HTTP requests and responses. We will demonstrate how to perform CRUD (Create, Read, Update, Delete) operations to manage user data effectively within the API. Whether you are a novice or an experienced Go developer, this tutorial will equip you with the knowledge and skills to build a robust fitness API using the Echo framework.
 
-**Echo is a fast, lightweight, and high-performance web framework for building web applications in Go. It is simple to use and provides an excellent set of features and functionality for building RESTful APIs.**
-
-We will build a fitness API that allows users to store and track their fitness information, such as weight, height, and body fat percentage, in a PostgreSQL database. By using Echo and a database, we will demonstrate how to build a complete and functional RESTful API from start to finish.
-
-You will learn how to use Echo to build a RESTful API, handle HTTP requests and responses, and interact with a PostgreSQL database by the end of this tutorial. We will cover key concepts, such as routing, middleware, and HTTP handling, and demonstrate how to implement CRUD operations for managing user data.
-
-Whether you are a beginner or an experienced Go developer, this tutorial will provide you with a solid foundation in using the Echo framework to build RESTful APIs. So, let's get started and learn how to build a simple but powerful fitness API using Echo!
+Let's begin our journey into creating a simple yet powerful fitness API with Echo, allowing you to develop powerful web applications for fitness tracking and management.
 
 ## Prerequisites
 
@@ -745,6 +739,11 @@ func main(){
 ```
 
 The `Use()` function takes a list of middleware functions as arguments. You can add as many middleware functions as you want.
+
+<p class="text-xl font-bold">Also Read:</p>
+<Link url="/blog/echo-group-routes/">
+  <strong class="text-xl font-bold">Echo Group Routes</strong>
+</Link>
 
 ### CORs Middleware <SectionLink client:load id="cors-middleware" />
 
